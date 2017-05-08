@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{{define "home"}}
+<html>
+<head>
+	<title>首页 - 寰宇0w0 - 安利💊即是正义！ </title>
+{{template "header"}}
+
+    	{{range .}}
+    	<div class="mdl-grid" style="margin-left: 40px">
+    		<div class="mdl-cell mdl-cell--6-col mdl-cell--middle mdl-card mdl-shadow--4dp">
+  				<div class="mdl-card__title mdl-card--expand mdl-card--border">
+    				<h2 class="mdl-card__title-text">{{.Title}}</h2>
+  				</div>
+  				<div class="mdl-card__media" style="background: url('');" style="margin: 12px;">
+    				<!-- <span><a href="/user/{{.Editor.Id}}"><img src="{{.Editor.Avatar}}" alt="头像君挂掉啦" width="40px" height="40px" style="margin: 12px;"></a></span>
+    				<span>{{.Editor.Name}}</span> -->
+            <span class="mdl-chip mdl-chip--contact">
+              <img class="mdl-chip__contact" src="{{.Editor.Avatar}}" alt="🐷">
+              <span class="mdl-chip__text">{{.Editor.Name}}</span>
+              <a href="/user/{{.Editor.Id}}" class="mdl-chip__action"><i class="material-icons">more</i></a>
+            </span>
+
+    			</div>
+  				<div class="mdl-card__supporting-text">
+    				{{.Introduction}}
+  				</div>
+  				<div class="mdl-card__actions">
+    				<a href="/article/{{.Id}}" target="_blank" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
+      					查看全文
+    				</a>
+  				</div>
+  				<div class="mdl-card__menu" id="share"><a href="/share"><i class="material-icons">share</i></a></div>
+  				<div class="mdl-tooltip" data-mdl-for="share">分享</div>
+			  </div>
+    	</div>
+    	{{end}}
+
+{{template "footer"}}
+{{end}}

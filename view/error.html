@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{{define "error"}}
+<html>
+<head>
+<title>牙白，有什么地方出问题了 - 寰宇0w0 - 安利💊即是正义！ </title>
+<meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/mdl/mdl/material.min.css">
+    <script src="../static/mdl/mdl/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+    #create-article {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+    </style>
+</head>
+<body>
+    <div class="mdl-layout mdl-js-layout" style="background: url('http://images.huanyu0w0.cn/background/%E5%9B%9B%E6%9C%88%E6%98%AF%E4%BD%A0%E7%9A%84%E8%AC%8A%E8%A8%8003.png') center/ cover;">
+        <!-- header -->
+        <header class="mdl-layout__header mdl-layout__header--transparent mdl-layout__header--scroll" id="top">
+            <!-- row 1 -->
+            <div class="mdl-layout__header-row">
+                <!-- Title -->
+                <span class="mdl-layout-title mdl-color-text--accent" id="icon">huanyu0w0</span>
+                <div class="mdl-tooltip" data-mdl-for="icon">ohayo~</div>
+                <!-- spacer -->
+            </div>
+            <!-- row 2 -->
+            <div class="mdl-layout__header-row">
+                <!-- navigation -->
+                <nav class="mdl-navigation">
+                    <a href="/" class="mdl-navigation__link mdl-color-text--accent">首页</a>
+                    <a href="#" class="mdl-navigation__link mdl-color-text--accent">番剧</a>
+                    <a href="#" class="mdl-navigation__link mdl-color-text--accent">电影</a>
+                    <a href="#" class="mdl-navigation__link mdl-color-text--accent">影视</a>
+                    <a href="#" class="mdl-navigation__link mdl-color-text--accent">音乐</a>
+                    <a href="#" class="mdl-navigation__link mdl-color-text--accent">小说</a>
+                </nav>
+                <!-- spacer -->
+                <div class="mdl-layout-spacer"></div>
+                <!-- search -->
+                <form action="https://www.google.com/search">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                        <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
+                            <i class="material-icons mdl-color-text--accent">search</i>
+                        </label>
+                        <!-- <div class="mdl-tooltip" data-mdl-for="searchnote">搜索</div> -->
+                        <div class="mdl-textfield__expandable-holder">
+                            <input class="mdl-textfield__input  mdl-color-text--accent" type="text" id="search">
+                            <label class="mdl-textfield__label" for="sample-expandable">Enter your query...</label>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </header>
+        <!-- content -->
+        <main class="mdl-layout__content">
+            <div class="mdl-grid" style="margin-left: 40px;">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--middle mdl-card mdl-shadow--4dp">
+            <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
+                <h2 class="mdl-card__title-text mdl-color-text--grey-600">牙白...出了点问题...</h2>
+            </div>
+
+            <div class="mdl-card__supporting-text">
+                <h2 class="mdl-card__title-text mdl-color-text--accent">{{.}}</h2>
+            </div>
+
+                <div class="mdl-card__actions">
+                    <a href="javascript:history.go(-1);" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--primary" style="margin-top: 20px;">返回</a>
+                </div>
+            </form>
+        </div>
+    </div>
+       
+
+{{template "footer"}}
+{{end}}

@@ -1,0 +1,39 @@
+<component name="libraryTable">
+  <library name="GOPATH &lt;huanyu0w0&gt;">
+    <CLASSES>
+      <root url="file://$USER_HOME$/Documents/gogogo/src/playPixel" />
+      <root url="file://$USER_HOME$/Documents/gogogo/src/playgopl" />
+      <root url="file://$PROJECT_DIR$/../huanyu0w0sort" />
+      <root url="file://$USER_HOME$/Documents/gogogo/src/playecho" />
+      <root url="file://$USER_HOME$/Documents/gogogo/src/servicetest" />
+      <root url="file://$PROJECT_DIR$/../DBtest" />
+      <root url="file://$PROJECT_DIR$/../servicetest" />
+      <root url="file://$PROJECT_DIR$/../gopkg.in" />
+      <root url="file://$PROJECT_DIR$/../github.com" />
+      <root url="file://$USER_HOME$/Documents/gogogo/src/goinaction" />
+      <root url="file://$PROJECT_DIR$/../golang.org" />
+      <root url="file://$USER_HOME$/Documents/gogogo/src/playkafka" />
+      <root url="file://$USER_HOME$/Documents/gogogo/src/playblackfriday" />
+      <root url="file://$PROJECT_DIR$/../.idea" />
+    </CLASSES>
+    <SOURCES>
+      <root url="file://$USER_HOME$/Documents/gogogo/src/playPixel" />
+      <root url="file://$USER_HOME$/Documents/gogogo/src/playgopl" />
+      <root url="file://$PROJECT_DIR$/../huanyu0w0sort" />
+      <root url="file://$USER_HOME$/Documents/gogogo/src/playecho" />
+      <root url="file://$USER_HOME$/Documents/gogogo/src/servicetest" />
+      <root url="file://$PROJECT_DIR$/../DBtest" />
+      <root url="file://$PROJECT_DIR$/../servicetest" />
+      <root url="file://$PROJECT_DIR$/../gopkg.in" />
+      <root url="file://$PROJECT_DIR$/../github.com" />
+      <root url="file://$USER_HOME$/Documents/gogogo/src/goinaction" />
+      <root url="file://$PROJECT_DIR$/../golang.org" />
+      <root url="file://$USER_HOME$/Documents/gogogo/src/playkafka" />
+      <root url="file://$USER_HOME$/Documents/gogogo/src/playblackfriday" />
+      <root url="file://$PROJECT_DIR$/../.idea" />
+    </SOURCES>
+    <excluded>
+      <root url="file://$PROJECT_DIR$" />
+    </excluded>
+  </library>
+</component>
