@@ -99,13 +99,23 @@ func SigninPost(c echo.Context) error {
 	}
 	c.SetCookie(avatar)
 
+	like := new(http.Cookie)
+	like.Name = "like"
+	like.Value = "false"
+	if remember == "on" {
+		like.Expires = time.Now().Add(model.REMEMBER)
+	} else {
+		like.Expires = time.Now().Add(model.COOKIE_TIME)
+	}
+	c.SetCookie(like)
+
 	//username := new(http.Cookie)
 	//username.Name = "username"
 	//username.Value = u.Name
 	//username.Expires = time.Now().Add(3 * time.Hour)
 	//c.SetCookie(username)
 	log.Println("sign in successed.")
-	return c.Redirect(http.StatusFound, "/signup")
+	return c.Redirect(http.StatusFound, "/")
 }
 
 func Signout(c echo.Context) error {

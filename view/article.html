@@ -7,13 +7,14 @@
     
         <div class="mdl-grid" style="margin-left: 40px;">
             <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--7-col">
-                <div class="mdl-card__title mdl-color--primary">
+                <div class="mdl-card__title mdl-card--border">
                   <div style="margin-left: 6px; margin-top: 6px;">
-                    <a href="/{{.Article.Topic}}" class="mdl-color-text--accent">{{.Article.Topic}}</a>
-                    <b class="mdl-color-text--accent"> -> </b>
+                    <a href="/{{.Article.Topic}}" class="mdl-color-text--accent" style="text-decoration: none;"><small>{{.Article.Topic}}</small></a>
+                    <small class="mdl-color-text--accent" style="margin-left: 6px;"> >> </small>
                     <div class="mdl-card__title mdl-color-text--grey-600">
                         <h4 class="mdl-card__title-text">{{.Article.Title}}</h4>
                     </div>
+                    <small class="mdl-color-text--grey-500" style="margin-left: 12px;">发布于 {{.Time}}</small>
                   </div>
                 </div>
 
@@ -21,44 +22,69 @@
                     <a href="/user/{{.Editor.Id}}" id="avatar" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--fab" style="margin: 12px;">
                         <img src="{{.Editor.Avatar}}" style="width: 100%; height: 100%; border-radius: 50%;">
                     </a>
-                    {{.Editor.Name}}
+                    <a href="/user/{{.Editor.Id}}" style="text-decoration: none;"><big>{{.Editor.Name}}</big></a>
                 </div>
 
-                <div class="mdl-card__supporting-text mdl-color-text--grey-700">
+                <div class="mdl-card__supporting-text mdl-color-text--grey-700" style="min-height: 320px; margin: 12px; margin-top: 0px;">
                     {{.Content}}
                 </div>
 
-                <div class="mdl-card__actions mdl-card--border mdl-color--grey-100">
+                <div class="mdl-card__actions mdl-card--border mdl-color--grey-50 mdl-shadow--2dp">
 
-                    <form action="/comment" method="POST">
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 700px;">
-                            <textarea rows=1 class="mdl-textfield__input mdl-color-text--accent" id="comment"></textarea>
+                    <form action="/comment" method="post">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 95%; margin-left: 12px;">
+                            <textarea rows=1 class="mdl-textfield__input" type="text" id="comment" name="content"></textarea>
                             <label for="comment" class="mdl-textfield__label">添加评论...</label>
+                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--accent mdl-button--icon" style="right: 6px;">
+                                <i class="material-icons" role="presentation">keyboard_return</i>
+                            </button>
                         </div>
-                        <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-                            <i class="material-icons" role="presentation">check</i><span class="visuallyhidden">add comment</span>
-                        </button>
+                        <input type="hidden" name="article" value="{{.Article.Id}}">
                     </form>
 
                 {{range .Comments}}
-                    <a href="/user/{{.Editor.Id}}" id="avatar" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--fab" style="margin: 12px;">
+                    <div id="{{.Comment.Id}}"><span><a href="/user/{{.Editor.Id}}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--fab mdl-button--icon" style="margin: 6px; margin-left: 12px;">
                         <img src="{{.Editor.Avatar}}" style="width: 100%; height: 100%; border-radius: 50%;">
                     </a>
-                    {{.Editor.Name}}
-                    <div>
-                        {{.Comment.Content}}
+                    <a href="/user/{{.Editor.Id}}" style="text-decoration: none;">{{.Editor.Name}}</a></span>
+
+                    <div style="margin-left: 56px;">
+                        <p>{{.Comment.Content}}</p>
+                    </div>
+                    <small class="mdl-color-text--grey-500" style="margin-left: 56px;">{{.Time}}</small>
+
+                    <span style="right: 12px;">
+                        {{if .Nice}}
+                        <a href="/nice/{{.Comment.Id}}" style="text-decoration: none; margin-left: 12px;"><small class="mdl-color-text--accent">赞({{.Comment.Like}})</small></a>
+                        {{else}}
+                        <a href="/nice/{{.Comment.Id}}" style="text-decoration: none; margin-left: 12px;"><small class="mdl-color-text--grey-500">赞({{.Comment.Like}})</small></a>
+                        {{end}}
+                        <small class="mdl-color-text--grey-500">&nbsp&nbsp|&nbsp&nbsp</small>
+                        <a href="/reply/{{.Comment.Id}}" style="text-decoration: none;"><small class="mdl-color-text--grey-500">回复</small></a>
+                        <small class="mdl-color-text--grey-500">&nbsp&nbsp|&nbsp&nbsp</small>
+                        <a href="/comment/{{.Comment.Id}}" style="text-decoration: none;"><small class="mdl-color-text--grey-500">所有回复({{.ReplyNumber}})</small></a>
+                    </span>
+                    <hr>
                     </div>
                 {{else}}
-                    no comments
+                    <br>
                 {{end}}
                 </div>
 
                 
-
+                {{if .Like}}
                 <div class="mdl-card__menu mdl-color-text--accent">
-                    <span style="margin-right: 6px;">{{.Article.Like}}</span><span id="like"><a href="/like/{{.Article.Id}}"><i class="material-icons">favorite</i></a></span>
+                    <span style="margin-right: 6px;"><big>{{.Article.Like}}</big></span>
+                    <span id="liked"><a href="/like/{{.Article.Id}}"><i class="material-icons">favorite</i></a></span>
                 </div>
-                <div class="mdl-tooltip" data-mdl-for="like">吃了这颗安利💊~</div>
+                <div class="mdl-tooltip" data-mdl-for="liked">已经喜欢了</div>
+                {{else}}
+                <div class="mdl-card__menu mdl-color-text--accent">
+                    <span style="margin-right: 6px;"><big>{{.Article.Like}}</big></span>
+                    <span id="like"><a href="/like/{{.Article.Id}}"><i class="material-icons">favorite_border</i></a></span>
+                </div>
+                <div class="mdl-tooltip" data-mdl-for="like">喜欢</div>
+                {{end}}
             </div>
         </div>
 

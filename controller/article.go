@@ -9,6 +9,7 @@ import (
 	"html/template"
 	"github.com/satori/go.uuid"
 	"log"
+	"strconv"
 )
 
 func Article(c echo.Context) error {
@@ -96,18 +97,19 @@ func GetArticle(c echo.Context) error {
 		model.Cookies
 		Article *model.Article
 		Editor *model.User
+		Time string
 		Comments []*model.CommentEditor
 		Content template.HTML
+		Like bool
 	}{
 		Article: &model.Article{},
 		Editor: &model.User{},
 		Comments: []*model.CommentEditor{},
 	}
-
+	//处理cookie
 	isSignin, err := c.Cookie("isSignin")
 	if err != nil {
 		log.Println("not sign in, ", err)
-		return c.Redirect(http.StatusFound, "/signin")
 	} else if isSignin.Value == "yes" {
 		data.IsLogin = true
 		userid, err := c.Cookie("userid")
@@ -120,23 +122,95 @@ func GetArticle(c echo.Context) error {
 			return c.Render(http.StatusFound, "error", err)
 		}
 		data.Avatar = avatar.Value
+		like, err := c.Cookie("like")
+		if err == nil {
+			if like.Value == "true" {
+				data.Like = true
+			}
+		}
 	}
 
+	time := time.Now()
 	id := c.Param("id")
 	err = model.FindMongo(model.MONGO_ARTICLE, "_id" , id, data.Article)
 	if err != nil {
 		log.Println("GetArticle FindMongo Article error: ",err)
 		return c.Render(http.StatusFound, "error", "404 NOT FOUND")
 	}
+	if data.Article.Time.Year() == time.Year() {
+		if data.Article.Time.Month() == time.Month() && data.Article.Time.Day() == time.Day() {
+			if data.Article.Time.Hour() == time.Hour() {
+				if data.Article.Time.Minute() == time.Minute() {
+					data.Time = strconv.Itoa(time.Second() - data.Article.Time.Second()) + "秒前"
+				} else {
+					data.Time = strconv.Itoa(time.Minute() - data.Article.Time.Minute()) + "分钟前"
+				}
+			} else {
+				data.Time = data.Article.Time.Format("15:04")
+			}
+		} else {
+			data.Time = data.Article.Time.Format("01月02日 15:04")
+		}
+	} else {
+		data.Time = data.Article.Time.Format("2006年 01月02日 15:04")
+	}
 	data.Content = template.HTML(blackfriday.MarkdownCommon([]byte(data.Article.Content)))
+
 	err = model.FindMongo(model.MONGO_USER, "_id", data.Article.Editor, data.Editor)
 	if err != nil {
 		log.Println("GetArticle FindMongo User error: ", err)
 		return c.Render(http.StatusFound, "error", "404 NOT FOUND")
 	}
 	for index, comment := range data.Article.Comments {
-		model.FindMongo(model.MONGO_COMMENT, "_id", comment, data.Comments[index].Comment)
-		model.FindMongo(model.MONGO_USER, "_id", data.Comments[index].Comment.Editor, data.Comments[index].Editor)
+		data.Comments = append(data.Comments, &model.CommentEditor{
+			&model.Comment{},
+			&model.Comment{},
+			&model.User{},
+			"",
+			0,
+			false,
+		})
+		err = model.FindMongo(model.MONGO_COMMENT, "_id", comment, data.Comments[index].Comment)
+		if err != nil {
+			log.Println("GetArticle FindMongo CommentEditor.Comment error: ", err)
+			return c.Render(http.StatusFound, "error", "404 NOT FOUND")
+		}
+		nice := new(http.Cookie)
+		nice.Name = comment
+
+		//实现装逼的时间显示效果
+		if data.Comments[index].Comment.Time.Year() == time.Year() {
+			if data.Comments[index].Comment.Time.Month() == time.Month() && data.Comments[index].Comment.Time.Day() == time.Day() {
+				if data.Comments[index].Comment.Time.Hour() == time.Hour() {
+					if data.Comments[index].Comment.Time.Minute() == time.Minute() {
+						data.Comments[index].Time = strconv.Itoa(time.Second() - data.Comments[index].Comment.Time.Second()) + "秒前"
+					} else {
+						data.Comments[index].Time = strconv.Itoa(time.Minute() - data.Comments[index].Comment.Time.Minute()) + "分钟前"
+					}
+				} else {
+					data.Comments[index].Time = data.Comments[index].Comment.Time.Format("15:04")
+				}
+			} else {
+				data.Comments[index].Time = data.Comments[index].Comment.Time.Format("01月02日 15:04")
+			}
+		} else {
+			data.Comments[index].Time = data.Comments[index].Comment.Time.Format("2006年 01月02日 15:04")
+		}
+
+		//获取回复数
+		data.Comments[index].ReplyNumber = len(data.Comments[index].Comment.Replies)
+
+		err = model.FindMongo(model.MONGO_USER, "_id", data.Comments[index].Comment.Editor, data.Comments[index].Editor)
+		if err != nil {
+			log.Println("GetArticle FindMongo CommentEditor.Editor error: ", err)
+			return c.Render(http.StatusFound, "error", "404 NOT FOUND")
+		}
+		if data.Comments[index].Comment.UserLiked[data.UserId] == true {
+			data.Comments[index].Nice = true
+		}
+	}
+	if data.Article.UserLiked[data.UserId] == true {
+		data.Like = true
 	}
 	return c.Render(http.StatusOK, "article", data)
 }
@@ -168,31 +242,37 @@ func DeleteArticle(c echo.Context) error {
 	return c.NoContent(http.StatusNoContent)
 }
 
-func Like(c echo.Context) error {
-
-	_, err := c.Cookie("isSignin")
+func LikeArticle(c echo.Context) error {
+	userid, err := c.Cookie("userid")
 	if err != nil {
 		log.Println("not sign in, ERROR: ", err)
 		return c.Redirect(http.StatusFound, "/signin")
 	}
-
-	userid, err := c.Cookie("userid")
-	if err != nil {
-		return c.Redirect(http.StatusFound, "/signin")
-	}
+	like, _ := c.Cookie("like")
 
 	id := c.Param("id")
 	a := new(model.Article)
 	err = model.FindMongo(model.MONGO_ARTICLE, "_id", id, a)
 	if err != nil {
 		log.Println("GetArticle FindMongo error.")
-		return c.Render(http.StatusNotFound, "error", "404 not found")
+		return c.Render(http.StatusNotFound, "error", "没找到...")
 	}
 	if a.UserLiked[userid.Value] == true {
-		return c.Render(http.StatusFound, "error", "您已经被安立💊过了~")
+		a.Like--
+		a.UserLiked[userid.Value] = false
+		like.Value = "false"
+		c.SetCookie(like)
+		err = model.UpdateMongo(model.MONGO_ARTICLE, id, a)
+		if err != nil {
+			log.Println("LikeArticle Update error: ", err)
+			c.Render(http.StatusFound, "error", "牙白...出了点问题...")
+		}
+		return c.Redirect(http.StatusFound, "/article/" + id)
 	}
 	a.Like++
 	a.UserLiked[userid.Value] = true
+	like.Value = "true"
+	c.SetCookie(like)
 	err = model.UpdateMongo(model.MONGO_ARTICLE, id, a)
 	if err != nil {
 		log.Println("Update error: ", err)

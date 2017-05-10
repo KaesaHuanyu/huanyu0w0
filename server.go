@@ -48,8 +48,7 @@ func main() {
 	e.GET("/article/:id", controller.GetArticle)
 	e.PUT("/article/:id", controller.UpdateArticle)
 	e.DELETE("/article/:id", controller.DeleteArticle)
-
-	e.GET("/like/:id", controller.Like)
+	e.GET("/like/:id", controller.LikeArticle)
 
 	//CRUD User
 	//e.POST("/user", controller.CreateUser)
@@ -61,6 +60,8 @@ func main() {
 	e.POST("/comment", controller.CreateComment)
 	e.GET("/comment/:id", controller.GetComment)
 	e.DELETE("/comment/:id", controller.DeleteComment)
+	e.GET("/nice/:id", controller.NiceComment)
+	e.GET("/reply/:id", controller.ReplyComment)
 
 	//图片之类的静态文件路由
 	e.Static("/static", "static")

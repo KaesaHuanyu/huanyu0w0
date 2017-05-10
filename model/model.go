@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"gopkg.in/mgo.v2/bson"
+	"html/template"
 )
 
 const (
@@ -50,6 +51,8 @@ type Comment struct {
 	Article string `json:"article" bson:"article" xml:"article" form:"article" query:"article"`
 	Content string `json:"content" bson:"content" xml:"content" form:"content" query:"content"`
 	Like int `json:"like" bson:"like" xml:"like" form:"like" query:"like"`
+	UserLiked map[string]bool `json:"user_liked" bson:"user_liked"`
+	Comment string `json:"comment" bson:"comment" xml:"comment"`
 	Replies []string `json:"replies" bson:"replies" xml:"replies" form:"replies" query:"replies"`
 	Time time.Time `json:"time" bson:"time" xml:"time" form:"time" query:"time"`
 }
@@ -68,7 +71,17 @@ type Cookies struct {
 
 type CommentEditor struct {
 	Comment *Comment
+	Reply *Comment
 	Editor *User
+	Time string
+	ReplyNumber int
+	Nice bool
+}
+
+type ArticleEditor struct {
+	Article *Article
+	Editor *User
+	Introduction template.HTML
 }
 
 func InsertMongo(collection string, data interface{}) error {
@@ -159,7 +172,7 @@ func RemoveMongo(collection string, id string) error {
 	return nil
 }
 
-func FindAll(collection string, key string, value string, n int, sort string, data []*Article) error {
+func FindAll(collection string, key string, value string, n int, sort string, data *[]*Article) error {
 	session, err := mgo.Dial(MONGO_ADDRESS)
 	if session == nil {
 		return fmt.Errorf("error: session is nil")
