@@ -199,12 +199,3 @@ func FindAll(collection string, key string, value string, n int, sort string, da
 	log.Println("find data from mongo successed")
 	return nil
 }
-
-//func ReadCookie(c echo.Context, cookiename string) error {
-//	cookie, err := c.Cookie(cookiename)
-//	if err != nil {
-//		return err
-//	}
-//
-//
-//}

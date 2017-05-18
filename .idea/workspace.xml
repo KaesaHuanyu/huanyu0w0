@@ -2,534 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9e749d95-0938-46ae-bc2b-95b662fbc046" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/fonts/OpenSans-Bold-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/fonts/OpenSans-Bold-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/fonts/OpenSans-BoldItalic-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/fonts/OpenSans-BoldItalic-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/fonts/OpenSans-Italic-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/fonts/OpenSans-Italic-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/fonts/OpenSans-Light-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/fonts/OpenSans-Light-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/fonts/OpenSans-LightItalic-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/fonts/OpenSans-LightItalic-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/fonts/OpenSans-Regular-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/fonts/OpenSans-Regular-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/images/4.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/images/7.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/images/8.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/images/editormd-screenshot.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/fonts/FontAwesome.otf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/fonts/editormd-logo.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/fonts/editormd-logo.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/fonts/editormd-logo.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/fonts/fontawesome-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/fonts/fontawesome-webfont.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/fonts/fontawesome-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/fonts/fontawesome-webfont.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/loading.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/loading@2x.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/loading@3x.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/logos/editormd-favicon-16x16.ico" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/logos/editormd-favicon-24x24.ico" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/logos/editormd-favicon-32x32.ico" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/logos/editormd-favicon-48x48.ico" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/logos/editormd-favicon-64x64.ico" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/logos/editormd-logo-114x114.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/logos/editormd-logo-120x120.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/logos/editormd-logo-144x144.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/logos/editormd-logo-16x16.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/logos/editormd-logo-180x180.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/logos/editormd-logo-240x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/logos/editormd-logo-24x24.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/logos/editormd-logo-320x320.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/logos/editormd-logo-32x32.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/logos/editormd-logo-48x48.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/logos/editormd-logo-57x57.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/logos/editormd-logo-64x64.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/logos/editormd-logo-72x72.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/logos/editormd-logo-96x96.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/images/logos/vi.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/.jshintrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/BUGS.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/CHANGE.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/Gulpfile.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/css/editormd.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/css/editormd.logo.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/css/editormd.logo.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/css/editormd.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/css/editormd.preview.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/css/editormd.preview.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/editormd.js.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/fonts/OpenSans-Bold-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/fonts/OpenSans-BoldItalic-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/fonts/OpenSans-Italic-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/fonts/OpenSans-Light-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/fonts/OpenSans-LightItalic-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/fonts/OpenSans-Regular-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/scripts/linenumber.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/scripts/prettify/Apache-License-2.0.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/scripts/prettify/lang-css.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/scripts/prettify/prettify.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/styles/jsdoc-default.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/styles/prettify-jsdoc.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/docs/styles/prettify-tomorrow.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/editormd.amd.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/editormd.amd.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/editormd.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/editormd.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/@links.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/auto-height.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/change-mode.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/code-fold.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/css/style.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/custom-keyboard-shortcuts.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/custom-toolbar.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/define-plugin.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/delay-renderer-preview.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/dynamic-create-editormd.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/emoji.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/extends.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/external-use.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/flowchart.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/form-get-value.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/full.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/goto-line.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/html-preview-markdown-to-html-custom-toc-container.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/html-preview-markdown-to-html.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/html-tags-decode.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/image-cross-domain-upload.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/image-upload.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/js/jquery.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/js/require.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/js/sea.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/js/seajs-main.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/js/zepto.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/katex.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/manually-load-modules.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/multi-editormd.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/multi-languages.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/on-off.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/onchange.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/onfullscreen.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/onload.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/onpreviewing-onpreviewed.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/onresize.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/onscroll-onpreviewscroll.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/onwatch-onunwatch.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/page-break.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/php/cross-domain-upload.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/php/editormd.uploader.class.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/php/post.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/php/upload.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/php/upload_callback.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/readonly.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/resettings.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/search-replace.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/sequence-diagram.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/set-get-replace-selection.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/simple.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/sync-scrolling.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/task-lists.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/test.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/themes.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/toc.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/toolbar-auto-fixed.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/use-requirejs.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/use-seajs.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/examples/use-zepto.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/fonts/editormd-logo.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/fonts/fontawesome-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/languages/en.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/languages/zh-tw.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/AUTHORS" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/comment/comment.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/comment/continuecomment.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/dialog/dialog.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/dialog/dialog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/display/fullscreen.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/display/fullscreen.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/display/panel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/display/placeholder.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/display/rulers.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/edit/closebrackets.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/edit/closetag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/edit/continuelist.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/edit/matchbrackets.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/edit/matchtags.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/edit/trailingspace.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/fold/brace-fold.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/fold/comment-fold.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/fold/foldcode.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/fold/foldgutter.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/fold/foldgutter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/fold/indent-fold.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/fold/markdown-fold.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/fold/xml-fold.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/hint/anyword-hint.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/hint/css-hint.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/hint/html-hint.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/hint/javascript-hint.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/hint/show-hint.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/hint/show-hint.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/hint/sql-hint.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/hint/xml-hint.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/lint/coffeescript-lint.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/lint/css-lint.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/lint/javascript-lint.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/lint/json-lint.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/lint/lint.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/lint/lint.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/lint/yaml-lint.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/merge/merge.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/merge/merge.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/mode/loadmode.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/mode/multiplex.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/mode/multiplex_test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/mode/overlay.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/mode/simple.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/runmode/colorize.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/runmode/runmode-standalone.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/runmode/runmode.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/runmode/runmode.node.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/scroll/annotatescrollbar.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/scroll/scrollpastend.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/scroll/simplescrollbars.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/scroll/simplescrollbars.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/search/match-highlighter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/search/matchesonscrollbar.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/search/matchesonscrollbar.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/search/search.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/search/searchcursor.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/selection/active-line.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/selection/mark-selection.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/selection/selection-pointer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/tern/tern.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/tern/tern.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/tern/worker.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addon/wrap/hardwrap.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/addons.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/bower.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/codemirror.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/codemirror.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/lib/codemirror.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/lib/codemirror.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/apl/apl.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/apl/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/asterisk/asterisk.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/asterisk/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/clike/clike.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/clike/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/clike/scala.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/clojure/clojure.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/clojure/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/cobol/cobol.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/cobol/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/coffeescript/coffeescript.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/coffeescript/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/commonlisp/commonlisp.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/commonlisp/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/css/css.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/css/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/css/less.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/css/less_test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/css/scss.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/css/scss_test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/css/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/cypher/cypher.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/cypher/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/d/d.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/d/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/dart/dart.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/dart/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/diff/diff.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/diff/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/django/django.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/django/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/dockerfile/dockerfile.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/dockerfile/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/dtd/dtd.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/dtd/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/dylan/dylan.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/dylan/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/ebnf/ebnf.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/ebnf/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/ecl/ecl.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/ecl/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/eiffel/eiffel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/eiffel/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/erlang/erlang.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/erlang/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/forth/forth.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/forth/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/fortran/fortran.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/fortran/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/gas/gas.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/gas/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/gfm/gfm.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/gfm/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/gfm/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/gherkin/gherkin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/gherkin/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/go/go.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/go/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/groovy/groovy.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/groovy/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/haml/haml.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/haml/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/haml/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/haskell/haskell.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/haskell/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/haxe/haxe.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/haxe/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/htmlembedded/htmlembedded.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/htmlembedded/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/htmlmixed/htmlmixed.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/htmlmixed/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/http/http.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/http/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/idl/idl.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/idl/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/jade/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/jade/jade.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/javascript/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/javascript/javascript.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/javascript/json-ld.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/javascript/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/javascript/typescript.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/jinja2/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/jinja2/jinja2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/julia/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/julia/julia.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/kotlin/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/kotlin/kotlin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/livescript/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/livescript/livescript.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/lua/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/lua/lua.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/markdown/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/markdown/markdown.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/markdown/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/meta.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/mirc/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/mirc/mirc.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/mllike/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/mllike/mllike.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/modelica/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/modelica/modelica.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/nginx/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/nginx/nginx.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/ntriples/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/ntriples/ntriples.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/octave/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/octave/octave.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/pascal/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/pascal/pascal.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/pegjs/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/pegjs/pegjs.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/perl/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/perl/perl.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/php/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/php/php.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/php/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/pig/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/pig/pig.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/properties/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/properties/properties.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/puppet/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/puppet/puppet.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/python/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/python/python.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/q/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/q/q.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/r/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/r/r.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/rpm/changes/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/rpm/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/rpm/rpm.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/rst/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/rst/rst.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/ruby/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/ruby/ruby.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/ruby/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/rust/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/rust/rust.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/sass/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/sass/sass.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/scheme/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/scheme/scheme.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/shell/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/shell/shell.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/shell/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/sieve/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/sieve/sieve.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/slim/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/slim/slim.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/slim/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/smalltalk/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/smalltalk/smalltalk.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/smarty/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/smarty/smarty.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/smartymixed/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/smartymixed/smartymixed.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/solr/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/solr/solr.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/soy/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/soy/soy.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/sparql/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/sparql/sparql.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/spreadsheet/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/spreadsheet/spreadsheet.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/sql/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/sql/sql.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/stex/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/stex/stex.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/stex/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/stylus/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/stylus/stylus.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/tcl/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/tcl/tcl.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/textile/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/textile/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/textile/textile.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/tiddlywiki/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/tiddlywiki/tiddlywiki.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/tiddlywiki/tiddlywiki.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/tiki/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/tiki/tiki.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/tiki/tiki.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/toml/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/toml/toml.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/tornado/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/tornado/tornado.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/turtle/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/turtle/turtle.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/vb/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/vb/vb.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/vbscript/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/vbscript/vbscript.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/velocity/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/velocity/velocity.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/verilog/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/verilog/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/verilog/verilog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/xml/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/xml/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/xml/xml.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/xquery/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/xquery/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/xquery/xquery.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/yaml/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/yaml/yaml.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/z80/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/mode/z80/z80.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/modes.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/3024-day.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/3024-night.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/ambiance-mobile.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/ambiance.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/base16-dark.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/base16-light.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/blackboard.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/cobalt.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/colorforth.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/eclipse.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/elegant.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/erlang-dark.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/lesser-dark.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/mbo.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/mdn-like.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/midnight.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/monokai.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/neat.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/neo.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/night.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/paraiso-dark.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/paraiso-light.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/pastel-on-dark.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/rubyblue.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/solarized.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/the-matrix.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/tomorrow-night-bright.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/tomorrow-night-eighties.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/twilight.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/vibrant-ink.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/xq-dark.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/xq-light.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/codemirror/theme/zenburn.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/flowchart.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/jquery.flowchart.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/marked.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/prettify.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/raphael.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/sequence-diagram.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/lib/underscore.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/plugins/code-block-dialog/code-block-dialog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/plugins/emoji-dialog/emoji-dialog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/plugins/emoji-dialog/emoji.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/plugins/goto-line-dialog/goto-line-dialog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/plugins/help-dialog/help-dialog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/plugins/help-dialog/help.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/plugins/html-entities-dialog/html-entities-dialog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/plugins/html-entities-dialog/html-entities.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/plugins/image-dialog/image-dialog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/plugins/link-dialog/link-dialog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/plugins/plugin-template.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/plugins/preformatted-text-dialog/preformatted-text-dialog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/plugins/reference-link-dialog/reference-link-dialog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/plugins/table-dialog/table-dialog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/plugins/test-plugin/test-plugin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/scss/editormd.codemirror.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/scss/editormd.dialog.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/scss/editormd.form.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/scss/editormd.grid.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/scss/editormd.logo.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/scss/editormd.menu.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/scss/editormd.preview.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/scss/editormd.preview.themes.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/scss/editormd.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/scss/editormd.tab.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/scss/editormd.themes.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/scss/font-awesome.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/scss/github-markdown.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/scss/lib/prefixes.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/scss/lib/variables.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/scss/prettify.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/src/editormd.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/tests/bootstrap-test.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/tests/codemirror-searchbox-test.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/tests/codemirror-test.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/tests/css/bootstrap-theme.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/tests/css/bootstrap.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/tests/js/bootstrap.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/tests/js/searchbox.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/tests/katex-tests.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/tests/marked-@at-test.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/tests/marked-emoji-test.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/tests/marked-heading-link-test.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/tests/marked-todo-list-test.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/tests/qunit/qunit-1.16.0.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/editor.md-master/tests/qunit/qunit-1.16.0.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/view/test.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controller/article.go" afterPath="$PROJECT_DIR$/controller/article.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controller/comment.go" afterPath="$PROJECT_DIR$/controller/comment.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controller/home.go" afterPath="$PROJECT_DIR$/controller/home.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controller/sign.go" afterPath="$PROJECT_DIR$/controller/sign.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/model.go" afterPath="$PROJECT_DIR$/model/model.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/playground.go" afterPath="$PROJECT_DIR$/playground.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.go" afterPath="$PROJECT_DIR$/server.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/view/article.html" afterPath="$PROJECT_DIR$/view/article.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/view/home.html" afterPath="$PROJECT_DIR$/view/home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/view/template.html" afterPath="$PROJECT_DIR$/view/template.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -541,11 +15,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="server.go" pinned="false" current-in-tab="false">
+      <file leaf-file-name="server.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="385">
-              <caret line="59" column="20" lean-forward="false" selection-start-line="59" selection-start-column="13" selection-end-line="59" selection-end-column="20" />
+            <state relative-caret-position="594">
+              <caret line="33" column="30" lean-forward="false" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="30" />
               <folding>
                 <element signature="e#242#327#0" expanded="true" />
               </folding>
@@ -556,11 +30,12 @@
       <file leaf-file-name="sign.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controller/sign.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="443">
-              <caret line="109" column="21" lean-forward="true" selection-start-line="109" selection-start-column="21" selection-end-line="109" selection-end-column="21" />
+            <state relative-caret-position="1201">
+              <caret line="73" column="26" lean-forward="false" selection-start-line="73" selection-start-column="26" selection-end-line="73" selection-end-column="26" />
               <folding>
                 <element signature="e#20#104#0" expanded="true" />
                 <element signature="n#!!block;n#Signout#0" expanded="false" />
+                <marker date="1495099780000" expanded="true" signature="144:147" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -569,28 +44,60 @@
       <file leaf-file-name="home.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controller/home.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="379">
-              <caret line="51" column="29" lean-forward="false" selection-start-line="51" selection-start-column="29" selection-end-line="51" selection-end-column="29" />
+            <state relative-caret-position="372">
+              <caret line="36" column="50" lean-forward="false" selection-start-line="36" selection-start-column="50" selection-end-line="36" selection-end-column="50" />
               <folding>
-                <element signature="e#20#148#0" expanded="true" />
+                <element signature="n#!!block;n#Home#0" expanded="false" />
+                <marker date="1495099780000" expanded="true" signature="27:95" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="article.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="user.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controller/user.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="172">
+              <caret line="49" column="58" lean-forward="false" selection-start-line="49" selection-start-column="58" selection-end-line="49" selection-end-column="58" />
+              <folding>
+                <marker date="1495099780000" expanded="true" signature="27:98" ph="..." />
+                <marker date="1495099780000" expanded="true" signature="1290:1698" ph="{...}" />
+                <marker date="1495099780000" expanded="true" signature="1310:1398" ph="{...}" />
+                <marker date="1495099780000" expanded="true" signature="1450:1489" ph="{...}" />
+                <marker date="1495099780000" expanded="true" signature="1489:1523" ph="{...}" />
+                <marker date="1495099780000" expanded="true" signature="1570:1617" ph="{...}" />
+                <marker date="1495099780000" expanded="true" signature="1623:1650" ph="{...}" />
+                <marker date="1495099780000" expanded="true" signature="1747:2070" ph="{...}" />
+                <marker date="1495099780000" expanded="true" signature="1826:1883" ph="{...}" />
+                <marker date="1495099780000" expanded="true" signature="1971:2035" ph="{...}" />
+                <marker date="1495099780000" expanded="true" signature="2117:2311" ph="{...}" />
+                <marker date="1495099780000" expanded="true" signature="2203:2267" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="article.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controller/article.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="29" column="44" lean-forward="false" selection-start-line="29" selection-start-column="44" selection-end-line="29" selection-end-column="44" />
+            <state relative-caret-position="1899">
+              <caret line="158" column="84" lean-forward="true" selection-start-line="158" selection-start-column="84" selection-end-line="158" selection-end-column="84" />
               <folding>
-                <element signature="n#!!block;n#Article#0" expanded="false" />
-                <element signature="n#!!block;n#CreateArticleGet#0" expanded="false" />
-                <element signature="n#!!block;n#CreateArticlePost#0" expanded="false" />
-                <element signature="n#!!block;n#GetArticle#0" expanded="false" />
-                <element signature="n#!!block;n#UpdateArticle#0" expanded="false" />
-                <element signature="n#!!block;n#DeleteArticle#0" expanded="false" />
-                <element signature="n#!!block;n#LikeArticle#0" expanded="false" />
+                <element signature="e#20#196#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="playMgo.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/playMgo.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="422">
+              <caret line="33" column="6" lean-forward="false" selection-start-line="33" selection-start-column="6" selection-end-line="33" selection-end-column="6" />
+              <folding>
+                <marker date="1495099780000" expanded="false" signature="21:43" ph="..." />
+                <marker date="1495099780000" expanded="true" signature="793:1146" ph="/.../" />
+                <marker date="1495099780000" expanded="true" signature="793:1148" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -599,8 +106,8 @@
       <file leaf-file-name="model.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/model/model.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="73" column="18" lean-forward="false" selection-start-line="73" selection-start-column="18" selection-end-line="73" selection-end-column="18" />
+            <state relative-caret-position="2022">
+              <caret line="200" column="1" lean-forward="false" selection-start-line="200" selection-start-column="1" selection-end-line="200" selection-end-column="1" />
               <folding>
                 <element signature="e#15#107#0" expanded="true" />
               </folding>
@@ -611,24 +118,12 @@
       <file leaf-file-name="comment.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controller/comment.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="643">
-              <caret line="125" column="0" lean-forward="true" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
+            <state relative-caret-position="282">
+              <caret line="123" column="88" lean-forward="false" selection-start-line="123" selection-start-column="88" selection-end-line="123" selection-end-column="88" />
               <folding>
-                <element signature="n#!!block;n#GetComment#0" expanded="false" />
-                <element signature="n#!!block;n#DeleteComment#0" expanded="false" />
-                <element signature="n#!!block;n#NiceComment#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="user.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/controller/user.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-302">
-              <caret line="26" column="5" lean-forward="false" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
-              <folding>
-                <element signature="e#20#150#0" expanded="true" />
+                <marker date="1495099780000" expanded="true" signature="27:98" ph="..." />
+                <marker date="1495099780000" expanded="true" signature="3637:3640" ph="{...}" />
+                <marker date="1495099780000" expanded="true" signature="3682:3759" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -674,9 +169,9 @@
         <option value="$PROJECT_DIR$/controller/home.go" />
         <option value="$PROJECT_DIR$/playground.go" />
         <option value="$PROJECT_DIR$/server.go" />
-        <option value="$PROJECT_DIR$/model/model.go" />
         <option value="$PROJECT_DIR$/controller/article.go" />
         <option value="$PROJECT_DIR$/controller/comment.go" />
+        <option value="$PROJECT_DIR$/model/model.go" />
       </list>
     </option>
   </component>
@@ -687,10 +182,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="64" />
-    <option name="y" value="23" />
-    <option name="width" value="1376" />
-    <option name="height" value="877" />
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -708,6 +201,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -745,13 +239,44 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="img" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="huanyu0w0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="huanyu0w0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="model" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="huanyu0w0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="huanyu0w0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="controller" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -772,7 +297,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Single File.go run playground.go">
+  <component name="RunManager" selected="Go Single File.go run server.go">
     <configuration default="false" name="go run server.go" type="GoRunFileConfiguration" factoryName="Go Single File" temporary="true">
       <module name="huanyu0w0" />
       <working_directory value="$PROJECT_DIR$/" />
@@ -870,26 +395,36 @@
     <option name="remove_strategy" value="false" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="64" y="23" width="1376" height="877" extended-state="6" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1191904" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12088698" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21910828" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2180723" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24981302" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299363" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32891566" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21910828" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299363" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1191904" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24981302" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -919,7 +454,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="12" />
+      <option name="time" value="13" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -953,7 +488,18 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#20#150#0" expanded="true" />
+            <marker date="1495099780000" expanded="true" signature="27:98" ph="..." />
+            <marker date="1495099780000" expanded="true" signature="1290:1698" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1310:1398" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1450:1489" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1489:1523" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1570:1617" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1623:1650" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1747:2070" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1826:1883" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1971:2035" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="2117:2311" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="2203:2267" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -988,7 +534,18 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#20#150#0" expanded="true" />
+            <marker date="1495099780000" expanded="true" signature="27:98" ph="..." />
+            <marker date="1495099780000" expanded="true" signature="1290:1698" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1310:1398" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1450:1489" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1489:1523" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1570:1617" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1623:1650" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1747:2070" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1826:1883" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1971:2035" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="2117:2311" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="2203:2267" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -1023,7 +580,18 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#20#150#0" expanded="true" />
+            <marker date="1495099780000" expanded="true" signature="27:98" ph="..." />
+            <marker date="1495099780000" expanded="true" signature="1290:1698" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1310:1398" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1450:1489" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1489:1523" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1570:1617" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1623:1650" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1747:2070" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1826:1883" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1971:2035" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="2117:2311" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="2203:2267" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -1058,7 +626,18 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#20#150#0" expanded="true" />
+            <marker date="1495099780000" expanded="true" signature="27:98" ph="..." />
+            <marker date="1495099780000" expanded="true" signature="1290:1698" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1310:1398" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1450:1489" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1489:1523" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1570:1617" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1623:1650" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1747:2070" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1826:1883" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1971:2035" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="2117:2311" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="2203:2267" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -1092,7 +671,18 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#20#150#0" expanded="true" />
+            <marker date="1495099780000" expanded="true" signature="27:98" ph="..." />
+            <marker date="1495099780000" expanded="true" signature="1290:1698" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1310:1398" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1450:1489" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1489:1523" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1570:1617" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1623:1650" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1747:2070" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1826:1883" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1971:2035" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="2117:2311" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="2203:2267" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -1142,8 +732,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/playMgo.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="16" column="50" lean-forward="false" selection-start-line="16" selection-start-column="50" selection-end-line="16" selection-end-column="50" />
+        <state relative-caret-position="422">
+          <caret line="33" column="6" lean-forward="false" selection-start-line="33" selection-start-column="6" selection-end-line="33" selection-end-column="6" />
+          <folding>
+            <marker date="1495099780000" expanded="false" signature="21:43" ph="..." />
+            <marker date="1495099780000" expanded="true" signature="793:1146" ph="/.../" />
+            <marker date="1495099780000" expanded="true" signature="793:1148" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1234,41 +829,44 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/controller/user.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-302">
-          <caret line="26" column="5" lean-forward="false" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
+        <state relative-caret-position="172">
+          <caret line="49" column="58" lean-forward="false" selection-start-line="49" selection-start-column="58" selection-end-line="49" selection-end-column="58" />
           <folding>
-            <element signature="e#20#150#0" expanded="true" />
+            <marker date="1495099780000" expanded="true" signature="27:98" ph="..." />
+            <marker date="1495099780000" expanded="true" signature="1290:1698" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1310:1398" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1450:1489" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1489:1523" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1570:1617" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1623:1650" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1747:2070" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1826:1883" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="1971:2035" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="2117:2311" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="2203:2267" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controller/home.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="379">
-          <caret line="51" column="29" lean-forward="false" selection-start-line="51" selection-start-column="29" selection-end-line="51" selection-end-column="29" />
+        <state relative-caret-position="372">
+          <caret line="36" column="50" lean-forward="false" selection-start-line="36" selection-start-column="50" selection-end-line="36" selection-end-column="50" />
           <folding>
-            <element signature="e#20#148#0" expanded="true" />
+            <element signature="n#!!block;n#Home#0" expanded="false" />
+            <marker date="1495099780000" expanded="true" signature="27:95" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controller/sign.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="109" column="21" lean-forward="true" selection-start-line="109" selection-start-column="21" selection-end-line="109" selection-end-column="21" />
+        <state relative-caret-position="1201">
+          <caret line="73" column="26" lean-forward="false" selection-start-line="73" selection-start-column="26" selection-end-line="73" selection-end-column="26" />
           <folding>
             <element signature="e#20#104#0" expanded="true" />
             <element signature="n#!!block;n#Signout#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/model.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="73" column="18" lean-forward="false" selection-start-line="73" selection-start-column="18" selection-end-line="73" selection-end-column="18" />
-          <folding>
-            <element signature="e#15#107#0" expanded="true" />
+            <marker date="1495099780000" expanded="true" signature="144:147" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -1277,46 +875,48 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="11" column="16" lean-forward="false" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
-          <folding>
-            <element signature="e#14#50#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="59" column="20" lean-forward="false" selection-start-line="59" selection-start-column="13" selection-end-line="59" selection-end-column="20" />
-          <folding>
-            <element signature="e#242#327#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controller/comment.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="643">
-          <caret line="125" column="0" lean-forward="true" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
+        <state relative-caret-position="282">
+          <caret line="123" column="88" lean-forward="false" selection-start-line="123" selection-start-column="88" selection-end-line="123" selection-end-column="88" />
           <folding>
-            <element signature="n#!!block;n#GetComment#0" expanded="false" />
-            <element signature="n#!!block;n#DeleteComment#0" expanded="false" />
-            <element signature="n#!!block;n#NiceComment#0" expanded="false" />
+            <marker date="1495099780000" expanded="true" signature="27:98" ph="..." />
+            <marker date="1495099780000" expanded="true" signature="3637:3640" ph="{...}" />
+            <marker date="1495099780000" expanded="true" signature="3682:3759" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controller/article.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="29" column="44" lean-forward="false" selection-start-line="29" selection-start-column="44" selection-end-line="29" selection-end-column="44" />
+        <state relative-caret-position="1899">
+          <caret line="158" column="84" lean-forward="true" selection-start-line="158" selection-start-column="84" selection-end-line="158" selection-end-column="84" />
           <folding>
-            <element signature="n#!!block;n#Article#0" expanded="false" />
-            <element signature="n#!!block;n#CreateArticleGet#0" expanded="false" />
-            <element signature="n#!!block;n#CreateArticlePost#0" expanded="false" />
-            <element signature="n#!!block;n#GetArticle#0" expanded="false" />
-            <element signature="n#!!block;n#UpdateArticle#0" expanded="false" />
-            <element signature="n#!!block;n#DeleteArticle#0" expanded="false" />
-            <element signature="n#!!block;n#LikeArticle#0" expanded="false" />
+            <element signature="e#20#196#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/model.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2022">
+          <caret line="200" column="1" lean-forward="false" selection-start-line="200" selection-start-column="1" selection-end-line="200" selection-end-column="1" />
+          <folding>
+            <element signature="e#15#107#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="594">
+          <caret line="33" column="30" lean-forward="false" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="30" />
+          <folding>
+            <element signature="e#242#327#0" expanded="true" />
           </folding>
         </state>
       </provider>
