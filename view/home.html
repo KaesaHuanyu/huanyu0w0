@@ -4,10 +4,9 @@
 <head>
 	<title>首页 - 寰宇0w0 - 安利💊即是正义！ </title>
 {{template "header" .}}
-
+      <div class="mdl-grid" style="width: 60%; margin-left: 5%;">
     	{{range .ArticleEditors}}
-    	<div class="mdl-grid" style="margin-left: 40px">
-    		<div class="mdl-cell mdl-cell--6-col mdl-cell--middle mdl-card mdl-shadow--4dp">
+    		<div class="mdl-cell mdl-cell--5-col mdl-card mdl-shadow--4dp">
   				<div class="mdl-card__title mdl-card--expand mdl-card--border mdl-color--primary">
             <strong class="mdl-card__title-text mdl-color-text--grey-600">{{.Article.Title}}</strong>
 
@@ -36,10 +35,9 @@
   				<div class="mdl-card__menu" id="{{.Article.Id}}"><a href="/{{.Article.Topic}}"><i class="material-icons">fast_forward</i></a></div>
   				<div class="mdl-tooltip" data-mdl-for="{{.Article.Id}}">{{.Article.Topic}}</div>
 			  </div>
-    	</div>
       {{else}}
 
     	{{end}}
-
+      </div>
 {{template "footer"}}
 {{end}}

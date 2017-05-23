@@ -2,64 +2,67 @@ package main
 
 import (
 	"gopkg.in/mgo.v2"
-	//"gopkg.in/mgo.v2/bson"
-	"log"
-	//"huanyu0w0/model"
-	//"fmt"
-	//"time"
-	"huanyu0w0/model"
-	//"fmt"
-	"time"
-	"os"
+	"gopkg.in/mgo.v2/bson"
+	"fmt"
 )
 
-func main() {
-	session, err := mgo.Dial("120.24.253.180:27017")
+type User struct {
+	ID bson.ObjectId `bson:"_id"`
+	Name string
+	Articles []bson.ObjectId
+}
+
+type Article struct {
+	ID bson.ObjectId `bson:"_id"`
+	Title string
+	Content string
+	Editor bson.ObjectId
+}
+
+var GlobalMgoSession *mgo.Session
+
+func init() {
+	globalMgoSession, err := mgo.Dial("120.24.253.180:23333")
 	if err != nil {
 		panic(err)
 	}
-	if session == nil {
-		panic("session is nil!")
-	}
+	GlobalMgoSession = globalMgoSession
+	GlobalMgoSession.SetMode(mgo.Monotonic, true)
+	//设置最大连接数
+	GlobalMgoSession.SetPoolLimit(300)
+}
+
+func CloneSession() *mgo.Session {
+	return GlobalMgoSession.Clone()
+}
+
+func main() {
+	session := CloneSession()
 	defer session.Close()
 
-	session.SetMode(mgo.Monotonic, true)
-	c := session.DB("testDB").C("testC")
-	//insert
-	err = c.Insert(&model.User{
-		//Id: os.Geteuid(),
-		Time: time.Now(),
-		Name: "huanyu0w0",
-		Password: "3.1415926",
-	})
-	if err != nil {
-		log.Println("insert error")
-		log.Fatal(err)
-	}
-
-	//find
-	//result := model.User{}
-	//change := mgo.Change{
-	//	Update:bson.M{"$inc":bson.M{"_id":1}},
-	//	ReturnNew:true,
+	c1 := session.DB("huanyu0w0").C("User")
+	c2 := session.DB("huanyu0w0").C("Article")
+	//u := &User{
+	//	ID: bson.NewObjectId(),
+	//	Name: "huanyu0w0",
 	//}
-	//_, err = c.Find(bson.M{"_id": 1}).Apply(change, &result)
-	//if err != nil {
-	//	log.Println("find error")
+	//a := &Article{
+	//	ID: bson.NewObjectId(),
+	//	Title: "hello",
+	//	Content: "world",
+	//	Editor: u.ID,
+	//}
+	//u.Articles = append(u.Articles, a.ID)
+	//if err := c1.Insert(u); err != nil {
 	//	log.Fatal(err)
 	//}
-	//
-	//fmt.Println(result)
-	//
-	//err = c.Remove(bson.M{"name":"huanyu0w0"})
-	//if err != nil {
-	//	log.Println("here")
-	//	log.Println(err)
-	//}
-	//
-	//err = c.Find(bson.M{"name":"huanyu0w0"}).One(&result)
-	//if err != nil {
-	//	log.Println("find error")
+	//if err := c2.Insert(a); err != nil {
 	//	log.Fatal(err)
 	//}
+	u := &User{}
+	c1.Find(bson.M{"name":"huanyu0w0"}).One(u)
+	fmt.Println(u)
+	a := &Article{}
+	c2.FindId(u.Articles[0]).One(a)
+	fmt.Println(a)
 }

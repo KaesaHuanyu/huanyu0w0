@@ -19,6 +19,23 @@ const (
 	REMEMBER = 30 * 24 * time.Hour
 )
 
+var GlobalMgoSession *mgo.Session
+//初始化连接池
+func init() {
+	globalMgoSession, err := mgo.Dial(MONGO_ADDRESS)
+	if err != nil {
+		panic(err)
+	}
+	GlobalMgoSession = globalMgoSession
+	GlobalMgoSession.SetMode(mgo.Monotonic, true)
+	//设置最大连接数
+	GlobalMgoSession.SetPoolLimit(2048)
+}
+//获得连接
+func CloneSession() *mgo.Session {
+	return GlobalMgoSession.Clone()
+}
+
 type Article struct {
 	Id string `json:"id" bson:"_id" xml:"id" form:"id" query:"id"`
 	Time time.Time `json:"time" bson:"time" xml:"time" form:"time" query:"time"`

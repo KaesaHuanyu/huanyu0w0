@@ -63,6 +63,8 @@ func main() {
 	e.GET("/nice/:id", controller.NiceComment)
 	e.GET("/reply/:id", controller.ReplyComment)
 
+	e.GET("/curriculumVitae", controller.CurriculumVitae)
+
 	//图片之类的静态文件路由
 	e.Static("/static", "static")
 	//e.File("/", "view/article.html")

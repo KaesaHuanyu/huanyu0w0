@@ -1,13 +1,18 @@
 package main
 
 import (
-)
-import (
-	"time"
+	"os"
 	"fmt"
 )
 
+type Tree struct {
+	Salary int
+	LTree *Tree
+	RTree *Tree
+}
+
 func main() {
-	t := time.Now()
-	fmt.Println()
+	for _, v := range os.Environ() {
+		fmt.Println(v)
+	}
 }
