@@ -1,12 +1,12 @@
-package controller
+package controllers
 
 import (
 	"github.com/labstack/echo"
+	"gopkg.in/mgo.v2/bson"
 	"huanyu0w0/model"
+	"log"
 	"net/http"
 	"time"
-	"github.com/satori/go.uuid"
-	"log"
 )
 
 func CreateComment(c echo.Context) error {
@@ -19,10 +19,10 @@ func CreateComment(c echo.Context) error {
 	}
 
 	comment := &model.Comment{
-		Id: uuid.NewV4().String(),
-		Time: time.Now(),
-		Article: article,
-		Editor: editor.Value,
+		ID:      bson.NewObjectId(),
+		Time:    time.Now(),
+		Article: bson.ObjectIdHex(article),
+		Editor:  bson.ObjectIdHex(editor.Value),
 		Content: content,
 	}
 
@@ -30,44 +30,44 @@ func CreateComment(c echo.Context) error {
 		log.Println("CreateComment Bind error.", err)
 		return c.Render(http.StatusFound, "error", "评论失败...")
 	}
-	err = model.InsertMongo(model.MONGO_COMMENT, comment)
+	err = model.Insert(model.MONGO_COMMENT, comment)
 	if err != nil {
 		log.Println("CreateComment InsertMongo error.", err)
 		return c.Render(http.StatusFound, "error", "评论失败...")
 	}
 
 	a := new(model.Article)
-	err = model.FindMongo(model.MONGO_ARTICLE, "_id", article, a)
+	err = model.FindOne(model.MONGO_ARTICLE, bson.ObjectIdHex(article), a)
 	if err != nil {
 		log.Println("CreateComment FindMongo article error.", err)
 		return c.Render(http.StatusFound, "error", "评论失败...")
 	}
-	a.Comments = append(a.Comments, comment.Id)
-	err = model.UpdateMongo(model.MONGO_ARTICLE, article, a)
+	a.Comments = append(a.Comments, comment.ID)
+	err = model.Update(model.MONGO_ARTICLE, bson.ObjectIdHex(article), a)
 	if err != nil {
 		log.Println("CreateComment UpdateMongo article error.", err)
 		return c.Render(http.StatusFound, "error", "评论失败...")
 	}
 
 	u := new(model.User)
-	err = model.FindMongo(model.MONGO_USER, "_id", editor.Value, u)
+	err = model.FindOne(model.MONGO_USER, bson.ObjectIdHex(editor.Value), u)
 	if err != nil {
 		log.Println("CreateComment FindMongo editor error.", err)
 		return c.Render(http.StatusFound, "error", "评论失败...")
 	}
-	u.Comments = append(u.Comments, comment.Id)
-	err = model.UpdateMongo(model.MONGO_USER, editor.Value, u)
+	u.Comments = append(u.Comments, comment.ID)
+	err = model.Update(model.MONGO_USER, bson.ObjectIdHex(editor.Value), u)
 	if err != nil {
 		log.Println("CreateComment UpdateMongo editor error.", err)
 		return c.Render(http.StatusFound, "error", "评论失败...")
 	}
-	return c.Redirect(http.StatusFound, "/article/" + comment.Article)
+	return c.Redirect(http.StatusFound, "/article/"+comment.Article.Hex())
 }
 
 func GetComment(c echo.Context) error {
 	id := c.Param("id")
 	comment := new(model.Comment)
-	err := model.FindMongo(model.MONGO_COMMENT, "_id", id, comment)
+	err := model.FindOne(model.MONGO_COMMENT, bson.ObjectIdHex(id), comment)
 	if err != nil {
 		log.Println("GetComment FindMongo error.")
 		return err
@@ -77,7 +77,7 @@ func GetComment(c echo.Context) error {
 
 func DeleteComment(c echo.Context) error {
 	id := c.Param("id")
-	err := model.RemoveMongo(model.MONGO_COMMENT, id)
+	err := model.Remove(model.MONGO_COMMENT, bson.ObjectIdHex(id))
 	if err != nil {
 		log.Println("DeleteComment RemoveMongo error.")
 		return err
@@ -96,32 +96,32 @@ func NiceComment(c echo.Context) error {
 	nice.Name = id
 
 	comment := new(model.Comment)
-	err = model.FindMongo(model.MONGO_COMMENT, "_id", id, comment)
+	err = model.FindOne(model.MONGO_COMMENT, bson.ObjectIdHex(id), comment)
 	if err != nil {
 		log.Println("NiceComment FindMongo error, ", err)
 		return c.Render(http.StatusFound, "error", "赞失败了...找不到这条评论...")
 	}
-	if comment.UserLiked[user.Value] == true {
+	if comment.UserLiked[bson.ObjectIdHex(user.Value)] == true {
 		comment.Like--
-		comment.UserLiked[user.Value] = false
+		comment.UserLiked[bson.ObjectIdHex(user.Value)] = false
 		nice.Value = "false"
 		c.SetCookie(nice)
-		err := model.UpdateMongo(model.MONGO_COMMENT, id, comment)
+		err := model.Update(model.MONGO_COMMENT, bson.ObjectIdHex(id), comment)
 		if err != nil {
 			log.Println("NiceComment Update error: ", err)
 			c.Render(http.StatusFound, "error", "牙白...出了点问题...")
 		}
-		return c.Redirect(http.StatusFound, "/article/" + comment.Article + "#" + comment.Id)
+		return c.Redirect(http.StatusFound, "/article/"+comment.Article.Hex()+"#"+comment.ID.Hex())
 	}
 	comment.Like++
-	comment.UserLiked[user.Value] = true
+	comment.UserLiked[bson.ObjectIdHex(user.Value)] = true
 	nice.Value = "true"
-	err = model.UpdateMongo(model.MONGO_COMMENT, id, comment)
+	err = model.Update(model.MONGO_COMMENT, bson.ObjectIdHex(id), comment)
 	if err != nil {
 		log.Println("NiceComment Update error: ", err)
 		c.Render(http.StatusFound, "error", "牙白...出了点问题...")
 	}
-	return c.Redirect(http.StatusFound, "/article/" + comment.Article + "#" + comment.Id)
+	return c.Redirect(http.StatusFound, "/article/"+comment.Article.Hex()+"#"+comment.ID.Hex())
 }
 
 func ReplyComment(c echo.Context) error {

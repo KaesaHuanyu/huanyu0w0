@@ -1,18 +1,17 @@
 package main
 
 import (
-	"os"
 	"fmt"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type Tree struct {
 	Salary int
-	LTree *Tree
-	RTree *Tree
+	LTree  *Tree
+	RTree  *Tree
 }
 
 func main() {
-	for _, v := range os.Environ() {
-		fmt.Println(v)
-	}
+	a := bson.NewObjectId()
+	fmt.Println(a, a.Hex())
 }

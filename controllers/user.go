@@ -1,13 +1,12 @@
-package controller
+package controllers
 
 import (
 	"github.com/labstack/echo"
-	"net/http"
-	"huanyu0w0/model"
-	"time"
-	"github.com/satori/go.uuid"
-	"log"
+	"gopkg.in/mgo.v2/bson"
 	"html/template"
+	"huanyu0w0/model"
+	"log"
+	"net/http"
 )
 
 //创建用户
@@ -17,8 +16,8 @@ func CreateUser(c echo.Context) error {
 		return c.Render(http.StatusFound, "error", "请勾选誓约")
 	}
 	u := &model.User{
-		Id: uuid.NewV4().String(),//生成uuid
-		Time: time.Now(),//当前服务器时间为创建时间
+		ID: bson.NewObjectId(), //生成uuid
+		//Time:   time.Now(),         //当前服务器时间为创建时间
 		Avatar: "http://images.huanyu0w0.cn/icon.jpg",
 	}
 	if err := c.Bind(u); err != nil {
@@ -26,14 +25,14 @@ func CreateUser(c echo.Context) error {
 		return c.Redirect(http.StatusFound, "/signup")
 	}
 	//重复验证
-	if err := model.FindMongo(model.MONGO_USER, "email", u.Email, nil); err == nil {
+	if err := model.FindOneNoId(model.MONGO_USER, "email", u.Email, nil); err == nil {
 		return c.Render(http.StatusFound, "error", template.HTML("邮箱已存在"))
 	}
-	if err := model.FindMongo(model.MONGO_USER, "name", u.Name, nil); err == nil {
+	if err := model.FindOneNoId(model.MONGO_USER, "name", u.Name, nil); err == nil {
 		return c.Render(http.StatusFound, "error", template.HTML("用户名已存在"))
 	}
 	//插入数据
-	err := model.InsertMongo(model.MONGO_USER, u)
+	err := model.Insert(model.MONGO_USER, u)
 	if err != nil {
 		log.Println("CreateUser InsertMongo error.")
 		return c.Redirect(http.StatusFound, "/signup")
@@ -47,17 +46,17 @@ func CreateUser(c echo.Context) error {
 func GetUser(c echo.Context) error {
 	id := c.Param("id")
 	u := new(model.User)
-	err := model.FindMongo(model.MONGO_USER, "_id", id, u)
+	err := model.FindOne(model.MONGO_USER, bson.ObjectIdHex(id), u)
 	if err != nil {
 		log.Println("GetUser FindMongo error.")
 		return c.NoContent(http.StatusNotFound)
 	}
 	//return c.JSON(http.StatusOK, u)
 	data := struct {
-		user *model.User
+		user     *model.User
 		isSignin bool
 	}{
-		user: u,
+		user:     u,
 		isSignin: false,
 	}
 	_, err = c.Cookie("isSignin")
@@ -72,14 +71,14 @@ func GetUser(c echo.Context) error {
 //更新用户信息
 func UpdateUser(c echo.Context) error {
 	u := &model.User{
-		Change: time.Now(),
+	//Change: time.Now(),
 	}
 	if err := c.Bind(u); err != nil {
 		log.Println("UpdateUser Bind error.")
 		return err
 	}
 	id := c.Param("id")
-	err := model.UpdateMongo(model.MONGO_USER, id, u)
+	err := model.Update(model.MONGO_USER, bson.ObjectIdHex(id), u)
 	if err != nil {
 		log.Println("UpdateUser UpdateMongo error.")
 		return err
@@ -90,7 +89,7 @@ func UpdateUser(c echo.Context) error {
 //删除用户
 func DeleteUser(c echo.Context) error {
 	id := c.Param("id")
-	err := model.RemoveMongo(model.MONGO_USER, id)
+	err := model.Remove(model.MONGO_USER, bson.ObjectIdHex(id))
 	if err != nil {
 		log.Println("DeleteUser RemoveMongo error.")
 		return err

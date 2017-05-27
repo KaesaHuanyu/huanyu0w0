@@ -1,22 +1,22 @@
 package main
 
 import (
+	"fmt"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	"fmt"
 )
 
 type User struct {
-	ID bson.ObjectId `bson:"_id"`
-	Name string
+	ID       bson.ObjectId `bson:"_id"`
+	Name     string
 	Articles []bson.ObjectId
 }
 
 type Article struct {
-	ID bson.ObjectId `bson:"_id"`
-	Title string
+	ID      bson.ObjectId `bson:"_id"`
+	Title   string
 	Content string
-	Editor bson.ObjectId
+	Editor  bson.ObjectId
 }
 
 var GlobalMgoSession *mgo.Session
@@ -60,7 +60,7 @@ func main() {
 	//	log.Fatal(err)
 	//}
 	u := &User{}
-	c1.Find(bson.M{"name":"huanyu0w0"}).One(u)
+	c1.Find(bson.M{"name": "huanyu0w0"}).One(u)
 	fmt.Println(u)
 	a := &Article{}
 	c2.FindId(u.Articles[0]).One(a)

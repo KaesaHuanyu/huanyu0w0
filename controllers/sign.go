@@ -1,13 +1,12 @@
-package controller
+package controllers
 
 import (
 	"github.com/labstack/echo"
-	"net/http"
-	"log"
 	"huanyu0w0/model"
+	"log"
+	"net/http"
 	"time"
 )
-
 
 func SignupGet(c echo.Context) error {
 	data := new(model.Cookies)
@@ -20,8 +19,6 @@ func SignupGet(c echo.Context) error {
 		data.UserId = userid.Value
 		avatar, _ := c.Cookie("avatar")
 		data.Avatar = avatar.Value
-		//username, _ := c.Cookie("username")
-		//data.UserName = username.Value
 	}
 	return c.Render(http.StatusOK, "signup", data)
 }
@@ -37,14 +34,7 @@ func SigninGet(c echo.Context) error {
 		if err == nil {
 			data.UserId = userid.Value
 		}
-		avatar, err := c.Cookie("avatar")
-		if err == nil {
-			data.Avatar = avatar.Value
-		}
-		//username, err := c.Cookie("username")
-		//if err == nil {
-		//	data.UserName = username.Value
-		//}
+		return c.Redirect(http.StatusFound, "/user/"+userid.Value)
 	}
 	return c.Render(http.StatusOK, "signin", data)
 }
@@ -59,7 +49,7 @@ func SigninPost(c echo.Context) error {
 		return c.Render(http.StatusFound, "error", "请输入用户名和密码")
 	}
 	u := new(model.User)
-	err := model.FindMongo(model.MONGO_USER, "email", email, u)
+	err := model.FindOneNoId(model.MONGO_USER, "email", email, u)
 	if err != nil {
 		log.Println("Not found user: ", email)
 		return c.Render(http.StatusFound, "error", "用户名不存在")
@@ -81,7 +71,7 @@ func SigninPost(c echo.Context) error {
 
 	userid := new(http.Cookie)
 	userid.Name = "userid"
-	userid.Value = u.Id
+	userid.Value = u.ID.Hex()
 	if remember == "on" {
 		userid.Expires = time.Now().Add(model.REMEMBER)
 	} else {
@@ -109,11 +99,6 @@ func SigninPost(c echo.Context) error {
 	}
 	c.SetCookie(like)
 
-	//username := new(http.Cookie)
-	//username.Name = "username"
-	//username.Value = u.Name
-	//username.Expires = time.Now().Add(3 * time.Hour)
-	//c.SetCookie(username)
 	log.Println("sign in successed.")
 	return c.Redirect(http.StatusFound, "/")
 }

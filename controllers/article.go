@@ -1,15 +1,15 @@
-package controller
+package controllers
 
 import (
-	"github.com/russross/blackfriday"
 	"github.com/labstack/echo"
-	"huanyu0w0/model"
-	"net/http"
-	"time"
+	"github.com/russross/blackfriday"
+	"gopkg.in/mgo.v2/bson"
 	"html/template"
-	"github.com/satori/go.uuid"
+	"huanyu0w0/model"
 	"log"
+	"net/http"
 	"strconv"
+	"time"
 )
 
 func Article(c echo.Context) error {
@@ -56,54 +56,49 @@ func CreateArticlePost(c echo.Context) error {
 	if err != nil {
 		return c.Render(http.StatusFound, "error", err)
 	}
-	err = model.FindMongo(model.MONGO_USER, "_id", userid.Value, u)
+	err = model.FindOne(model.MONGO_USER, bson.ObjectIdHex(userid.Value), u)
 	if err != nil {
 		return c.Render(http.StatusFound, "error", err)
 	}
 
 	a := &model.Article{
-		Id: uuid.NewV4().String(),
-		Time: time.Now(),
-		Editor: u.Id,
+		ID:     bson.NewObjectId(),
+		Time:   time.Now(),
+		Editor: u.ID,
 	}
 	if err := c.Bind(a); err != nil {
 		log.Println("CreateArticle context.Bind() error.")
 		return c.Render(http.StatusFound, "error", err)
 	}
-	if len(a.Content) >= 20 {
-		a.Introduction = a.Content[:20] + "..."
-	} else {
-		a.Introduction = a.Content
-	}
 	//User中插入article
-	u.Articles = append(u.Articles, a.Id)
-	err = model.UpdateMongo(model.MONGO_USER, u.Id, u)
+	u.Articles = append(u.Articles, a.ID)
+	err = model.Update(model.MONGO_USER, u.ID, u)
 	if err != nil {
 		log.Println("CreateArticle model.UpdateMongo() error.", err)
 		return c.Render(http.StatusFound, "error", "保存安利💊失败...")
 	}
 	//插入article到数据库
-	err = model.InsertMongo(model.MONGO_ARTICLE, a)
+	err = model.Insert(model.MONGO_ARTICLE, a)
 	if err != nil {
 		log.Println("CreateArticle model.InsertMongo() error.", err)
 		return c.Render(http.StatusFound, "error", "保存安利💊失败...")
 	}
 	log.Println(a)
-	return c.Redirect(http.StatusFound, "/article/" + a.Id)
+	return c.Redirect(http.StatusFound, "/article/"+a.ID.Hex())
 }
 
 func GetArticle(c echo.Context) error {
 	data := &struct {
 		model.Cookies
-		Article *model.Article
-		Editor *model.User
-		Time string
+		Article  *model.Article
+		Editor   *model.User
+		Time     string
 		Comments []*model.CommentEditor
-		Content template.HTML
-		Like bool
+		Content  template.HTML
+		Like     bool
 	}{
-		Article: &model.Article{},
-		Editor: &model.User{},
+		Article:  &model.Article{},
+		Editor:   &model.User{},
 		Comments: []*model.CommentEditor{},
 	}
 	//处理cookie
@@ -132,18 +127,18 @@ func GetArticle(c echo.Context) error {
 
 	time := time.Now()
 	id := c.Param("id")
-	err = model.FindMongo(model.MONGO_ARTICLE, "_id" , id, data.Article)
+	err = model.FindOne(model.MONGO_ARTICLE, bson.ObjectIdHex(id), data.Article)
 	if err != nil {
-		log.Println("GetArticle FindMongo Article error: ",err)
+		log.Println("GetArticle FindMongo Article error: ", err)
 		return c.Render(http.StatusFound, "error", "404 NOT FOUND")
 	}
 	if data.Article.Time.Year() == time.Year() {
 		if data.Article.Time.Month() == time.Month() && data.Article.Time.Day() == time.Day() {
 			if data.Article.Time.Hour() == time.Hour() {
 				if data.Article.Time.Minute() == time.Minute() {
-					data.Time = strconv.Itoa(time.Second() - data.Article.Time.Second()) + "秒前"
+					data.Time = strconv.Itoa(time.Second()-data.Article.Time.Second()) + "秒前"
 				} else {
-					data.Time = strconv.Itoa(time.Minute() - data.Article.Time.Minute()) + "分钟前"
+					data.Time = strconv.Itoa(time.Minute()-data.Article.Time.Minute()) + "分钟前"
 				}
 			} else {
 				data.Time = data.Article.Time.Format("15:04")
@@ -156,7 +151,7 @@ func GetArticle(c echo.Context) error {
 	}
 	data.Content = template.HTML(blackfriday.MarkdownCommon([]byte(data.Article.Content)))
 
-	err = model.FindMongo(model.MONGO_USER, "_id", data.Article.Editor, data.Editor)
+	err = model.FindOne(model.MONGO_USER, data.Article.Editor, data.Editor)
 	if err != nil {
 		log.Println("GetArticle FindMongo User error: ", err)
 		return c.Render(http.StatusFound, "error", "404 NOT FOUND")
@@ -170,22 +165,22 @@ func GetArticle(c echo.Context) error {
 			0,
 			false,
 		})
-		err = model.FindMongo(model.MONGO_COMMENT, "_id", comment, data.Comments[index].Comment)
+		err = model.FindOne(model.MONGO_COMMENT, comment, data.Comments[index].Comment)
 		if err != nil {
 			log.Println("GetArticle FindMongo CommentEditor.Comment error: ", err)
 			return c.Render(http.StatusFound, "error", "404 NOT FOUND")
 		}
 		nice := new(http.Cookie)
-		nice.Name = comment
+		nice.Name = comment.Hex()
 
 		//实现装逼的时间显示效果
 		if data.Comments[index].Comment.Time.Year() == time.Year() {
 			if data.Comments[index].Comment.Time.Month() == time.Month() && data.Comments[index].Comment.Time.Day() == time.Day() {
 				if data.Comments[index].Comment.Time.Hour() == time.Hour() {
 					if data.Comments[index].Comment.Time.Minute() == time.Minute() {
-						data.Comments[index].Time = strconv.Itoa(time.Second() - data.Comments[index].Comment.Time.Second()) + "秒前"
+						data.Comments[index].Time = strconv.Itoa(time.Second()-data.Comments[index].Comment.Time.Second()) + "秒前"
 					} else {
-						data.Comments[index].Time = strconv.Itoa(time.Minute() - data.Comments[index].Comment.Time.Minute()) + "分钟前"
+						data.Comments[index].Time = strconv.Itoa(time.Minute()-data.Comments[index].Comment.Time.Minute()) + "分钟前"
 					}
 				} else {
 					data.Comments[index].Time = data.Comments[index].Comment.Time.Format("15:04")
@@ -200,16 +195,16 @@ func GetArticle(c echo.Context) error {
 		//获取回复数
 		data.Comments[index].ReplyNumber = len(data.Comments[index].Comment.Replies)
 
-		err = model.FindMongo(model.MONGO_USER, "_id", data.Comments[index].Comment.Editor, data.Comments[index].Editor)
+		err = model.FindOne(model.MONGO_USER, data.Comments[index].Comment.Editor, data.Comments[index].Editor)
 		if err != nil {
 			log.Println("GetArticle FindMongo CommentEditor.Editor error: ", err)
 			return c.Render(http.StatusFound, "error", "404 NOT FOUND")
 		}
-		if data.Comments[index].Comment.UserLiked[data.UserId] == true {
+		if data.Comments[index].Comment.UserLiked[bson.ObjectIdHex(data.UserId)] == true {
 			data.Comments[index].Nice = true
 		}
 	}
-	if data.Article.UserLiked[data.UserId] == true {
+	if data.Article.UserLiked[bson.ObjectIdHex(data.UserId)] == true {
 		data.Like = true
 	}
 	return c.Render(http.StatusOK, "article", data)
@@ -224,7 +219,7 @@ func UpdateArticle(c echo.Context) error {
 		return err
 	}
 	id := c.Param("id")
-	err := model.UpdateMongo(model.MONGO_ARTICLE, id, a)
+	err := model.Update(model.MONGO_ARTICLE, bson.ObjectIdHex(id), a)
 	if err != nil {
 		log.Println("UpdateArticle UpdateMongo error.")
 		return err
@@ -234,7 +229,7 @@ func UpdateArticle(c echo.Context) error {
 
 func DeleteArticle(c echo.Context) error {
 	id := c.Param("id")
-	err := model.RemoveMongo(model.MONGO_ARTICLE, id)
+	err := model.Remove(model.MONGO_ARTICLE, bson.ObjectIdHex(id))
 	if err != nil {
 		log.Println("DeleteArticle RemoveMongo error.")
 		return err
@@ -252,31 +247,31 @@ func LikeArticle(c echo.Context) error {
 
 	id := c.Param("id")
 	a := new(model.Article)
-	err = model.FindMongo(model.MONGO_ARTICLE, "_id", id, a)
+	err = model.FindOne(model.MONGO_ARTICLE, bson.ObjectIdHex(id), a)
 	if err != nil {
 		log.Println("GetArticle FindMongo error.")
 		return c.Render(http.StatusNotFound, "error", "没找到...")
 	}
-	if a.UserLiked[userid.Value] == true {
+	if a.UserLiked[bson.ObjectIdHex(userid.Value)] == true {
 		a.Like--
-		a.UserLiked[userid.Value] = false
+		a.UserLiked[bson.ObjectIdHex(userid.Value)] = false
 		like.Value = "false"
 		c.SetCookie(like)
-		err = model.UpdateMongo(model.MONGO_ARTICLE, id, a)
+		err = model.Update(model.MONGO_ARTICLE, bson.ObjectIdHex(id), a)
 		if err != nil {
 			log.Println("LikeArticle Update error: ", err)
 			c.Render(http.StatusFound, "error", "牙白...出了点问题...")
 		}
-		return c.Redirect(http.StatusFound, "/article/" + id)
+		return c.Redirect(http.StatusFound, "/article/"+id)
 	}
 	a.Like++
-	a.UserLiked[userid.Value] = true
+	a.UserLiked[bson.ObjectIdHex(userid.Value)] = true
 	like.Value = "true"
 	c.SetCookie(like)
-	err = model.UpdateMongo(model.MONGO_ARTICLE, id, a)
+	err = model.Update(model.MONGO_ARTICLE, bson.ObjectIdHex(id), a)
 	if err != nil {
 		log.Println("Update error: ", err)
 		c.Render(http.StatusFound, "error", "牙白...出了点问题...")
 	}
-	return c.Redirect(http.StatusFound, "/article/" + id)
+	return c.Redirect(http.StatusFound, "/article/"+id)
 }

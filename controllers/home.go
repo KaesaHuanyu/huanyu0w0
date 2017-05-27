@@ -1,12 +1,12 @@
-package controller
+package controllers
 
 import (
 	"github.com/labstack/echo"
-	"net/http"
+	"github.com/russross/blackfriday"
+	"html/template"
 	"huanyu0w0/model"
 	"log"
-	"html/template"
-	"github.com/russross/blackfriday"
+	"net/http"
 )
 
 func Home(c echo.Context) error {
@@ -46,25 +46,24 @@ func Home(c echo.Context) error {
 			"",
 		})
 		data.ArticleEditors[index].Article = article
-		data.ArticleEditors[index].Introduction = template.HTML(blackfriday.MarkdownCommon([]byte(article.Introduction)))
-		err = model.FindMongo(model.MONGO_USER, "_id", article.Editor, data.ArticleEditors[index].Editor)
+		//data.ArticleEditors[index].Introduction = template.HTML(blackfriday.MarkdownCommon([]byte(article.Introduction)))
+		err = model.FindOne(model.MONGO_USER, article.Editor, data.ArticleEditors[index].Editor)
 		if err != nil {
 			log.Println("Home FindMongo editor error.", err)
 			//return c.Render(http.StatusFound, "error", "出了点小问题...")
 		}
 	}
-	log.Println(data)
 	return c.Render(http.StatusOK, "home", data)
 }
 
 func CurriculumVitae(c echo.Context) error {
 	data := struct {
-		One template.HTML
-		Two template.HTML
+		One   template.HTML
+		Two   template.HTML
 		Three template.HTML
-		Four template.HTML
-		Five template.HTML
-		Six template.HTML
+		Four  template.HTML
+		Five  template.HTML
+		Six   template.HTML
 	}{}
 
 	data.One = template.HTML(blackfriday.MarkdownCommon([]byte(`##### 姓名：黎寰宇`)))
