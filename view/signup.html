@@ -2,43 +2,42 @@
 {{define "signup"}}
 <html>
 <head>
-    <title>注册 - 寰宇0w0 - 少年少女，安利💊即是正义！ </title>
+    <title>注册 - 寰宇0w0 - 阁下，您听说过安利💊吗 Σ( ° △ °|||) </title>
 {{template "header" .}}
 
-	<div class="mdl-grid" style="margin-left: 40px;">
-      <div class="mdl-cell mdl-cell--6-col mdl-cell--middle mdl-card mdl-shadow--4dp">
-        <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-          <h2 class="mdl-card__title-text mdl-color-text--grey-600">注册</h2>
+      <div class="mdl-card mdl-shadow--4dp" style="margin-left: 9%; width: 30%; min-width: 360px; margin-top: 2%;">
+        <div class="mdl-card__title mdl-card--border mdl-color--primary">
+          <!-- <h2 class="mdl-card__title-text mdl-color-text--grey-600">注册</h2> -->
+          <strong class="mdl-color-text--grey-600">DNA提取中...未检测到阁下...重新建立神经绑定...</strong>
         </div>
-        <form action="/Signup" method="post">
+        <form action="/signup" method="post">
           <div class="mdl-card__supporting-text">
-              <div class="mdl-textfield mdl-js-textfield" style="margin-left: 12px;">
+              <div class="mdl-textfield mdl-js-textfield" style="margin-left: 3%; width: 80%;">
                   <input class="mdl-textfield__input" type="email" id="email" name="email" />
                   <label class="mdl-textfield__label" for="email">邮箱</label>
                   <span class="mdl-textfield__error">请输入正确的邮箱地址</span>
               </div>
-              <div class="mdl-textfield mdl-js-textfield" style="margin-left: 12px;">
+              <div class="mdl-textfield mdl-js-textfield" style="margin-left: 3%; width: 80%;">
                   <input class="mdl-textfield__input" type="text" id="name" name="name" />
                   <label class="mdl-textfield__label" for="name">用户名</label>
               </div>
-              <div class="mdl-textfield mdl-js-textfield" style="margin-left: 12px;">
+              <div class="mdl-textfield mdl-js-textfield" style="margin-left: 3%; width: 80%;">
                   <input class="mdl-textfield__input" type="password" id="password" name="password" />
                   <label class="mdl-textfield__label" for="password">密码</label>
               </div>
 
-              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" style="margin-left: 12px; margin-top: 6px;" for="2333">
+              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" style="margin-left: 3%; margin-top: 2%;" for="2333">
                 <input type="checkbox" id="2333" name="2333" class="mdl-checkbox__input">
-                <span class="mdl-checkbox__label">我将誓死捍卫 富强 民主 文明 和谐 自由 平等 公正 法治 爱国 敬业 诚信 友善</span>
+                <span class="mdl-checkbox__label">我已阅读并同意&nbsp<a href="http://baike.baidu.com/item/%E7%A4%BE%E4%BC%9A%E4%B8%BB%E4%B9%89%E6%A0%B8%E5%BF%83%E4%BB%B7%E5%80%BC%E8%A7%82" target="_blank" style="text-decoration: none;">社会主义核心价值观</a></span>
               </label>
           </div>
 
           <div class="mdl-card__actions">
-            <input type="submit" value="注册" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--primary" style="margin-left: 12px;">
-            <a href="/signin" class="mdl-button mdl-color-text--accent mdl-js-button mdl-js-ripple-effect" style="margin-left: 12px">已有账号？登录</a>
+            <input type="submit" value="注册" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--primary" style="margin-left: 3%;">
+            <a href="/login" class="mdl-button mdl-color-text--accent mdl-js-button mdl-js-ripple-effect" style="margin-left: 3%">已有账号？登录</a>
           </div>
       </form>
     </div>
-  </div>
 
 {{template "footer"}}
 {{end}}

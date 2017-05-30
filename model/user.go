@@ -2,20 +2,22 @@ package model
 
 import (
 	"gopkg.in/mgo.v2/bson"
+	"time"
 )
 
 type (
 	User struct {
-		ID    bson.ObjectId `json:"id" bson:"_id,omitempty" xml:"id" form:"id" query:"name"`
-		Token string        `json:"token,omitempty" bson:"-"`
-		//Time time.Time `json:"time" bson:"time" xml:"time" form:"time" query:"time"`
-		//Change time.Time `json:"change" bson:"change" xml:"change" form:"change" query:"change"`
-		Email     string          `json:"email" bson:"email" xml:"email" form:"email" query:"email"`
-		Name      string          `json:"name" bson:"name" xml:"name" form:"name" query:"name"`
-		Password  string          `json:"password" bson:"password" xml:"password" form:"password" query:"name"`
-		Avatar    string          `json:"avatar" bson:"avatar" xml:"avatar" form:"avatar" query:"avatar"`
-		Comments  []bson.ObjectId `json:"comments" bson:"comments" xml:"comments" form:"comments" query:"comments"`
-		Articles  []bson.ObjectId `json:"articles" bson:"articles" xml:"articles" form:"articles" query:"articles"`
-		Followers []string        `json:"followers,omitempty" bson:"followers,omitempty"`
+		ID        bson.ObjectId `json:"id" bson:"_id,omitempty"`
+		Token     string        `json:"token,omitempty" bson:"-"`
+		Time      time.Time     `json:"time" bson:"time"`
+		Change    time.Time     `json:"change,omitempty" bson:"change,omitempty"`
+		Email     string        `json:"email" bson:"email" form:"email"`
+		Name      string        `json:"name" bson:"name" form:"name"`
+		Password  string        `json:"password,omitempty" bson:"password,omitempty" form:"password"`
+		Avatar    string        `json:"avatar" bson:"avatar" form:"avatar"`
+		Follows   []string      `json:"follow" bson:"follow"`
+		Comments  []string      `json:"comments" bson:"comments"`
+		Articles  []string      `json:"articles" bson:"articles"`
+		Followers []string      `json:"followers" bson:"followers"`
 	}
 )

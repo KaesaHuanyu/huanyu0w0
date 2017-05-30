@@ -10,7 +10,7 @@ import (
 )
 
 func (h *Handler) CreatePost(c echo.Context) (err error) {
-	userID, _, _ := userInfoFromToken(c)
+	userID := userInfoFromToken(c)
 	u := &model.User{
 		ID: bson.ObjectIdHex(userID),
 	}
@@ -45,7 +45,7 @@ func (h *Handler) CreatePost(c echo.Context) (err error) {
 }
 
 func (h *Handler) FetchPost(c echo.Context) (err error) {
-	userID, _, _ := userInfoFromToken(c)
+	userID := userInfoFromToken(c)
 	page, _ := strconv.Atoi(c.QueryParam("page"))
 	limit, _ := strconv.Atoi(c.QueryParam("limit"))
 

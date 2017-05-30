@@ -1,63 +1,84 @@
-package controllers
+package handlers
 
 import (
 	"github.com/labstack/echo"
+	"huanyu0w0/model"
+	"net/http"
 	"github.com/russross/blackfriday"
 	"html/template"
-	"huanyu0w0/model"
-	"log"
-	"net/http"
+	"strconv"
 	"gopkg.in/mgo.v2/bson"
+	"sync"
 )
 
-func Home(c echo.Context) error {
+func (h *Handler) Home(c echo.Context) (err error) {
+	//初始化数据
 	data := &struct {
-		model.Cookies
-		ArticleEditors []*model.ArticleEditor
+		model.Cookie
+		Displays []*model.Display
+		NextPage int
+		PreviousPage int
+		Head bool
+		Tail bool
 	}{
-		ArticleEditors: []*model.ArticleEditor{},
+		Displays: []*model.Display{},
+	}
+	if err = data.ReadCookie(c); err == nil{
+		data.IsLogin = true
+	}
+	method := "-" + c.QueryParam("method")
+	if method == "-" {
+		method = "-like"
+	}
+	page, _ := strconv.Atoi(c.QueryParam("page"))
+	articles := []*model.Article{}
+	//Default
+	if page == 0 {
+		page = 1
+	}
+	data.NextPage = page + 1
+	data.PreviousPage = page - 1
+	if data.PreviousPage == 0 {
+		data.Head = true
 	}
 
-	isSignin, err := c.Cookie("isSignin")
-	if err != nil {
-		log.Println("not sign in, ", err)
-	} else if isSignin.Value == "yes" {
-		data.IsLogin = true
-		userid, err := c.Cookie("userid")
-		if err != nil {
-			return c.Render(http.StatusFound, "error", err)
-		}
-		data.UserId = userid.Value
-		avatar, err := c.Cookie("avatar")
-		if err != nil {
-			return c.Render(http.StatusFound, "error", err)
-		}
-		data.Avatar = avatar.Value
+	//查找所有的Display
+	db := h.DB.Clone()
+	defer db.Close()
+
+	if err = db.DB(MONGO_DB).C(ARTICLE).
+		Find(nil).
+		Sort(method).
+		Skip((page - 1) * 20).
+		Limit(20).
+		All(&articles); err != nil {
+		return
 	}
-	articles := &[]*model.Article{}
-	err = model.FindAll(model.MONGO_ARTICLE, "", "", 5, "-like", articles)
-	if err != nil {
-		log.Println("Home FindAll error.", err)
-		return c.Render(http.StatusFound, "error", "出了点小问题...")
+
+	if len(articles) < 20 {
+		data.Tail = true
 	}
-	for index, article := range *articles {
-		data.ArticleEditors = append(data.ArticleEditors, &model.ArticleEditor{
-			&model.Article{},
-			&model.User{},
-			"",
-		})
-		data.ArticleEditors[index].Article = article
-		//data.ArticleEditors[index].Introduction = template.HTML(blackfriday.MarkdownCommon([]byte(article.Introduction)))
-		err = model.FindOne(model.MONGO_USER, bson.ObjectIdHex(article.Editor), data.ArticleEditors[index].Editor)
-		if err != nil {
-			log.Println("Home FindMongo editor error.", err)
-			//return c.Render(http.StatusFound, "error", "出了点小问题...")
-		}
+
+	wg := sync.WaitGroup{}
+	for i, v := range articles {
+		wg.Add(1)
+		data.Displays = append(data.Displays, &model.Display{})
+		data.Displays[i].Article = v
+		go func(i int) {
+			defer wg.Done()
+			db := h.DB.Clone()
+			defer db.Close()
+			db.DB(MONGO_DB).C(USER).
+				Find(bson.M{"ID": bson.ObjectIdHex(data.Displays[i].Article.Editor)}).
+				One(data.Displays[i].Editor)
+		}(i)
 	}
+	wg.Wait()
+
 	return c.Render(http.StatusOK, "home", data)
 }
 
-func CurriculumVitae(c echo.Context) error {
+func (h *Handler) CurriculumVitae(c echo.Context) error {
 	data := struct {
 		One   template.HTML
 		Two   template.HTML

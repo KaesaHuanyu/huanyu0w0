@@ -21,8 +21,8 @@ func CreateComment(c echo.Context) error {
 	comment := &model.Comment{
 		ID:      bson.NewObjectId(),
 		Time:    time.Now(),
-		Article: bson.ObjectIdHex(article),
-		Editor:  bson.ObjectIdHex(editor.Value),
+		Article: article,
+		Editor:  editor.Value,
 		Content: content,
 	}
 
@@ -42,7 +42,7 @@ func CreateComment(c echo.Context) error {
 		log.Println("CreateComment FindMongo article error.", err)
 		return c.Render(http.StatusFound, "error", "评论失败...")
 	}
-	a.Comments = append(a.Comments, comment.ID)
+	a.Comments = append(a.Comments, comment.ID.Hex())
 	err = model.Update(model.MONGO_ARTICLE, bson.ObjectIdHex(article), a)
 	if err != nil {
 		log.Println("CreateComment UpdateMongo article error.", err)
@@ -55,13 +55,13 @@ func CreateComment(c echo.Context) error {
 		log.Println("CreateComment FindMongo editor error.", err)
 		return c.Render(http.StatusFound, "error", "评论失败...")
 	}
-	u.Comments = append(u.Comments, comment.ID)
+	u.Comments = append(u.Comments, comment.ID.Hex())
 	err = model.Update(model.MONGO_USER, bson.ObjectIdHex(editor.Value), u)
 	if err != nil {
 		log.Println("CreateComment UpdateMongo editor error.", err)
 		return c.Render(http.StatusFound, "error", "评论失败...")
 	}
-	return c.Redirect(http.StatusFound, "/article/"+comment.Article.Hex())
+	return c.Redirect(http.StatusFound, "/article/"+comment.Article)
 }
 
 func GetComment(c echo.Context) error {
@@ -101,9 +101,9 @@ func NiceComment(c echo.Context) error {
 		log.Println("NiceComment FindMongo error, ", err)
 		return c.Render(http.StatusFound, "error", "赞失败了...找不到这条评论...")
 	}
-	if comment.UserLiked[bson.ObjectIdHex(user.Value)] == true {
+	if comment.UserLiked[user.Value] == true {
 		comment.Like--
-		comment.UserLiked[bson.ObjectIdHex(user.Value)] = false
+		comment.UserLiked[user.Value] = false
 		nice.Value = "false"
 		c.SetCookie(nice)
 		err := model.Update(model.MONGO_COMMENT, bson.ObjectIdHex(id), comment)
@@ -111,17 +111,17 @@ func NiceComment(c echo.Context) error {
 			log.Println("NiceComment Update error: ", err)
 			c.Render(http.StatusFound, "error", "牙白...出了点问题...")
 		}
-		return c.Redirect(http.StatusFound, "/article/"+comment.Article.Hex()+"#"+comment.ID.Hex())
+		return c.Redirect(http.StatusFound, "/article/"+comment.Article+"#"+comment.ID.Hex())
 	}
 	comment.Like++
-	comment.UserLiked[bson.ObjectIdHex(user.Value)] = true
+	comment.UserLiked[user.Value] = true
 	nice.Value = "true"
 	err = model.Update(model.MONGO_COMMENT, bson.ObjectIdHex(id), comment)
 	if err != nil {
 		log.Println("NiceComment Update error: ", err)
 		c.Render(http.StatusFound, "error", "牙白...出了点问题...")
 	}
-	return c.Redirect(http.StatusFound, "/article/"+comment.Article.Hex()+"#"+comment.ID.Hex())
+	return c.Redirect(http.StatusFound, "/article/"+comment.Article+"#"+comment.ID.Hex())
 }
 
 func ReplyComment(c echo.Context) error {

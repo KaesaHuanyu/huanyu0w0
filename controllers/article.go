@@ -64,14 +64,14 @@ func CreateArticlePost(c echo.Context) error {
 	a := &model.Article{
 		ID:     bson.NewObjectId(),
 		Time:   time.Now(),
-		Editor: u.ID,
+		Editor: u.ID.Hex(),
 	}
 	if err := c.Bind(a); err != nil {
 		log.Println("CreateArticle context.Bind() error.")
 		return c.Render(http.StatusFound, "error", err)
 	}
 	//User中插入article
-	u.Articles = append(u.Articles, a.ID)
+	u.Articles = append(u.Articles, a.ID.Hex())
 	err = model.Update(model.MONGO_USER, u.ID, u)
 	if err != nil {
 		log.Println("CreateArticle model.UpdateMongo() error.", err)
@@ -149,9 +149,9 @@ func GetArticle(c echo.Context) error {
 	} else {
 		data.Time = data.Article.Time.Format("2006年 01月02日 15:04")
 	}
-	data.Content = template.HTML(blackfriday.MarkdownCommon([]byte(data.Article.Content)))
+	data.Content = template.HTML(blackfriday.MarkdownCommon([]byte(data.Article.Reason)))
 
-	err = model.FindOne(model.MONGO_USER, data.Article.Editor, data.Editor)
+	err = model.FindOne(model.MONGO_USER, bson.ObjectIdHex(data.Article.Editor), data.Editor)
 	if err != nil {
 		log.Println("GetArticle FindMongo User error: ", err)
 		return c.Render(http.StatusFound, "error", "404 NOT FOUND")
@@ -165,13 +165,13 @@ func GetArticle(c echo.Context) error {
 			0,
 			false,
 		})
-		err = model.FindOne(model.MONGO_COMMENT, comment, data.Comments[index].Comment)
+		err = model.FindOne(model.MONGO_COMMENT, bson.ObjectIdHex(comment), data.Comments[index].Comment)
 		if err != nil {
 			log.Println("GetArticle FindMongo CommentEditor.Comment error: ", err)
 			return c.Render(http.StatusFound, "error", "404 NOT FOUND")
 		}
 		nice := new(http.Cookie)
-		nice.Name = comment.Hex()
+		nice.Name = comment
 
 		//实现装逼的时间显示效果
 		if data.Comments[index].Comment.Time.Year() == time.Year() {
@@ -195,16 +195,16 @@ func GetArticle(c echo.Context) error {
 		//获取回复数
 		data.Comments[index].ReplyNumber = len(data.Comments[index].Comment.Replies)
 
-		err = model.FindOne(model.MONGO_USER, data.Comments[index].Comment.Editor, data.Comments[index].Editor)
+		err = model.FindOne(model.MONGO_USER, bson.ObjectIdHex(data.Comments[index].Comment.Editor), data.Comments[index].Editor)
 		if err != nil {
 			log.Println("GetArticle FindMongo CommentEditor.Editor error: ", err)
 			return c.Render(http.StatusFound, "error", "404 NOT FOUND")
 		}
-		if data.Comments[index].Comment.UserLiked[bson.ObjectIdHex(data.UserId)] == true {
+		if data.Comments[index].Comment.UserLiked[data.UserId] == true {
 			data.Comments[index].Nice = true
 		}
 	}
-	if data.Article.UserLiked[bson.ObjectIdHex(data.UserId)] == true {
+	if data.Article.UserLiked[data.UserId] == true {
 		data.Like = true
 	}
 	return c.Render(http.StatusOK, "article", data)
@@ -252,9 +252,9 @@ func LikeArticle(c echo.Context) error {
 		log.Println("GetArticle FindMongo error.")
 		return c.Render(http.StatusNotFound, "error", "没找到...")
 	}
-	if a.UserLiked[bson.ObjectIdHex(userid.Value)] == true {
+	if a.UserLiked[userid.Value] == true {
 		a.Like--
-		a.UserLiked[bson.ObjectIdHex(userid.Value)] = false
+		a.UserLiked[userid.Value] = false
 		like.Value = "false"
 		c.SetCookie(like)
 		err = model.Update(model.MONGO_ARTICLE, bson.ObjectIdHex(id), a)
@@ -265,7 +265,7 @@ func LikeArticle(c echo.Context) error {
 		return c.Redirect(http.StatusFound, "/article/"+id)
 	}
 	a.Like++
-	a.UserLiked[bson.ObjectIdHex(userid.Value)] = true
+	a.UserLiked[userid.Value] = true
 	like.Value = "true"
 	c.SetCookie(like)
 	err = model.Update(model.MONGO_ARTICLE, bson.ObjectIdHex(id), a)

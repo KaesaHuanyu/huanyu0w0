@@ -8,9 +8,9 @@ import (
 type (
 	Post struct {
 		ID      bson.ObjectId `bson:"_id,omitempty"`
-		Time    time.Time     `json:"time,omitempty" bson:"time,omitempty"`
+		Time    time.Time     `json:"time" bson:"time"`
 		To      string        `json:"to" bson:"to"`
 		From    string        `json:"from" bson:"from"`
-		Message string        `json:"message" bson:"message"`
+		Message string        `json:"message" bson:"message" form:"message"`
 	}
 )

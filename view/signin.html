@@ -2,38 +2,38 @@
 {{define "signin"}}
 <html>
 <head>
-    <title>登录 - 寰宇0w0 - 安利💊即是正义！ </title>
+    <title>登录 - 寰宇0w0 - 阁下，您听说过安利💊吗 Σ( ° △ °|||)</title>
 {{template "header" .}}
-	<div class="mdl-grid" style="margin-left: 5%;">
-    	<div class="mdl-cell mdl-cell--5-col mdl-cell--middle mdl-card mdl-shadow--4dp">
-  			<div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-   				<h2 class="mdl-card__title-text mdl-color-text--grey-600">登录</h2>
+    	<div class="mdl-card mdl-shadow--4dp" style="margin-left: 9%; width: 30%; min-width: 360px; margin-top: 2%;">
+  			<div class="mdl-card__title mdl-card--border mdl-color--primary">
+   				<!-- <h2 class="mdl-card__title-text mdl-color-text--grey-600">登录</h2> -->
+          <strong class="mdl-color-text--grey-600">DNA提取中...阁下编号S-B2333...神经末梢连接中...</strong>
   			</div>
 
-          	<form action="/signin" method="POST">
+          	<form action="/login" method="POST">
   			<div class="mdl-card__supporting-text">
-            	<div class="mdl-textfield mdl-js-textfield" style="margin-left: 12px;">
+            	<div class="mdl-textfield mdl-js-textfield" style="margin-left: 3%; width: 80%;">
             		<!-- <span class="mdl-button--icon"><i class="material-icons">account_box</i></span> -->
               		<input class="mdl-textfield__input" type="email" id="email" name="email" />
               		<label class="mdl-textfield__label" for="email">邮箱</label>
               		<span class="mdl-textfield__error">请输入正确的邮箱地址</span>
             	</div>
             	<!-- <label class="mdl-button--icon"><i class="material-icons">lock</i></label> -->
-            	<div class="mdl-textfield mdl-js-textfield" style="margin-left: 12px;">
+            	<div class="mdl-textfield mdl-js-textfield" style="margin-left: 3%; width: 80%;">
               		<input class="mdl-textfield__input" type="password" id="password" name="password" />
               		<label class="mdl-textfield__label" for="password">密码</label>
             	</div>
 
-            	<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" style="margin-left: 12px; margin-top: 6px;" for="remember">
+            	<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" style="margin-left: 3%; margin-top: 2%;" for="remember">
   					<input type="checkbox" id="remember" name="remember" class="mdl-checkbox__input">
   					<span class="mdl-checkbox__label">记住密码</span>
 				</label>
-				<div id="p1" class="mdl-progress mdl-js-progress mdl-progress__indeterminate mdl-color--accent" style="margin-left: 12px; margin-top: 12px; width: 300px;"></div>
+				<div id="p1" class="mdl-progress mdl-js-progress mdl-progress__indeterminate mdl-color--accent" style="margin-left: 3%; margin-top: 3%; width: 80%;"></div>
   			</div>
 
   				<div class="mdl-card__actions">
-   					<input type="submit" value="登录" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--primary"  style="margin-left: 12px;">
-   					<a href="/signup" class="mdl-button mdl-color-text--accent mdl-js-button mdl-js-ripple-effect" style="margin-left: 12px">还没有账号？注册</a>
+   					<input type="submit" value="登录" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--primary"  style="margin-left: 3%;">
+   					<a href="/signup" class="mdl-button mdl-color-text--accent mdl-js-button mdl-js-ripple-effect" style="margin-left: 3%">还没有账号？注册</a>
   				</div>
           	</form>
 		</div>
