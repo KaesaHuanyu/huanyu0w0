@@ -9,6 +9,8 @@ import (
 	"strconv"
 	"gopkg.in/mgo.v2/bson"
 	"sync"
+	"gopkg.in/mgo.v2"
+	"fmt"
 )
 
 func (h *Handler) Home(c echo.Context) (err error) {
@@ -52,7 +54,9 @@ func (h *Handler) Home(c echo.Context) (err error) {
 		Skip((page - 1) * 20).
 		Limit(20).
 		All(&articles); err != nil {
-		return
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		}
 	}
 
 	if len(articles) < 20 {
@@ -64,13 +68,21 @@ func (h *Handler) Home(c echo.Context) (err error) {
 		wg.Add(1)
 		data.Displays = append(data.Displays, &model.Display{})
 		data.Displays[i].Article = v
+		data.Displays[i].ID = v.ID.Hex()
 		go func(i int) {
 			defer wg.Done()
+			data.Displays[i].ShowTime = data.Displays[i].Article.GetShowTime()
+			data.Displays[i].CommentsNum = len(data.Displays[i].Article.Comments)
+			//data.Displays[i].Editor不能为 nil
+			data.Displays[i].Editor = &model.User{}
 			db := h.DB.Clone()
 			defer db.Close()
-			db.DB(MONGO_DB).C(USER).
-				Find(bson.M{"ID": bson.ObjectIdHex(data.Displays[i].Article.Editor)}).
+			err = db.DB(MONGO_DB).C(USER).
+				FindId(bson.ObjectIdHex(data.Displays[i].Article.Editor)).
 				One(data.Displays[i].Editor)
+			if err != nil {
+				fmt.Println("<(￣︶￣)↗[GO!]", i, ":", err)
+			}
 		}(i)
 	}
 	wg.Wait()
@@ -105,15 +117,18 @@ func (h *Handler) CurriculumVitae(c echo.Context) error {
 我所在的部门在本项目中负责服务目录的容器化解决方案，本期计划上线的共有四个服务：mysql高可用服务，mongoDB高可用服务，RabbitMQ高可用服务，Redis高可用服务。
 
 我的主要工作为
+
 - 测试这些服务在部署之后能否按预期工作，并在测试发现问题后解决问题（重写Dockerfile、镜像启动脚本等）。
 - 编写代码测试或者解决来自上级的需求，编写服务高可用测试程序并做成了公开镜像 daocloud.io/daocloud/servicetest
 - 服务交付文档、服务测试文档以及其他需要交付的文档的编写
+
 ##### 2017-04 ~ 2017-05 上汽saiccloud项目第二期
 在第二期项目中，客户追加了对zookeeper、kafka、tomcat的需求。
 
 我的工作与之前基本一致（但是这一期中zookeeper和kafka基本交于我负责）
 
 具体成果：
+
 - 发现并单独解决了zk不能正常建立集群，kafka的broker不能访问外网、
 kafka不能正常连接到zookeeper等严重问题。
 - 独自完成keepalived的自动化配置虚拟ip的解决方案
@@ -123,6 +138,7 @@ kafka不能正常连接到zookeeper等严重问题。
 #### 个人项目
 ##### 2017-04 ~ 至今： [huanyu0w0](https://github.com/KaesaHuanyu/huanyu0w0)网站的搭建
 本项目使用的工具为:
+
 - 后端：由golang编写，使用[echo](https://echo.labstack.com/guide)框架
 - 前端：使用谷歌公司的[MDL](https://getmdl.io/index.html)框架
 - 数据库：使用[mongoDB](https://hub.docker.com/_/mongo/)
@@ -138,8 +154,8 @@ kafka不能正常连接到zookeeper等严重问题。
 - 熟悉docker的日常使用
 - 熟悉linux的日常使用
 - 熟悉git的日常使用
-- 了解常用DB
-- 了解HTML、CSS等前端技术
+- 了解常用DB、MQ及其高可用架构
+- 了解前端，熟悉后端
 - 基础知识良好，熟悉常用算法和数据结构
 - 能够较为熟练查阅英文技术文档，学习能力强`)))
 

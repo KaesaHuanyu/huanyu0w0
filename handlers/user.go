@@ -107,10 +107,10 @@ func (h *Handler) Login(c echo.Context) (err error) {
 	claims["exp"] = time.Now().Add(72 * time.Hour).Unix()
 
 	//Generate encoded token and send it as response
-	u.Token, err = token.SignedString([]byte(KEY))
-	if err != nil {
-		return
-	}
+	//u.Token, err = token.SignedString([]byte(KEY))
+	//if err != nil {
+	//	return
+	//}
 
 	u.Password = ""
 	return c.JSON(http.StatusOK, u)

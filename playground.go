@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"gopkg.in/mgo.v2/bson"
+	"huanyu0w0/model"
+	"time"
 )
 
 type Tree struct {
@@ -12,6 +13,9 @@ type Tree struct {
 }
 
 func main() {
-	a := bson.NewObjectId()
-	fmt.Println(a, a.Hex())
+	a := &model.Article{
+		Time: time.Now().Add(-34*time.Minute),
+	}
+
+	fmt.Println(a.GetShowTime())
 }

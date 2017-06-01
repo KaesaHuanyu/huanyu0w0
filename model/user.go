@@ -8,7 +8,7 @@ import (
 type (
 	User struct {
 		ID        bson.ObjectId `json:"id" bson:"_id,omitempty"`
-		Token     string        `json:"token,omitempty" bson:"-"`
+		//Token     string        `json:"token,omitempty" bson:"-"`
 		Time      time.Time     `json:"time" bson:"time"`
 		Change    time.Time     `json:"change,omitempty" bson:"change,omitempty"`
 		Email     string        `json:"email" bson:"email" form:"email"`

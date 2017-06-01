@@ -5,58 +5,79 @@
 <title>安利💊制作中... - 寰宇0w0 - 阁下，您听说过安利💊吗 Σ( ° △ °|||)</title>
 {{template "header" .}}
 
-	<div class="mdl-grid" style="margin-left: 40px;">
-    	<div class="mdl-cell mdl-cell--6-col mdl-cell--middle mdl-card mdl-shadow--4dp">
-  			<div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-   				<h2 class="mdl-card__title-text mdl-color-text--grey-600">海山城 安利💊 制作中心</h2>
+    	<div class="mdl-card mdl-shadow--4dp" style="margin-left: 6%; margin-top: 1%; min-width: 640px; width: 40%;">
+  			<div class="mdl-card__title mdl-color--primary mdl-color-text--grey-600">
+   				<stong>新鲜原味de安利💊制作ing...</stong>
   			</div>
 
-          	<form action="/article/create" method="POST">
+        <form action="/article/create" method="POST">
   			<div class="mdl-card__supporting-text">
-            	<div class="mdl-textfield mdl-js-textfield" style="margin-left: 12px; width: 500px;">
+            	<div class="mdl-textfield mdl-js-textfield" style="margin-left: 3%; width: 90%;">
               		<input class="mdl-textfield__input" type="text" id="title" name="title" />
-              		<label class="mdl-textfield__label" for="title">标题...</label>
+              		<label class="mdl-textfield__label" for="title">安利の标题...</label>
             	</div>
 
-            	<div id="p1" class="mdl-progress mdl-js-progress mdl-progress__indeterminate" style="margin-left: 12px;"></div>
+              <div class="mdl-textfield mdl-js-textfield" style="margin-left: 3%; width: 90%;">
+                  <input class="mdl-textfield__input" type="text" id="name" name="name" />
+                  <label class="mdl-textfield__label" for="name">作品de名字...</label>
+              </div>
 
-            	<div class="mdl-textfield mdl-js-textfield" style="margin-left: 12px; width: 500px">
-              		<textarea class="mdl-textfield__input" type="text" id="content" name="content" rows="18" style="width: 100%;"></textarea>
-              		<label class="mdl-textfield__label" for="content">请输入安利理由(140字以内)...</label>
+              <div class="mdl-textfield mdl-js-textfield" style="margin-left: 3%; width: 90%;">
+                  <input class="mdl-textfield__input" type="text" id="url" name="url" />
+                  <label class="mdl-textfield__label" for="url">视频地址...</label>
+              </div>
+
+              <!-- <div class="mdl-textfield mdl-js-textfield" style="margin-left: 3%; width: 90%;">
+                  <input class="mdl-textfield__input" type="text" id="link" name="link" />
+                  <label class="mdl-textfield__label" for="link">html地址...</label>
+              </div> -->
+
+              <hr>
+
+            	<div class="mdl-textfield mdl-js-textfield" style="margin-left: 3%; width: 90%">
+              		<textarea class="mdl-textfield__input" type="text" id="reason" name="reason" rows="9" style="width: 100%;"></textarea>
+              		<label class="mdl-textfield__label" for="reason">推荐理由...</label>
             	</div>
 
-            	<div style="margin-left: 12px;" class="mdl-color-text--accent"><label class="mdl-radio mdl-js-radio">
-            		<input type="radio" class="mdl-radio__button" name="topic" value="番剧" checked />
+            	<div style="margin-left: 3%;" class="mdl-color-text--accent"><label class="mdl-radio mdl-js-radio">
+            		<input type="radio" class="mdl-radio__button" name="topic" value="anime" checked />
             		<span class="mdl-radio__label">番剧</span>
             	</label>
 
-            	<label class="mdl-radio mdl-js-radio" style="margin-left: 12px;">
-    				<input type="radio" class="mdl-radio__button" name="topic" value="电影"/>
+            	<label class="mdl-radio mdl-js-radio" style="margin-left: 3%;">
+    				<input type="radio" class="mdl-radio__button" name="topic" value="movie"/>
     				<span class="mdl-radio__label">电影</span>
 				</label>
 
-				<label class="mdl-radio mdl-js-radio" style="margin-left: 12px;">
-    				<input type="radio" class="mdl-radio__button" name="topic" value="影视"/>
+				<label class="mdl-radio mdl-js-radio" style="margin-left: 3%;">
+    				<input type="radio" class="mdl-radio__button" name="topic" value="tv"/>
     				<span class="mdl-radio__label">影视</span>
 				</label>
 
-				<label class="mdl-radio mdl-js-radio" style="margin-left: 12px;">
-    				<input type="radio" class="mdl-radio__button" name="topic" value="音乐"/>
+				<label class="mdl-radio mdl-js-radio" style="margin-left: 3%;">
+    				<input type="radio" class="mdl-radio__button" name="topic" value="music_note"/>
     				<span class="mdl-radio__label">音乐</span>
 				</label>
 
-				<label class="mdl-radio mdl-js-radio" style="margin-left: 12px;">
-    				<input type="radio" class="mdl-radio__button" name="topic" value="小说"/>
-    				<span class="mdl-radio__label">小说</span>
-				</label></div>
+				<label class="mdl-radio mdl-js-radio" style="margin-left: 3%;">
+    				<input type="radio" class="mdl-radio__button" name="topic" value="book"/>
+    				<span class="mdl-radio__label">文字</span>
+				</label>
+
+        <label class="mdl-radio mdl-js-radio" style="margin-left: 3%;">
+            <input type="radio" class="mdl-radio__button" name="topic" value="others"/>
+            <span class="mdl-radio__label">其他</span>
+        </label>
+
+        </div>
+
   			</div>
 
   				<div class="mdl-card__actions">
-   					<input type="submit" value="制作完成..." class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--primary"  style="margin-left: 12px;">
+   					<input type="submit" value="制作完成..." class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--primary mdl-color-text--grey-600"  style="margin-left: 3%;">
   				</div>
           	</form>
 		</div>
-	</div>
 
 {{template "footer"}}
 {{end}}

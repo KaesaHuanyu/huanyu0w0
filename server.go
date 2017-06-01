@@ -75,6 +75,8 @@ func main() {
 	e.GET("/login", h.Signin)
 	e.POST("/login", h.Login)
 	e.GET("/signout", h.Signout)
+	e.GET("/article/create", h.CreateArticleGet)
+	e.POST("/article/create", h.CreateArticle)
 	e.POST("/follow/:id", h.Follow)
 	e.POST("/posts", h.CreatePost)
 	e.GET("/feed", h.FetchPost)

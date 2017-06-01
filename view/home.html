@@ -4,36 +4,55 @@
 <head>
 	<title>首页 - 寰宇0w0 - 阁下，您听说过安利💊吗 Σ( ° △ °|||)</title>
 {{template "header" .}}
-      <div class="mdl-grid" style="width: 60%; min-width: 800px; margin-left: 5%;">
+      <div class="mdl-grid" style="width: 55%; min-width: 800px; margin-left: 5%;">
     	{{range .Displays}}
-      <a href="/article/{{.Article.ID}}" target="_blank">
-    		<div class="mdl-cell mdl-cell--5-col mdl-card mdl-shadow--4dp">
-  				<div class="mdl-card__title mdl-card--expand mdl-card--border mdl-color--primary">
-            <strong class="mdl-card__title-text mdl-color-text--grey-600">{{.Article.Title}}</strong>
-
-            <div class="mdl-layout-spacer"></div>
-
-            <strong class="mdl-color-text--accent" style="text-decoration: none; margin-right: 36px;">{{.Article.Topic}}</strong>
+    		<div class="mdl-cell mdl-cell--6-col mdl-card mdl-shadow--4dp">
+  				<div class="mdl-card__title mdl-card--border">
+              <a href="/user/{{.Article.Editor}}" target="_blank" id="avatar" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--icon">
+                <img src="{{.Editor.Avatar}}" style="width: 100%; height: 100%; border-radius: 50%;">
+              </a>
+              <small class="mdl-color-text--grey-500" style="margin-left: 3%;">{{.Editor.Name}}<br>{{.ShowTime}}</small>
   				</div>
   				
           <div class="mdl-card__media" style="background: url('');">
-              <a href="/user/{{.Editor.ID}}" id="avatar" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--fab" style="margin: 12px;">
-                  <img src="{{.Editor.Avatar}}" style="width: 100%; height: 100%; border-radius: 50%;">
-              </a>
-              <a href="/user/{{.Editor.ID}}" style="text-decoration: none;"><big>{{.Editor.Name}}</big></a>
+            {{if .Article.Url}}
+            <a href="{{.Article.Url}}" target="_blank" type="button" class="mdl-chip mdl-button mdl-js-button mdl-button--raised" style="margin: 2%; margin-bottom: 1%; margin-left: 6%; max-width: 80%;">
+              <span class="mdl-chip__text mdl-color-text--grey-600">{{.Article.Name}}</span>
+            </a>
+            {{else}}
+            <span class="mdl-chip" style="margin: 2%; margin-bottom: 1%; margin-left: 6%; max-width: 80%;">
+              <span class="mdl-chip__text mdl-color-text--grey-600">{{.Article.Name}}</span>
+            </span>
+            {{end}}
           </div>
 
-  				<div class="mdl-card__supporting-text" style="margin-left: 24px;">
-            {{.Article.Reason}}
+  				<div class="mdl-card__supporting-text">
+            <h2 class="mdl-card__title-text" style="margin-left: 3%;">{{.Article.Title}}</h2>
   				</div>
+
   				<div class="mdl-card__actions">
-            <small class="mdl-color-text--accent" style="margin-left: 12px;">{{.Article.Like}}</small>
-            <small class="mdl-color-text--accent" style="text-decoration: none; margin-left: 6px;">赞</small>
+
+            <a href="/article/{{.ID}}" target="_blank" class="mdl-button mdl-color-text--accent mdl-js-button">
+              READ
+            </a>
+            <div id="{{.ID}}comment" style="direction: rtl; float: right; margin-right: 2%;">
+            <i class="material-icons mdl-color-text--accent">chat</i>
+            <small class="mdl-color-text--accent">{{.CommentsNum}}</small>
+            </div>
+            <div class="mdl-tooltip" data-mdl-for="{{.ID}}comment">{{.CommentsNum}}条评论</div>
+            <div id="{{.ID}}like" style="direction: rtl; float: right; margin-right: 3%;">
+            <i class="material-icons mdl-color-text--accent">favorite</i>
+            <small class="mdl-color-text--accent">{{.Article.Like}}</small>
+            </div>
+            <div class="mdl-tooltip" data-mdl-for="{{.ID}}like">{{.Article.Like}}人喜欢</div>
+
   				</div>
-  				<div class="mdl-card__menu" id="{{.Article.ID}}"><a href="/{{.Article.Topic}}"><i class="material-icons">fast_forward</i></a></div>
-  				<div class="mdl-tooltip" data-mdl-for="{{.Article.ID}}">{{.Article.Topic}}</div>
+
+  				<div class="mdl-card__menu" id="{{.ID}}"><a href="/{{.Article.Topic}}"><i class="material-icons">f{{.Article.Topic}}</i></a></div>
+  				<div class="mdl-tooltip" data-mdl-for="{{.ID}}">前往{{.Article.Topic}}分区</div>
+
 			  </div>
-      </a>
+
       {{else}}
 
     	{{end}}
