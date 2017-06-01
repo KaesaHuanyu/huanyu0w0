@@ -23,8 +23,8 @@ func (h *Handler) SignupGet(c echo.Context) (err error) {
 func (h *Handler) Signup(c echo.Context) (err error) {
 	//Bind
 	u := &model.User{
-		ID: bson.NewObjectId(),
-		Time: time.Now(),
+		ID:     bson.NewObjectId(),
+		Time:   time.Now(),
 		Avatar: "http://images.huanyu0w0.cn/icon.jpg",
 	}
 
@@ -40,11 +40,11 @@ func (h *Handler) Signup(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 	if err = db.DB(MONGO_DB).C(USER).
-		Find(bson.M{"email": u.Email}).One(&model.User{}); err == nil{
+		Find(bson.M{"email": u.Email}).One(&model.User{}); err == nil {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "该邮箱已被注册"}
 	}
 	if err = db.DB(MONGO_DB).C(USER).
-		Find(bson.M{"name": u.Name}).One(&model.User{}); err == nil{
+		Find(bson.M{"name": u.Name}).One(&model.User{}); err == nil {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "用户名已存在"}
 	}
 	must := c.FormValue("2333")
@@ -88,7 +88,7 @@ func (h *Handler) Login(c echo.Context) (err error) {
 	}
 
 	cookie := &model.Cookie{
-		ID: u.ID.Hex(),
+		ID:     u.ID.Hex(),
 		Avatar: u.Avatar,
 	}
 	remember := c.FormValue("remember")
@@ -145,4 +145,9 @@ func userInfoFromToken(c echo.Context) (id string) {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
 	return claims["id"].(string)
+}
+
+func (h *Handler) UserDetail(c echo.Context) (err error) {
+
+	return c.JSON(http.StatusOK, nil)
 }

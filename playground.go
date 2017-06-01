@@ -14,7 +14,7 @@ type Tree struct {
 
 func main() {
 	a := &model.Article{
-		Time: time.Now().Add(-34*time.Minute),
+		Time: time.Now().Add(-34 * time.Minute),
 	}
 
 	fmt.Println(a.GetShowTime())

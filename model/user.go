@@ -8,7 +8,6 @@ import (
 type (
 	User struct {
 		ID        bson.ObjectId `json:"id" bson:"_id,omitempty"`
-		//Token     string        `json:"token,omitempty" bson:"-"`
 		Time      time.Time     `json:"time" bson:"time"`
 		Change    time.Time     `json:"change,omitempty" bson:"change,omitempty"`
 		Email     string        `json:"email" bson:"email" form:"email"`
@@ -20,4 +19,18 @@ type (
 		Articles  []string      `json:"articles" bson:"articles"`
 		Followers []string      `json:"followers" bson:"followers"`
 	}
+
+	UserDisplay struct {
+		User      *User
+		ID string
+		CreateTime string
+		Articles  []*Article
+		Comments  []*Comment
+		Follow    []*User
+		Followers []*User
+	}
 )
+
+func (u *User) GetCreateTime() (createTime string) {
+	return u.Time.Format("2006年 01月02日 15:04")
+}

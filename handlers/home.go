@@ -1,31 +1,32 @@
 package handlers
 
 import (
+	"fmt"
 	"github.com/labstack/echo"
+	"github.com/russross/blackfriday"
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
+	"html/template"
 	"huanyu0w0/model"
 	"net/http"
-	"github.com/russross/blackfriday"
-	"html/template"
 	"strconv"
-	"gopkg.in/mgo.v2/bson"
 	"sync"
-	"gopkg.in/mgo.v2"
-	"fmt"
 )
 
 func (h *Handler) Home(c echo.Context) (err error) {
 	//初始化数据
 	data := &struct {
 		model.Cookie
-		Displays []*model.Display
-		NextPage int
+		Displays     []*model.Display
+		NextPage     int
 		PreviousPage int
-		Head bool
-		Tail bool
+		Head         bool
+		Tail         bool
 	}{
 		Displays: []*model.Display{},
 	}
-	if err = data.ReadCookie(c); err == nil{
+
+	if err = data.ReadCookie(c); err == nil {
 		data.IsLogin = true
 	}
 	method := "-" + c.QueryParam("method")
@@ -72,12 +73,13 @@ func (h *Handler) Home(c echo.Context) (err error) {
 		go func(i int) {
 			defer wg.Done()
 			data.Displays[i].ShowTime = data.Displays[i].Article.GetShowTime()
+			data.Displays[i].ShowTopic = data.Displays[i].Article.GetShowTopic()
 			data.Displays[i].CommentsNum = len(data.Displays[i].Article.Comments)
 			//data.Displays[i].Editor不能为 nil
 			data.Displays[i].Editor = &model.User{}
 			db := h.DB.Clone()
 			defer db.Close()
-			err = db.DB(MONGO_DB).C(USER).
+			err := db.DB(MONGO_DB).C(USER).
 				FindId(bson.ObjectIdHex(data.Displays[i].Article.Editor)).
 				One(data.Displays[i].Editor)
 			if err != nil {

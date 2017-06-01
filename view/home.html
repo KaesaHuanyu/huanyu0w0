@@ -2,7 +2,7 @@
 {{define "home"}}
 <html>
 <head>
-	<title>首页 - 寰宇0w0 - 阁下，您听说过安利💊吗 Σ( ° △ °|||)</title>
+	<title>首页 - huanyu0w0 - 阁下，您听说过安利💊吗 Σ( ° △ °|||)</title>
 {{template "header" .}}
       <div class="mdl-grid" style="width: 55%; min-width: 800px; margin-left: 5%;">
     	{{range .Displays}}
@@ -49,7 +49,7 @@
   				</div>
 
   				<div class="mdl-card__menu" id="{{.ID}}"><a href="/{{.Article.Topic}}"><i class="material-icons">f{{.Article.Topic}}</i></a></div>
-  				<div class="mdl-tooltip" data-mdl-for="{{.ID}}">前往{{.Article.Topic}}分区</div>
+  				<div class="mdl-tooltip" data-mdl-for="{{.ID}}">前往{{.ShowTopic}}分区</div>
 
 			  </div>
 

@@ -2,8 +2,8 @@ package model
 
 import (
 	"gopkg.in/mgo.v2/bson"
-	"time"
 	"strconv"
+	"time"
 )
 
 type (
@@ -18,6 +18,15 @@ type (
 		Replies   []string        `json:"replies" bson:"replies"`
 		Time      time.Time       `json:"time" bson:"time"`
 	}
+
+	DisplayComment struct {
+		Comment *Comment
+		Editor *User
+		ID string
+		ShowTime string
+		ReplyNum int
+		IsAgree bool
+	}
 )
 
 func (comment *Comment) GetShowTime() (showTime string) {
@@ -26,14 +35,22 @@ func (comment *Comment) GetShowTime() (showTime string) {
 		if comment.Time.Month() == time.Month() && comment.Time.Day() == time.Day() {
 			if comment.Time.Hour() == time.Hour() {
 				if comment.Time.Minute() == time.Minute() {
-					showTime = strconv.Itoa(time.Second() - comment.Time.Second()) + "秒前"
+					if comment.Time.Second() == time.Second() {
+						showTime = "刚刚"
+					} else {
+						showTime = strconv.Itoa(time.Second()-comment.Time.Second()) + "秒前"
+					}
+				} else if comment.Time.Minute() == time.Minute()-1 && comment.Time.Second() > time.Second() {
+					showTime = strconv.Itoa(time.Second()+60-comment.Time.Second()) + "秒前"
 				} else {
-					showTime = strconv.Itoa(time.Minute() - comment.Time.Minute()) + "分钟前"
+					showTime = strconv.Itoa(time.Minute()-comment.Time.Minute()) + "分钟前"
 				}
+			} else if comment.Time.Hour() == time.Hour()-1 && comment.Time.Minute() > time.Minute() {
+				showTime = strconv.Itoa(time.Minute()+60-comment.Time.Minute()) + "分钟前"
 			} else {
 				showTime = "今天" + comment.Time.Format("15:04")
 			}
-		} else if comment.Time.YearDay() == time.YearDay() - 1 {
+		} else if comment.Time.YearDay() == time.YearDay()-1 {
 			showTime = "昨天" + comment.Time.Format("15:04")
 		} else {
 			showTime = comment.Time.Format("01月02日 15:04")

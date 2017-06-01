@@ -3,13 +3,13 @@
 package main
 
 import (
-	"io"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"html/template"
 	"github.com/labstack/gommon/log"
 	"gopkg.in/mgo.v2"
+	"html/template"
 	"huanyu0w0/handlers"
+	"io"
 )
 
 //实现echo.Renderer接口
@@ -60,7 +60,7 @@ func main() {
 	}
 
 	if err = db.Copy().DB(handlers.MONGO_DB).C(handlers.ARTICLE).EnsureIndex(mgo.Index{
-		Key: []string{"topic", "like"},
+		Key:    []string{"topic", "like"},
 		Unique: true,
 	}); err != nil {
 		log.Fatal(err)
@@ -77,6 +77,9 @@ func main() {
 	e.GET("/signout", h.Signout)
 	e.GET("/article/create", h.CreateArticleGet)
 	e.POST("/article/create", h.CreateArticle)
+	e.GET("/article/:id", h.ArticleDetail)
+	e.GET("/user/:id", h.UserDetail)
+	e.GET("/topic/:topic", h.Topic)
 	e.POST("/follow/:id", h.Follow)
 	e.POST("/posts", h.CreatePost)
 	e.GET("/feed", h.FetchPost)
@@ -87,4 +90,3 @@ func main() {
 	//Run
 	e.Logger.Fatal(e.Start(":1323"))
 }
-

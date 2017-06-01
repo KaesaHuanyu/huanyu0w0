@@ -3,11 +3,11 @@ package controllers
 import (
 	"github.com/labstack/echo"
 	"github.com/russross/blackfriday"
+	"gopkg.in/mgo.v2/bson"
 	"html/template"
 	"huanyu0w0/model"
 	"log"
 	"net/http"
-	"gopkg.in/mgo.v2/bson"
 )
 
 func Home(c echo.Context) error {
