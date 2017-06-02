@@ -55,6 +55,8 @@ func (h *Handler) CreateArticle(c echo.Context) (err error) {
 		UpdateId(bson.ObjectIdHex(data.ID), bson.M{"$addToSet": bson.M{"articles": a.ID.Hex()}}); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
+		} else {
+			return
 		}
 	}
 
@@ -87,12 +89,11 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 			return echo.ErrNotFound
 		}
 	}
-
+	data.Display.Editor = &model.User{}
 	data.Display.ID = data.Display.Article.ID.Hex()
 	data.Display.ShowTime = data.Display.Article.GetShowTime()
 	data.Display.ShowTopic = data.Display.Article.GetShowTopic()
-
-	data.Display.Editor = &model.User{}
+	data.Display.Fans = len(data.Display.Editor.Followers)
 	if err = db.DB(MONGO_DB).C(USER).
 	FindId(bson.ObjectIdHex(data.Display.Article.Editor)).
 	One(data.Display.Editor); err != nil {
@@ -101,16 +102,17 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 		}
 	}
 
+	data.Display.MostLikes = &model.DisplayComment{
+		Comment: &model.Comment{},
+		Editor: &model.User{},
+		Replyto: &model.User{},
+	}
 	wg := sync.WaitGroup{}
 	for i, v := range data.Display.Article.Comments {
 		wg.Add(1)
 		data.Display.Comments = append(data.Display.Comments, &model.DisplayComment{})
 		go func(i int, v string) {
 			defer wg.Done()
-
-			data.Display.Comments[i].ID = data.Display.Comments[i].Comment.ID.Hex()
-			data.Display.Comments[i].ShowTime = data.Display.Comments[i].Comment.GetShowTime()
-			data.Display.Comments[i].ReplyNum = len(data.Display.Comments[i].Comment.Replies)
 			db := h.DB.Clone()
 			defer db.Close()
 
@@ -120,6 +122,9 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 			One(data.Display.Comments[i].Comment); err != nil {
 				fmt.Println("<(￣︶￣)↗[GO!]", i, ":", err)
 			}
+			data.Display.Comments[i].ID = data.Display.Comments[i].Comment.ID.Hex()
+			data.Display.Comments[i].ShowTime = data.Display.Comments[i].Comment.GetShowTime()
+			data.Display.Comments[i].ReplyNum = len(data.Display.Comments[i].Comment.Replies)
 
 			data.Display.Comments[i].Editor = &model.User{}
 			if err := db.DB(MONGO_DB).C(USER).
@@ -127,9 +132,30 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 				One(data.Display.Comments[i].Editor); err != nil {
 				fmt.Println("<(￣︶￣)↗[GO!]", i, ":", err)
 			}
+			//是否为回复
+			if data.Display.Comments[i].Comment.Replyto != "" {
+				data.Display.Comments[i].Replyto = &model.User{}
+				if err := db.DB(MONGO_DB).C(USER).
+					FindId(bson.ObjectIdHex(data.Display.Comments[i].Comment.Replyto)).
+					One(data.Display.Comments[i].Replyto); err != nil {
+					fmt.Println("<(￣︶￣)↗[GO!]", i, ":", err)
+				}
+			}
+			//是否是楼主
+			if data.Display.Comments[i].Comment.Editor == data.Display.Article.Editor {
+				data.Display.Comments[i].IsEditor = true
+			}
+
+			//筛选最热评论
+			if data.Display.Comments[i].Comment.Like > data.Display.MostLikes.Comment.Like {
+				data.Display.MostLikes = data.Display.Comments[i]
+			}
 		}(i, v)
 	}
 	wg.Wait()
+	if data.Display.MostLikes.Comment.Like >= len(data.Display.Article.Comments) {
+		data.Display.IsMostLikes = true
+	}
 
 	return c.Render(http.StatusOK, "article", data)
 }

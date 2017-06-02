@@ -8,8 +8,8 @@ import (
 
 type (
 	Cookie struct {
-		ID       string `json:"id,omitempty" bson:"id,omitempty"`
-		Avatar   string `json:"avatar,omitempty" bson:"avatar,omitempty"`
+		ID       string
+		Avatar   string
 		Remember bool
 		IsLogin  bool
 	}

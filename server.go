@@ -78,6 +78,7 @@ func main() {
 	e.GET("/article/create", h.CreateArticleGet)
 	e.POST("/article/create", h.CreateArticle)
 	e.GET("/article/:id", h.ArticleDetail)
+	e.POST("/createcomment", h.CreateComment)
 	e.GET("/user/:id", h.UserDetail)
 	e.GET("/topic/:topic", h.Topic)
 	e.POST("/follow/:id", h.Follow)

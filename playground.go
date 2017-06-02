@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"huanyu0w0/model"
-	"time"
 )
 
 type Tree struct {
@@ -13,9 +11,8 @@ type Tree struct {
 }
 
 func main() {
-	a := &model.Article{
-		Time: time.Now().Add(-34 * time.Minute),
-	}
-
-	fmt.Println(a.GetShowTime())
+	var a interface{}
+	a = 2
+	v, ok := a.(string)
+	fmt.Println(v, ok)
 }

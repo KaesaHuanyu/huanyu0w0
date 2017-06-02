@@ -26,10 +26,13 @@ type (
 		Article     *Article
 		Editor      *User
 		Comments []*DisplayComment
+		MostLikes *DisplayComment
+		IsMostLikes bool
 		ID          string
 		ShowTime    string
 		ShowTopic string
 		CommentsNum int
+		Fans int
 		IsLike bool
 	}
 )
