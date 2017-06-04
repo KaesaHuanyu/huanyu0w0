@@ -25,15 +25,24 @@ func (h *Handler) Topic(c echo.Context) (err error) {
 		PreviousPage int
 		Head         bool
 		Tail         bool
+		Ad string
+		ByTime bool
+		ByLike bool
 	}{
 		Displays: []*model.Display{},
+		Ad: "topic/" + topic,
 	}
 	if err = data.ReadCookie(c); err == nil {
 		data.IsLogin = true
 	}
-	method := "-" + c.QueryParam("method")
-	if method == "-" {
-		method = "-like"
+	sort := "-" + c.QueryParam("sort")
+	if sort == "-" {
+		sort = "-like"
+	}
+	if sort == "-like" {
+		data.ByLike = true
+	} else if sort == "-time" {
+		data.ByTime = true
 	}
 	page, _ := strconv.Atoi(c.QueryParam("page"))
 	articles := []*model.Article{}
@@ -53,7 +62,7 @@ func (h *Handler) Topic(c echo.Context) (err error) {
 
 	if err = db.DB(MONGO_DB).C(ARTICLE).
 		Find(bson.M{"topic": topic}).
-		Sort(method).
+		Sort(sort).
 		Skip((page - 1) * 20).
 		Limit(20).
 		All(&articles); err != nil {

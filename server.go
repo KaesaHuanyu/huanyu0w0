@@ -26,16 +26,10 @@ func main() {
 	e := echo.New()
 	e.Logger.SetLevel(log.ERROR)
 	e.Use(middleware.Logger())
-	//e.Use(middleware.JWTWithConfig(middleware.JWTConfig{
-	//	SigningKey: []byte(handlers.Key),
-	//	Skipper: func(c echo.Context) bool {
-	//		//Skip authentication for those requests
-	//		if c.Path() == "/login" || c.Path() == "/signup" || c.Path() == "/" || c.Path() == "/static"{
-	//			return true
-	//		}
-	//		return false
-	//	},
-	//}))
+	e.Use(middleware.Recover())
+	//CORS中间件
+	e.Use(middleware.CORS())
+
 
 	//声明模版集
 	t := &Template{
@@ -78,15 +72,18 @@ func main() {
 	e.GET("/article/create", h.CreateArticleGet)
 	e.POST("/article/create", h.CreateArticle)
 	e.GET("/article/:id", h.ArticleDetail)
+	e.GET("/articlelike/:id", h.ArticleLike)
+	e.GET("/commentlike/:id", h.CommentLike)
 	e.POST("/createcomment", h.CreateComment)
 	e.GET("/user/:id", h.UserDetail)
 	e.GET("/topic/:topic", h.Topic)
-	e.POST("/follow/:id", h.Follow)
+	e.GET("/follow/:id", h.Follow)
 	e.POST("/posts", h.CreatePost)
 	e.GET("/feed", h.FetchPost)
 	e.GET("/curriculumVitae", h.CurriculumVitae)
 	//图片之类的静态文件路由
 	e.Static("/static", "static")
+	e.File("/favicon.ico", "static/favicon/favicon.icon")
 
 	//Run
 	e.Logger.Fatal(e.Start(":1323"))

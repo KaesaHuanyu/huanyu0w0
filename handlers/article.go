@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 	"sync"
-	"fmt"
+	"log"
 )
 
 func (h *Handler) CreateArticleGet(c echo.Context) (err error) {
@@ -82,6 +82,7 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 	data.Display.Article = &model.Article{}
 	db := h.DB.Clone()
 	defer db.Close()
+
 	if err = db.DB(MONGO_DB).C(ARTICLE).
 	FindId(bson.ObjectIdHex(id)).
 	One(data.Display.Article); err != nil {
@@ -89,16 +90,39 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 			return echo.ErrNotFound
 		}
 	}
+	//当前用户是否点赞
+	if v, ok := data.Display.Article.UserLiked[data.ID]; ok {
+		if v {
+			data.Display.IsLike = true
+		}
+	}
+
+	//增加点击量
+	data.Display.Article.Click++
+	if err = db.DB(MONGO_DB).C(ARTICLE).
+	UpdateId(bson.ObjectIdHex(id), bson.M{"$set": bson.M{"click": data.Display.Article.Click}}); err != nil {
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		}
+	}
+
 	data.Display.Editor = &model.User{}
 	data.Display.ID = data.Display.Article.ID.Hex()
 	data.Display.ShowTime = data.Display.Article.GetShowTime()
 	data.Display.ShowTopic = data.Display.Article.GetShowTopic()
-	data.Display.Fans = len(data.Display.Editor.Followers)
+	data.Display.Article.Click = data.Display.Article.Click/2
 	if err = db.DB(MONGO_DB).C(USER).
 	FindId(bson.ObjectIdHex(data.Display.Article.Editor)).
 	One(data.Display.Editor); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
+		}
+	}
+
+	//当前用户是否关注
+	if v, ok := data.Display.Editor.IsFollower[data.ID]; ok {
+		if v {
+			data.Display.IsFollow = true
 		}
 	}
 
@@ -115,12 +139,12 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 			defer wg.Done()
 			db := h.DB.Clone()
 			defer db.Close()
-
+			data.Display.Comments[i].Number = i + 1
 			data.Display.Comments[i].Comment = &model.Comment{}
 			if err := db.DB(MONGO_DB).C(COMMENT).
 			FindId(bson.ObjectIdHex(v)).
 			One(data.Display.Comments[i].Comment); err != nil {
-				fmt.Println("<(￣︶￣)↗[GO!]", i, ":", err)
+				log.Println("<(￣︶￣)↗[GO!]", i, ":", err)
 			}
 			data.Display.Comments[i].ID = data.Display.Comments[i].Comment.ID.Hex()
 			data.Display.Comments[i].ShowTime = data.Display.Comments[i].Comment.GetShowTime()
@@ -130,7 +154,7 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 			if err := db.DB(MONGO_DB).C(USER).
 				FindId(bson.ObjectIdHex(data.Display.Comments[i].Comment.Editor)).
 				One(data.Display.Comments[i].Editor); err != nil {
-				fmt.Println("<(￣︶￣)↗[GO!]", i, ":", err)
+				log.Println("<(￣︶￣)↗[GO!]", i, ":", err)
 			}
 			//是否为回复
 			if data.Display.Comments[i].Comment.Replyto != "" {
@@ -138,7 +162,7 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 				if err := db.DB(MONGO_DB).C(USER).
 					FindId(bson.ObjectIdHex(data.Display.Comments[i].Comment.Replyto)).
 					One(data.Display.Comments[i].Replyto); err != nil {
-					fmt.Println("<(￣︶￣)↗[GO!]", i, ":", err)
+					log.Println("<(￣︶￣)↗[GO!]", i, ":", err)
 				}
 			}
 			//是否是楼主
@@ -150,12 +174,78 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 			if data.Display.Comments[i].Comment.Like > data.Display.MostLikes.Comment.Like {
 				data.Display.MostLikes = data.Display.Comments[i]
 			}
+
+			//当前用户是否点赞
+			if v, ok := data.Display.Comments[i].Comment.UserLiked[data.ID]; ok {
+				if v {
+					data.Display.Comments[i].IsLike = true
+				}
+			}
+
+			//当前用户是否关注
+			if v, ok := data.Display.Comments[i].Editor.IsFollower[data.ID]; ok {
+				if v {
+					data.Display.Comments[i].IsFollow = true
+				}
+			}
 		}(i, v)
 	}
 	wg.Wait()
-	if data.Display.MostLikes.Comment.Like >= len(data.Display.Article.Comments) {
+	if data.Display.MostLikes.Comment.Like >= len(data.Display.Article.Comments) &&
+		len(data.Display.Article.Comments) > 10 {
 		data.Display.IsMostLikes = true
 	}
 
 	return c.Render(http.StatusOK, "article", data)
+}
+
+func (h *Handler) ArticleLike(c echo.Context) (err error) {
+	data := &struct {
+		model.Cookie
+	}{}
+	if err = data.Cookie.ReadCookie(c); err == nil {
+		data.IsLogin = true
+	} else {
+		return c.Redirect(http.StatusFound, "/login")
+	}
+	id := c.Param("id")
+	pos := c.QueryParam("pos")
+	//Add a follower to user
+	db := h.DB.Clone()
+	defer db.Close()
+	a := &model.Article{}
+	if err = db.DB(MONGO_DB).C(ARTICLE).
+		FindId(bson.ObjectIdHex(id)).One(a); err != nil {
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		} else {
+			return err
+		}
+	}
+	if a.UserLiked == nil {
+		a.UserLiked = make(map[string]bool)
+	}
+	if v, ok := a.UserLiked[data.ID]; ok {
+		if v {
+			a.Like--
+			a.UserLiked[data.ID] = false
+		} else {
+			a.Like++
+			a.UserLiked[data.ID] = true
+		}
+	} else {
+		a.Like++
+		a.UserLiked[data.ID] = true
+	}
+
+	if err = db.DB(MONGO_DB).C(ARTICLE).
+		UpdateId(a.ID, a); err != nil{
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		} else {
+			return err
+		}
+	}
+
+	return c.Redirect(http.StatusFound, "/article/" + id + "#" + pos)
 }

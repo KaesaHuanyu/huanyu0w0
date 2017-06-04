@@ -10,9 +10,16 @@ import (
 )
 
 func (h *Handler) CreatePost(c echo.Context) (err error) {
-	userID := userInfoFromToken(c)
+	data := &struct {
+		model.Cookie
+	}{}
+	if err = data.Cookie.ReadCookie(c); err == nil {
+		data.IsLogin = true
+	} else {
+		return c.Redirect(http.StatusFound, "/login")
+	}
 	u := &model.User{
-		ID: bson.ObjectIdHex(userID),
+		ID: bson.ObjectIdHex(data.ID),
 	}
 	p := &model.Post{
 		ID:   bson.NewObjectId(),
@@ -45,7 +52,14 @@ func (h *Handler) CreatePost(c echo.Context) (err error) {
 }
 
 func (h *Handler) FetchPost(c echo.Context) (err error) {
-	userID := userInfoFromToken(c)
+	data := &struct {
+		model.Cookie
+	}{}
+	if err = data.Cookie.ReadCookie(c); err == nil {
+		data.IsLogin = true
+	} else {
+		return c.Redirect(http.StatusFound, "/login")
+	}
 	page, _ := strconv.Atoi(c.QueryParam("page"))
 	limit, _ := strconv.Atoi(c.QueryParam("limit"))
 
@@ -61,7 +75,7 @@ func (h *Handler) FetchPost(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 	if err = db.DB("huanyu0w0").C("posts").
-		Find(bson.M{"to": userID}).
+		Find(bson.M{"to": data.ID}).
 		Skip((page - 1) * limit).
 		Limit(limit).
 		All(&posts); err != nil {

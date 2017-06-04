@@ -22,6 +22,9 @@ func (h *Handler) Home(c echo.Context) (err error) {
 		PreviousPage int
 		Head         bool
 		Tail         bool
+		ByLike bool
+		ByTime bool
+		Ad string
 	}{
 		Displays: []*model.Display{},
 	}
@@ -29,9 +32,14 @@ func (h *Handler) Home(c echo.Context) (err error) {
 	if err = data.ReadCookie(c); err == nil {
 		data.IsLogin = true
 	}
-	method := "-" + c.QueryParam("method")
-	if method == "-" {
-		method = "-like"
+	sort := "-" + c.QueryParam("sort")
+	if sort == "-" {
+		sort = "-like"
+	}
+	if sort == "-like" {
+		data.ByLike = true
+	} else if sort == "-time" {
+		data.ByTime = true
 	}
 	page, _ := strconv.Atoi(c.QueryParam("page"))
 	articles := []*model.Article{}
@@ -51,7 +59,7 @@ func (h *Handler) Home(c echo.Context) (err error) {
 
 	if err = db.DB(MONGO_DB).C(ARTICLE).
 		Find(nil).
-		Sort(method).
+		Sort(sort).
 		Skip((page - 1) * 20).
 		Limit(20).
 		All(&articles); err != nil {

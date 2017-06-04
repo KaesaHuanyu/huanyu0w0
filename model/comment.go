@@ -23,11 +23,13 @@ type (
 		Comment *Comment
 		Editor *User
 		Replyto *User
+		Number int
 		ID string
 		ShowTime string
 		ReplyNum int
-		IsAgree bool
+		IsLike bool
 		IsEditor bool
+		IsFollow bool
 	}
 )
 

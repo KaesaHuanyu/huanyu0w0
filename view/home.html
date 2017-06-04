@@ -52,11 +52,33 @@
   				<div class="mdl-tooltip" data-mdl-for="{{.ID}}">前往"{{.ShowTopic}}"分区</div>
 
 			  </div>
-
-      {{else}}
-
     	{{end}}
+        <style type="text/css">
+          #sort{
+            position: fixed;
+            display: block;
+            right: 0;
+            bottom: 0;
+            margin-right: 40px;
+            margin-bottom: 120px;
+            z-index: 900;
+          }
+        </style>
+        
+        <div id="sort">
+        {{if .ByLike}}
+          <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--accent">按热度排序</a>
+          <!-- <span class="mdl-color-text--accent">&nbsp|&nbsp</span> -->
+          <a href="/{{.Ad}}?sort=time" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--primary">按时间排序</a>
+        {{else}}
+          <a href="/{{.Ad}}?sort=like" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--primary">按热度排序</a>
+          <!-- <span class="mdl-color-text--accent">&nbsp|&nbsp</span> -->
+          <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--accent">按时间排序</a>
+        {{end}}
+        </div>
+
       </div>
+      
 
       {{if .Head}}
       <!-- <label class="mdl-button mdl-color-text--accent mdl-js-button mdl-js-ripple-effect" style="margin-left: 5%">首页</label> -->

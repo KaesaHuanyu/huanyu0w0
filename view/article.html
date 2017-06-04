@@ -10,8 +10,7 @@
                 <div class="mdl-card__title mdl-card--border">
 
                   <div style="padding: 2%;">
-                    <small class="mdl-color-text--grey-500">from</small>
-                    &nbsp
+                    <small class="mdl-color-text--grey-500">Topic</small>&nbsp
                     <a href="/topic/{{.Display.Article.Topic}}" style="text-decoration: none;">{{.Display.ShowTopic}}</a>
                     <!-- <span style="float:right; padding-right: 6%;">
                     <small class="mdl-color-text--accent">(╯°口°)╯ ┴—┴&nbsp&nbsp&nbsp&nbsp(＃°Д°)&nbsp&nbsp&nbsp&nbsp╮(￣▽￣)╭</small>
@@ -19,9 +18,11 @@
                     <div class="mdl-color-text--grey-600" style="margin-top: 2%; margin-bottom: 2%;">
                         <h2 class="mdl-card__title-text">{{.Display.Article.Title}}</h2>
                     </div>
-                    <small class="mdl-color-text--grey-500">发布于 {{.Display.ShowTime}}</small>
+                    <small class="mdl-color-text--grey-500">发布于 {{.Display.ShowTime}}</small>&nbsp&nbsp
+                    <small class="mdl-color-text--grey-500">{{.Display.Article.Click}} 次点击</small>&nbsp&nbsp
+                    <small class="mdl-color-text--grey-500">{{.Display.Article.Like}} 人喜欢</small>
                     <span style="float: right;">
-                        <small class="mdl-color-text--grey-500">Link</small>&nbsp
+                        <small class="mdl-color-text--grey-500">Label</small>&nbsp
                         <a href="{{.Display.Article.Url}}" target="_blank" style="text-decoration: none;">
                             <small class="mdl-color-text--accent">{{.Display.Article.Name}}</small>
                         </a>
@@ -36,9 +37,14 @@
                     </a>
                 
                     <span class="mdl-color-text--grey-500">
-                        <big>{{.Display.Editor.Name}}</big>
+                        <a href="/user/{{.Display.Article.Editor}}" target="_blank" style="text-decoration: none;"><big>{{.Display.Editor.Name}}</big></a>&nbsp
+                        {{if .Display.IsFollow}}
+                        <a href="/follow/{{.Display.Article.Editor}}?article={{.Display.ID}}&pos=0" id="0" style="text-decoration: none;"><small class="mdl-color-text--accent">已关注</small></a>
+                        {{else}}
+                        <a href="/follow/{{.Display.Article.Editor}}?article={{.Display.ID}}&pos=0" id="0" style="text-decoration: none;"><small>+关注</small></a>
+                        {{end}}
                         <br>
-                        <small style="margin-left: 3%;">{{.Display.Fans}}位粉丝</small>
+                        <small style="margin-left: 3%;">{{.Display.Editor.Follower}} 位粉丝</small>
                     </span>
                 </div>
 
@@ -62,30 +68,40 @@
 
                 {{if .Display.IsMostLikes}}
                     <small class="mdl-color-text--accent" style="margin: 2%;">最热评论</small>
-                   <div>
-                        <a href="/user/{{.Display.MostLikes.Comment.Editor}}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--icon" style="margin: 2%; margin-left: 12px;">
+                    <div id="mostlikes">
+                        <a href="/user/{{.Display.MostLikes.Comment.Editor}}" target="_blank" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--icon" style="margin: 2%; margin-left: 12px;">
                             <img src="{{.Display.MostLikes.Editor.Avatar}}" style="width: 100%; height: 100%; border-radius: 50%;">
                         </a>
-                        <a href="/user/{{.Display.MostLikes.Comment.Editor}}" style="text-decoration: none;">{{.Display.MostLikes.Editor.Name}}</a>
+                        <a href="/user/{{.Display.MostLikes.Comment.Editor}}" target="_blank" style="text-decoration: none;">{{.Display.MostLikes.Editor.Name}}</a>
+
                         {{if .Display.MostLikes.IsEditor}}
                         <i class="material-icons mdl-color-text--accent">pets</i>
-
-                        <span style="float: right; padding-right: 6%;"><i class="mdl-color-text--accent material-icons" style="margin-left: 2%;">whatshot</i></span>
                         {{end}}
+
+                        &nbsp
+                        {{if .Display.MostLikes.IsFollow}}
+                        <a href="/follow/{{.Display.MostLikes.Comment.Editor}}?article={{.Display.MostLikes.Comment.Article}}&pos=mostlikes" class="mdl-color-text--grey-500" style="text-decoration: none;"><small>已关注</small></a>
+                        {{else}}
+                        <a href="/follow/{{.Display.MostLikes.Comment.Editor}}?article={{.Display.MostLikes.Comment.Article}}&pos=mostlikes" style="text-decoration: none;"><small>+关注</small></a>
+                        {{end}}
+
+                        <span style="float: right; padding-right: 6%; margin-top: 1%"><i class="mdl-color-text--accent material-icons">whatshot</i></span>
+
                         {{if .Display.MostLikes.Comment.Replyto}}
                         <small class="mdl-color-text--grey-500" style="margin-left: 1%;" >回复</small>
-                        <a href="/user/{{.Display.MostLikes.Comment.Replyto}}" style="text-decoration: none; margin-left: 1%;">{{.Display.MostLikes.Replyto.Name}}</a>
+                        <a href="/user/{{.Display.MostLikes.Comment.Replyto}}" target="_blank" style="text-decoration: none; margin-left: 1%;">{{.Display.MostLikes.Replyto.Name}}</a>
                         {{end}}
+
                         <div class="mdl-color-text--grey-600" style="margin-left: 10%;">
                             <p>{{.Display.MostLikes.Comment.Content}}</p>
                         </div>
                         <small class="mdl-color-text--grey-500" style="margin-left: 10%;">{{.Display.MostLikes.ShowTime}}</small>
 
-                        <span style="float:right; padding-right:10%;">
-                            {{if .Display.MostLikes.IsAgree}}
-                            <a href="/nice/{{.Display.MostLikes.Comment.ID}}" style="text-decoration: none;"><small class="mdl-color-text--accent">赞({{.Display.MostLikes.Comment.Like}})</small></a>
+                        <span style="float: right; padding-right: 10%;">
+                            {{if .Display.MostLikes.IsLike}}
+                            <a href="/commentlike/{{.Display.MostLikes.ID}}?article={{.Display.MostLikes.Comment.Article}}&pos=hot" id="hot" style="text-decoration: none;"><small class="mdl-color-text--accent">赞({{.Display.MostLikes.Comment.Like}})</small></a>
                             {{else}}
-                            <a href="/nice/{{.Display.MostLikes.Comment.ID}}" style="text-decoration: none;"><small class="mdl-color-text--grey-500">赞({{.Display.MostLikes.Comment.Like}})</small></a>
+                            <a href="/commentlike/{{.Display.MostLikes.ID}}?article={{.Display.MostLikes.Comment.Article}}&?pos=hot" id="hot" style="text-decoration: none;"><small class="mdl-color-text--grey-500">赞({{.Display.MostLikes.Comment.Like}})</small></a>
                             {{end}}
                             <small class="mdl-color-text--grey-500">&nbsp&nbsp|&nbsp&nbsp</small>
                             <a href="/reply/{{.Display.MostLikes.ID}}" style="text-decoration: none;"><small class="mdl-color-text--grey-500">回复</small></a>
@@ -95,36 +111,51 @@
                     </div>
                     <hr><br><br>
                 {{end}}
-                    <small class="mdl-color-text--accent" style="margin-left: 2%;">所有评论</small>
+                    
                 {{range .Display.Comments}}
+                    <small class="mdl-color-text--accent" style="margin-left: 2%;">所有评论</small>
                     <div id="{{.ID}}">
-                        <a href="/user/{{.Comment.Editor}}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--icon" style="margin: 2%; margin-left: 12px;">
+                        <a href="/user/{{.Comment.Editor}}" target="_blank" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--icon" style="margin: 2%; margin-left: 12px;">
                             <img src="{{.Editor.Avatar}}" style="width: 100%; height: 100%; border-radius: 50%;">
                         </a>
-                        <a href="/user/{{.Comment.Editor}}" style="text-decoration: none;">{{.Editor.Name}}</a>
+                        <a href="/user/{{.Comment.Editor}}" target="_blank" style="text-decoration: none;">{{.Editor.Name}}</a>
+
                         {{if .IsEditor}}
                         <i class="material-icons mdl-color-text--accent">pets</i>
                         {{end}}
+                        &nbsp
+                        {{if .IsFollow}}
+                        <a href="/follow/{{.Comment.Editor}}?article={{.Comment.Article}}&pos={{.Number}}" class="mdl-color-text--grey-500" style="text-decoration: none;"><small>已关注</small></a>
+                        {{else}}
+                        <a href="/follow/{{.Comment.Editor}}?article={{.Comment.Article}}&pos={{.Number}}" style="text-decoration: none;"><small>+关注</small></a>
+                        {{end}}
+
+                        <span style="float: right; padding-right: 6%; margin-top: 1%;" id="{{.Number}}"><big class="mdl-color-text--grey-500"># {{.Number}}</big></span>
+
                         {{if .Comment.Replyto}}
                         <small class="mdl-color-text--grey-500" style="margin-left: 1%;" >回复</small>
-                        <a href="/user/{{.Comment.Replyto}}" style="text-decoration: none; margin-left: 1%;">{{.Replyto.Name}}</a>
+                        <a href="/user/{{.Comment.Replyto}}" target="_blank" style="text-decoration: none; margin-left: 1%;">{{.Replyto.Name}}</a>
                         {{end}}
+
                         <div class="mdl-color-text--grey-600" style="margin-left: 10%;">
                             <p>{{.Comment.Content}}</p>
                         </div>
                         <small class="mdl-color-text--grey-500" style="margin-left: 10%;">{{.ShowTime}}</small>
 
-                        <span style="float:right; padding-right:10%;">
-                            {{if .IsAgree}}
-                            <a href="/nice/{{.Comment.ID}}" style="text-decoration: none;"><small class="mdl-color-text--accent">赞({{.Comment.Like}})</small></a>
+                        <span style="float: right; padding-right:10%;">
+
+                            {{if .IsLike}}
+                            <a href="/commentlike/{{.ID}}?article={{.Comment.Article}}&pos={{.Number}}" style="text-decoration: none;"><small>赞({{.Comment.Like}})</small></a>
                             {{else}}
-                            <a href="/nice/{{.Comment.ID}}" style="text-decoration: none;"><small class="mdl-color-text--grey-500">赞({{.Comment.Like}})</small></a>
+                            <a href="/commentlike/{{.ID}}?article={{.Comment.Article}}&pos={{.Number}}" style="text-decoration: none;" class="mdl-color-text--grey-500"><small>赞({{.Comment.Like}})</small></a>
                             {{end}}
                             <small class="mdl-color-text--grey-500">&nbsp&nbsp|&nbsp&nbsp</small>
                             <a href="/reply/{{.ID}}" style="text-decoration: none;"><small class="mdl-color-text--grey-500">回复</small></a>
                             <small class="mdl-color-text--grey-500">&nbsp&nbsp|&nbsp&nbsp</small>
                             <a href="/comment/{{.ID}}" style="text-decoration: none;"><small class="mdl-color-text--grey-500">所有回复({{.ReplyNum}})</small></a>
+                            
                         </span>
+
                         <hr>
                     </div>
                 {{end}}
@@ -132,16 +163,16 @@
 
                 
                 {{if .Display.IsLike}}
-                <div class="mdl-card__menu mdl-color-text--accent">
-                    <span id="liked"><a href="/like/{{.Display.ID}}">{{.Display.Article.Like}} <i class="material-icons">favorite</i></a></span>
+                <div class="mdl-card__menu mdl-color-text--accent" id="articlelike">
+                    <!-- {{.Display.Article.Like}}  -->
+                    <a href="/articlelike/{{.Display.ID}}?pos=articlelike"><i class="material-icons">favorite</i></a></span>
                 </div>
-                <div class="mdl-tooltip" data-mdl-for="liked">已经喜欢了</div>
+                <div class="mdl-tooltip" data-mdl-for="articleliked">已经喜欢了</div>
                 {{else}}
-                <div class="mdl-card__menu mdl-color-text--accent">
-                    <span style="margin-right: 1%;"><small>{{.Display.Article.Like}}</small></span>
-                    <span id="like"><a href="/like/{{.Display.ID}}"><i class="material-icons">favorite_border</i></a></span>
+                <div class="mdl-card__menu mdl-color-text--accent" id="articlelike">
+                    <a href="/articlelike/{{.Display.ID}}?pos=articlelike"><i class="material-icons">favorite_border</i></a>
                 </div>
-                <div class="mdl-tooltip" data-mdl-for="like">喜欢</div>
+                <div class="mdl-tooltip" data-mdl-for="articlelike">喜欢</div>
                 {{end}}
             </div>
 

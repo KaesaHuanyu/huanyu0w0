@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -56,7 +55,7 @@ func (h *Handler) Signup(c echo.Context) (err error) {
 	if err = db.DB(MONGO_DB).C(USER).Insert(u); err != nil {
 		return
 	}
-	return c.JSON(http.StatusCreated, u)
+	return c.Redirect(http.StatusOK, "/login")
 }
 
 func (h *Handler) Signin(c echo.Context) (err error) {
@@ -97,39 +96,69 @@ func (h *Handler) Login(c echo.Context) (err error) {
 	}
 	cookie.WriteCookie(c)
 
-	//JWT
-	//Create token
-	token := jwt.New(jwt.SigningMethodHS256)
-
-	//Set claims
-	claims := token.Claims.(jwt.MapClaims)
-	claims["id"] = u.ID
-	claims["exp"] = time.Now().Add(72 * time.Hour).Unix()
-
-	//Generate encoded token and send it as response
-	//u.Token, err = token.SignedString([]byte(KEY))
-	//if err != nil {
-	//	return
-	//}
-
-	u.Password = ""
-	return c.JSON(http.StatusOK, u)
+	//u.Password = ""
+	return c.Redirect(http.StatusFound, "/")
 }
 
 func (h *Handler) Follow(c echo.Context) (err error) {
-	userID := userInfoFromToken(c)
+	data := &struct {
+		model.Cookie
+	}{}
+	if err = data.Cookie.ReadCookie(c); err == nil {
+		data.IsLogin = true
+	} else {
+		return c.Redirect(http.StatusFound, "/login")
+	}
 	id := c.Param("id")
-
+	article := c.QueryParam("article")
+	pos := c.QueryParam("pos")
 	//Add a follower to user
 	db := h.DB.Clone()
 	defer db.Close()
+	u := &model.User{}
 	if err = db.DB(MONGO_DB).C(USER).
-		UpdateId(bson.ObjectIdHex(id), bson.M{"$addToSet": bson.M{"followers": userID}}); err != nil {
+		FindId(bson.ObjectIdHex(id)).One(u); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
+		} else {
+			return err
 		}
 	}
-	return
+	if u.IsFollower == nil {
+		u.IsFollower = make(map[string]bool)
+	}
+	if v, ok := u.IsFollower[data.ID]; ok {
+		if v {
+			u.Follower--
+			u.IsFollower[data.ID] = false
+		} else {
+			u.Follower++
+			u.IsFollower[data.ID] = true
+		}
+	} else {
+		u.Follower++
+		u.IsFollower[data.ID] = true
+	}
+
+	if err = db.DB(MONGO_DB).C(USER).
+	UpdateId(u.ID, u); err != nil{
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		} else {
+			return err
+		}
+	}
+
+	if err = db.DB(MONGO_DB).C(USER).
+	UpdateId(bson.ObjectIdHex(data.ID), bson.M{"$addToSet": bson.M{"follow": u.ID.Hex()}}); err != nil{
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		} else {
+			return err
+		}
+	}
+
+	return c.Redirect(http.StatusFound, "/article/" + article + "#" + pos)
 }
 
 func (h *Handler) Signout(c echo.Context) (err error) {
@@ -140,14 +169,30 @@ func (h *Handler) Signout(c echo.Context) (err error) {
 	return c.Redirect(http.StatusFound, "/login")
 }
 
-//使用token以及claims的组合来传递当前登录信息更为优雅
-func userInfoFromToken(c echo.Context) (id string) {
-	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(jwt.MapClaims)
-	return claims["id"].(string)
-}
-
 func (h *Handler) UserDetail(c echo.Context) (err error) {
+	data := &struct {
+		model.Cookie
+		User *model.User
+	}{
+		User: &model.User{},
+	}
+	if err = data.Cookie.ReadCookie(c); err == nil {
+		data.IsLogin = true
+	}
 
-	return c.JSON(http.StatusOK, nil)
+	id := c.Param("id")
+	db := h.DB.Clone()
+	defer db.Close()
+
+	if err = db.DB(MONGO_DB).C(USER).
+	FindId(bson.ObjectIdHex(id)).
+	One(data.User); err != nil {
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		} else {
+			return err
+		}
+	}
+	data.User.Password = ""
+	return c.JSON(http.StatusOK, data.User)
 }

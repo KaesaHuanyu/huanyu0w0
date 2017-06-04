@@ -61,3 +61,55 @@ func (h *Handler) CreateComment(c echo.Context) (err error) {
 
 	return c.JSON(http.StatusOK, comment)
 }
+
+func (h *Handler) CommentLike(c echo.Context) (err error) {
+	data := &struct {
+		model.Cookie
+	}{}
+	if err = data.Cookie.ReadCookie(c); err == nil {
+		data.IsLogin = true
+	} else {
+		return c.Redirect(http.StatusFound, "/login")
+	}
+	id := c.Param("id")
+	article := c.QueryParam("article")
+	pos := c.QueryParam("pos")
+	//Add a follower to user
+	db := h.DB.Clone()
+	defer db.Close()
+	comment := &model.Comment{}
+	if err = db.DB(MONGO_DB).C(COMMENT).
+		FindId(bson.ObjectIdHex(id)).One(comment); err != nil {
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		} else {
+			return err
+		}
+	}
+	if comment.UserLiked == nil {
+		comment.UserLiked = make(map[string]bool)
+	}
+	if v, ok := comment.UserLiked[data.ID]; ok {
+		if v {
+			comment.Like--
+			comment.UserLiked[data.ID] = false
+		} else {
+			comment.Like++
+			comment.UserLiked[data.ID] = true
+		}
+	} else {
+		comment.Like++
+		comment.UserLiked[data.ID] = true
+	}
+
+	if err = db.DB(MONGO_DB).C(COMMENT).
+		UpdateId(comment.ID, comment); err != nil{
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		} else {
+			return err
+		}
+	}
+
+	return c.Redirect(http.StatusFound, "/article/" + article + "#" + pos)
+}

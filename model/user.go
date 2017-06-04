@@ -17,7 +17,8 @@ type (
 		Follows   []string      `json:"follow" bson:"follow"`
 		Comments  []string      `json:"comments" bson:"comments"`
 		Articles  []string      `json:"articles" bson:"articles"`
-		Followers []string      `json:"followers" bson:"followers"`
+		Follower int      `json:"follower" bson:"follower"`
+		IsFollower map[string]bool `json:"is_follower" bson:"is_follower"`
 	}
 
 	UserDisplay struct {
