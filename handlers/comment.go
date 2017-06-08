@@ -7,6 +7,8 @@ import (
 	"gopkg.in/mgo.v2/bson"
 	"time"
 	"gopkg.in/mgo.v2"
+	"sync"
+	"log"
 )
 
 func (h *Handler) CreateComment(c echo.Context) (err error) {
@@ -27,6 +29,7 @@ func (h *Handler) CreateComment(c echo.Context) (err error) {
 		Article: articleID,
 		Editor: data.ID,
 	}
+
 	if err = c.Bind(comment); err != nil {
 		return
 	}
@@ -55,11 +58,25 @@ func (h *Handler) CreateComment(c echo.Context) (err error) {
 		}
 	}
 
+	replyto := c.QueryParam("replyto")
+	if replyto != "" {
+		comment.Replyto = replyto
+		//更新comment
+		if err = db.DB(MONGO_DB).C(COMMENT).
+			UpdateId(bson.ObjectIdHex(replyto), bson.M{"$addToSet": bson.M{"replies": comment.ID.Hex()}}); err != nil {
+			if err == mgo.ErrNotFound {
+				return echo.ErrNotFound
+			} else {
+				return err
+			}
+		}
+	}
+
 	if err = db.DB(MONGO_DB).C(COMMENT).Insert(comment); err != nil {
 		return err
 	}
 
-	return c.JSON(http.StatusOK, comment)
+	return c.Redirect(http.StatusFound, "/article/" + comment.Article)
 }
 
 func (h *Handler) CommentLike(c echo.Context) (err error) {
@@ -112,4 +129,127 @@ func (h *Handler) CommentLike(c echo.Context) (err error) {
 	}
 
 	return c.Redirect(http.StatusFound, "/article/" + article + "#" + pos)
+}
+
+func (h *Handler) Replies(c echo.Context) (err error) {
+	//获得当前登录账户的ID
+	data := &struct {
+		model.Cookie
+		DisplayComment *model.DisplayComment
+		Replies []*model.DisplayComment
+		IsLike bool
+		IsFollow bool
+		IsEditor bool
+	}{
+		Replies: []*model.DisplayComment{},
+	}
+	if err = data.Cookie.ReadCookie(c); err == nil {
+		data.IsLogin = true
+	}
+
+	id := c.Param("id")
+	db := h.DB.Clone()
+	defer db.Close()
+	data.DisplayComment.Comment = &model.Comment{}
+	if err = db.DB(MONGO_DB).C(COMMENT).
+	FindId(bson.ObjectIdHex(id)).
+	One(data.DisplayComment.Comment); err != nil{
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		} else {
+			return err
+		}
+	}
+
+	data.DisplayComment.Editor = &model.User{}
+	if err = db.DB(MONGO_DB).C(USER).
+	FindId(bson.ObjectIdHex(data.DisplayComment.Comment.Editor)).
+	One(data.DisplayComment.Editor); err != nil {
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		} else {
+			return err
+		}
+	}
+
+	//是否为回复
+	if data.DisplayComment.Comment.Replyto != "" {
+		master := &model.Comment{}
+		if err := db.DB(MONGO_DB).C(COMMENT).
+			FindId(bson.ObjectIdHex(data.DisplayComment.Comment.Replyto)).
+			One(master); err != nil {
+			log.Println("<(￣︶￣)↗[GO!]", i, " Replyto:", err)
+		}
+		data.DisplayComment.Replyto = &model.User{}
+		if err := db.DB(MONGO_DB).C(USER).
+			FindId(bson.ObjectIdHex(master.Editor)).
+			One(data.DisplayComment.Replyto); err != nil {
+			log.Println("<(￣︶￣)↗[GO!]", i, " Replyto:", err)
+		}
+	}
+
+	//当前用户是否关注
+	if v, ok := data.DisplayComment.Editor.IsFollower[data.ID]; ok {
+		if v {
+			data.DisplayComment.IsFollow = true
+		}
+	}
+
+	//当前用户是否点赞
+	if v, ok := data.DisplayComment.Comment.UserLiked[data.ID]; ok {
+		if v {
+			data.DisplayComment.IsLike = true
+		}
+	}
+
+	wg := &sync.WaitGroup{}
+	for i, v := range data.DisplayComment.Comment.Replies {
+		wg.Add(1)
+		data.Replies = append(data.Replies, &model.DisplayComment{})
+		go func(i int, v string) {
+			defer wg.Done()
+			db := h.DB.Clone()
+			defer db.Close()
+
+			data.Replies[i].Number = i + 1
+			data.Replies[i].Comment = &model.Comment{}
+			if err = db.DB(MONGO_DB).C(COMMENT).
+			FindId(bson.ObjectIdHex(v)).
+			One(data.Replies[i].Comment); err != nil {
+				log.Println("<(￣︶￣)↗[GO!]", i, " Find comment:", err)
+			}
+			data.Replies[i].ID = data.Replies[i].Comment.ID.Hex()
+			data.Replies[i].ShowTime = data.Replies[i].Comment.GetShowTime()
+			data.Replies[i].ReplyNum = len(data.Replies[i].Comment.Replies)
+
+			data.Replies[i].Editor = &model.User{}
+			if err = db.DB(MONGO_DB).C(USER).
+			FindId(bson.ObjectIdHex(data.Replies[i].Comment.Editor)).
+			One(data.Replies[i].Editor); err != nil{
+				log.Println("<(￣︶￣)↗[GO!]", i, " Find editor:", err)
+			}
+
+			//是否是楼主
+			if data.Replies[i].Comment.Editor == data.DisplayComment.Comment.Editor {
+				data.Replies[i].IsEditor = true
+			}
+
+			//当前用户是否点赞
+			if v, ok := data.Replies[i].Comment.UserLiked[data.ID]; ok {
+				if v {
+					data.Replies[i].IsLike = true
+				}
+			}
+
+			//当前用户是否关注
+			if v, ok := data.Replies[i].Editor.IsFollower[data.ID]; ok {
+				if v {
+					data.Replies[i].IsFollow = true
+				}
+			}
+		}(i, v)
+	}
+	wg.Wait()
+
+	return c.Render(http.StatusOK, "replies", data)
 }

@@ -64,7 +64,7 @@ func (h *Handler) CreateArticle(c echo.Context) (err error) {
 		return
 	}
 
-	return c.JSON(http.StatusOK, a)
+	return c.Redirect(http.StatusFound, "/article/" + a.ID.Hex())
 }
 
 func (h *Handler) ArticleDetail(c echo.Context) (err error) {
@@ -154,15 +154,21 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 			if err := db.DB(MONGO_DB).C(USER).
 				FindId(bson.ObjectIdHex(data.Display.Comments[i].Comment.Editor)).
 				One(data.Display.Comments[i].Editor); err != nil {
-				log.Println("<(￣︶￣)↗[GO!]", i, ":", err)
+				log.Println("<(￣︶￣)↗[GO!]", i, " Editor:", err)
 			}
 			//是否为回复
 			if data.Display.Comments[i].Comment.Replyto != "" {
+				master := &model.Comment{}
+				if err := db.DB(MONGO_DB).C(COMMENT).
+					FindId(bson.ObjectIdHex(data.Display.Comments[i].Comment.Replyto)).
+					One(master); err != nil {
+					log.Println("<(￣︶￣)↗[GO!]", i, " Replyto:", err)
+				}
 				data.Display.Comments[i].Replyto = &model.User{}
 				if err := db.DB(MONGO_DB).C(USER).
-					FindId(bson.ObjectIdHex(data.Display.Comments[i].Comment.Replyto)).
+					FindId(bson.ObjectIdHex(master.Editor)).
 					One(data.Display.Comments[i].Replyto); err != nil {
-					log.Println("<(￣︶￣)↗[GO!]", i, ":", err)
+					log.Println("<(￣︶￣)↗[GO!]", i, " Replyto:", err)
 				}
 			}
 			//是否是楼主
@@ -192,7 +198,7 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 	}
 	wg.Wait()
 	if data.Display.MostLikes.Comment.Like >= len(data.Display.Article.Comments) &&
-		len(data.Display.Article.Comments) > 10 {
+		len(data.Display.Article.Comments) > 6 {
 		data.Display.IsMostLikes = true
 	}
 

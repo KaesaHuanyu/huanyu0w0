@@ -55,7 +55,15 @@ func (h *Handler) Signup(c echo.Context) (err error) {
 	if err = db.DB(MONGO_DB).C(USER).Insert(u); err != nil {
 		return
 	}
-	return c.Redirect(http.StatusOK, "/login")
+
+	cookie := &model.Cookie{
+		ID:     u.ID.Hex(),
+		Avatar: u.Avatar,
+	}
+	cookie.WriteCookie(c)
+
+	//u.Password = ""
+	return c.Redirect(http.StatusFound, "/")
 }
 
 func (h *Handler) Signin(c echo.Context) (err error) {

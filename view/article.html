@@ -2,7 +2,7 @@
 {{define "article"}}
 <html>
 <head>
-<title>{{.Display.Article.Title}} - {{.Display.Article.Topic}} - huanyu0w0 - 阁下，您听说过安利💊吗 Σ( ° △ °|||)</title>
+<title>{{.Display.Article.Title}} - {{.Display.Article.Topic}} - huanyu0w0 - 松鼠党聚集地 Σ( ° △ °|||)</title>
 {{template "header" .}}
 
             <div class="mdl-card mdl-shadow--4dp" style="margin-left: 8%; margin-top: 1%; min-width: 640px; width: 40%;">
@@ -48,7 +48,7 @@
                     </span>
                 </div>
 
-                <div class="mdl-card__supporting-text mdl-color-text--grey-600" style="min-height: 320px; margin: 2%; margin-top: 1%;">
+                <div class="mdl-card__supporting-text mdl-color-text--grey-600" style="min-height: 320px; margin: 2%; margin-top: 1%; margin-left: 3%;">
                     {{.Display.Article.Reason}}
                 </div>
 
@@ -104,16 +104,31 @@
                             <a href="/commentlike/{{.Display.MostLikes.ID}}?article={{.Display.MostLikes.Comment.Article}}&?pos=hot" id="hot" style="text-decoration: none;"><small class="mdl-color-text--grey-500">赞({{.Display.MostLikes.Comment.Like}})</small></a>
                             {{end}}
                             <small class="mdl-color-text--grey-500">&nbsp&nbsp|&nbsp&nbsp</small>
-                            <a href="/reply/{{.Display.MostLikes.ID}}" style="text-decoration: none;"><small class="mdl-color-text--grey-500">回复</small></a>
+                            <a href="javascript:void(0)" style="text-decoration: none;" onclick="document.getElementById('reply{{.Display.MostLikes.ID}}').style.display='block'"><small class="mdl-color-text--grey-500">回复</small></a>
                             <small class="mdl-color-text--grey-500">&nbsp&nbsp|&nbsp&nbsp</small>
-                            <a href="/comment/{{.Display.MostLikes.ID}}" style="text-decoration: none;"><small class="mdl-color-text--grey-500">所有回复({{.Display.MostLikes.ReplyNum}})</small></a>
+                            <a href="/replies/{{.Display.MostLikes.ID}}" style="text-decoration: none;"><small class="mdl-color-text--grey-500">所有回复({{.Display.MostLikes.ReplyNum}})</small></a>
                         </span>
                     </div>
+
+                    <div style="display: none;" id="reply{{.Display.MostLikes.ID}}">
+                        <form action="/createcomment?article={{.Display.MostLikes.Comment.Article}}&replyto={{.Display.MostLikes.ID}}" method="post">
+                            <div class="mdl-textfield mdl-js-textfield" style="width: 95%; margin-left: 2%;">
+                            <textarea rows=1 class="mdl-textfield__input" type="text" id="comment" name="content"></textarea>
+                            <label for="comment" class="mdl-textfield__label">回复 {{.Display.MostLikes.Editor.Name}}: </label>
+                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--grey-600 mdl-button--icon" style="right: 2%;">
+                                <i class="material-icons" role="presentation">send</i>
+                            </button>
+                            </div>
+                        </form>
+                    </div>
+
                     <hr><br><br>
                 {{end}}
-                    
+                {{if .Display.Comments}}
+                <small class="mdl-color-text--accent" style="margin-left: 2%;">所有评论</small>
+                {{end}}
+                <br>
                 {{range .Display.Comments}}
-                    <small class="mdl-color-text--accent" style="margin-left: 2%;">所有评论</small>
                     <div id="{{.ID}}">
                         <a href="/user/{{.Comment.Editor}}" target="_blank" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--icon" style="margin: 2%; margin-left: 12px;">
                             <img src="{{.Editor.Avatar}}" style="width: 100%; height: 100%; border-radius: 50%;">
@@ -150,11 +165,23 @@
                             <a href="/commentlike/{{.ID}}?article={{.Comment.Article}}&pos={{.Number}}" style="text-decoration: none;" class="mdl-color-text--grey-500"><small>赞({{.Comment.Like}})</small></a>
                             {{end}}
                             <small class="mdl-color-text--grey-500">&nbsp&nbsp|&nbsp&nbsp</small>
-                            <a href="/reply/{{.ID}}" style="text-decoration: none;"><small class="mdl-color-text--grey-500">回复</small></a>
+                            <a href="javascript:void(0)" style="text-decoration: none;" onclick="document.getElementById('reply{{.ID}}').style.display='block'"><small class="mdl-color-text--grey-500">回复</small></a>
                             <small class="mdl-color-text--grey-500">&nbsp&nbsp|&nbsp&nbsp</small>
-                            <a href="/comment/{{.ID}}" style="text-decoration: none;"><small class="mdl-color-text--grey-500">所有回复({{.ReplyNum}})</small></a>
+                            <a href="/replies/{{.ID}}" style="text-decoration: none;"><small class="mdl-color-text--grey-500">所有回复({{.ReplyNum}})</small></a>
                             
                         </span>
+
+                        <div style="display: none;" id="reply{{.ID}}">
+                            <form action="/createcomment?article={{.Comment.Article}}&replyto={{.ID}}" method="post">
+                                <div class="mdl-textfield mdl-js-textfield" style="width: 95%; margin-left: 2%;">
+                                <textarea rows=1 class="mdl-textfield__input" type="text" id="comment" name="content"></textarea>
+                                <label for="comment" class="mdl-textfield__label">回复 {{.Editor.Name}}: </label>
+                                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--grey-600 mdl-button--icon" style="right: 2%;">
+                                    <i class="material-icons" role="presentation">send</i>
+                                </button>
+                                </div>
+                            </form>
+                        </div>
 
                         <hr>
                     </div>

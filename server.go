@@ -54,7 +54,7 @@ func main() {
 	}
 
 	if err = db.Copy().DB(handlers.MONGO_DB).C(handlers.ARTICLE).EnsureIndex(mgo.Index{
-		Key:    []string{"topic", "like"},
+		Key:    []string{"topic"},
 		Unique: true,
 	}); err != nil {
 		log.Fatal(err)
@@ -75,6 +75,7 @@ func main() {
 	e.GET("/articlelike/:id", h.ArticleLike)
 	e.GET("/commentlike/:id", h.CommentLike)
 	e.POST("/createcomment", h.CreateComment)
+	e.GET("/replies/:id", h.Replies)
 	e.GET("/user/:id", h.UserDetail)
 	e.GET("/topic/:topic", h.Topic)
 	e.GET("/follow/:id", h.Follow)
@@ -83,7 +84,7 @@ func main() {
 	e.GET("/curriculumVitae", h.CurriculumVitae)
 	//图片之类的静态文件路由
 	e.Static("/static", "static")
-	e.File("/favicon.ico", "static/favicon/favicon.icon")
+	e.File("/favicon.ico", "static/favicon/松鼠.svg")
 
 	//Run
 	e.Logger.Fatal(e.Start(":1323"))
