@@ -73,7 +73,7 @@ func (a *Article) GetShowTime() (showTime string) {
 
 func (a *Article) GetShowTopic() (showTopic string) {
 	switch a.Topic {
-	case "anime":
+	case "toys":
 		showTopic = "番剧"
 	case "movie":
 		showTopic = "电影"

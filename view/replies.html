@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+{{define "replies"}}
+<html>
+<head>
+<title>{{.DisplayComment.Editor.Name}} - huanyu0w0 - 松鼠党聚集区 Σ( ° △ °|||)</title>
+{{template "header" .}}
+
+            <div class="mdl-card mdl-shadow--4dp" style="margin-left: 8%; margin-top: 1%; min-width: 640px; width: 40%;">
+
+                <div class="mdl-card__supporting-text mdl-color-text--grey-600" style="margin-left: 2%;" id="main">
+                    
+                    <a href="/user/{{.DisplayComment.Comment.Editor}}" target="_blank" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--icon" style="margin: 2%; margin-left: 12px;">
+                            <img src="{{.DisplayComment.Editor.Avatar}}" style="width: 100%; height: 100%; border-radius: 50%;">
+                        </a>
+                        <a href="/user/{{.DisplayComment.Comment.Editor}}" target="_blank" style="text-decoration: none;">{{.DisplayComment.Editor.Name}}</a>
+
+                        {{if .DisplayComment.IsEditor}}
+                        <i class="material-icons mdl-color-text--accent">pets</i>
+                        {{end}}
+                        &nbsp
+                        {{if .DisplayComment.IsFollow}}
+                        <a href="/follow/{{.DisplayComment.Comment.Editor}}?article={{.DisplayComment.Comment.Article}}&pos=main" class="mdl-color-text--grey-500" style="text-decoration: none;"><small>已关注</small></a>
+                        {{else}}
+                        <a href="/follow/{{.DisplayComment.Comment.Editor}}?article={{.DisplayComment.Comment.Article}}&pos=main" style="text-decoration: none;"><small>+关注</small></a>
+                        {{end}}
+
+                        {{if .DisplayComment.Comment.Replyto}}
+                        <small class="mdl-color-text--grey-500" style="margin-left: 1%;" >回复</small>
+                        <a href="/user/{{.DisplayComment.Comment.Replyto}}" target="_blank" style="text-decoration: none; margin-left: 1%;">{{.DisplayComment.Replyto.Name}}</a>
+                        {{end}}
+
+                        <div class="mdl-color-text--grey-600" style="margin-left: 10%;">
+                            <p>{{.DisplayComment.Comment.Content}}</p>
+                        </div>
+                        <small class="mdl-color-text--grey-500" style="margin-left: 10%;">{{.DisplayComment.ShowTime}}</small>
+
+                        <span style="float: right; padding-right:10%;">
+
+                            {{if .DisplayComment.IsLike}}
+                            <a href="/commentlike/{{.DisplayComment.ID}}?article={{.DisplayComment.Comment.Article}}&pos=main&replies=yes&comment={{.DisplayComment.ID}}" style="text-decoration: none;"><small>赞({{.DisplayComment.Comment.Like}})</small></a>
+                            {{else}}
+                            <a href="/commentlike/{{.DisplayComment.ID}}?article={{.DisplayComment.Comment.Article}}&pos=main&replies=yes&comment={{.DisplayComment.ID}}" style="text-decoration: none;" class="mdl-color-text--grey-500"><small>赞({{.DisplayComment.Comment.Like}})</small></a>
+                            {{end}}
+                            <small class="mdl-color-text--grey-500">&nbsp&nbsp|&nbsp&nbsp</small>
+                            <a href="javascript:void(0)" style="text-decoration: none;" onclick="document.getElementById('replymain').style.display='block'"><small class="mdl-color-text--grey-500">回复</small></a>
+                        </span>
+
+                        <div style="display: none;" id="replymain">
+                            <form action="/createcomment?article={{.DisplayComment.Comment.Article}}&replyto={{.DisplayComment.ID}}&replies=yes&comment={{.DisplayComment.ID}}" method="post">
+                                <div class="mdl-textfield mdl-js-textfield" style="width: 95%; margin-left: 2%;">
+                                <textarea rows=1 class="mdl-textfield__input" type="text" id="comment" name="content"></textarea>
+                                <label for="comment" class="mdl-textfield__label">回复 {{.DisplayComment.Editor.Name}}: </label>
+                                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--grey-600 mdl-button--icon" style="right: 2%;">
+                                    <i class="material-icons" role="presentation">send</i>
+                                </button>
+                                </div>
+                            </form>
+                        </div>
+
+                </div>
+
+                <div class="mdl-card__actions mdl-card--border mdl-color--grey-50 mdl-shadow--2dp">
+
+                {{if .Replies}}
+                <small class="mdl-color-text--accent" style="margin-left: 2%;">所有回复</small>
+                {{end}}
+                <br>
+                {{range .Replies}}
+                    <div id="{{.ID}}">
+                        <a href="/user/{{.Comment.Editor}}" target="_blank" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--icon" style="margin: 2%; margin-left: 12px;">
+                            <img src="{{.Editor.Avatar}}" style="width: 100%; height: 100%; border-radius: 50%;">
+                        </a>
+                        <a href="/user/{{.Comment.Editor}}" target="_blank" style="text-decoration: none;">{{.Editor.Name}}</a>
+
+                        {{if .IsEditor}}
+                        <i class="material-icons mdl-color-text--accent">pets</i>
+                        {{end}}
+                        &nbsp
+                        {{if .IsFollow}}
+                        <a href="/follow/{{.Comment.Editor}}?article={{.Comment.Article}}&pos={{.Number}}" class="mdl-color-text--grey-500" style="text-decoration: none;"><small>已关注</small></a>
+                        {{else}}
+                        <a href="/follow/{{.Comment.Editor}}?article={{.Comment.Article}}&pos={{.Number}}" style="text-decoration: none;"><small>+关注</small></a>
+                        {{end}}
+
+                        <span style="float: right; padding-right: 6%; margin-top: 1%;" id="{{.Number}}"><big class="mdl-color-text--grey-500"># {{.Number}}</big></span>
+
+                        <div class="mdl-color-text--grey-600" style="margin-left: 10%;">
+                            <p>{{.Comment.Content}}</p>
+                        </div>
+                        <small class="mdl-color-text--grey-500" style="margin-left: 10%;">{{.ShowTime}}</small>
+
+                        <span style="float: right; padding-right:10%;">
+
+                            {{if .IsLike}}
+                            <a href="/commentlike/{{.ID}}?article={{.Comment.Article}}&pos={{.Number}}&replies=yes&comment={{.Comment.Replyto}}" style="text-decoration: none;"><small>赞({{.Comment.Like}})</small></a>
+                            {{else}}
+                            <a href="/commentlike/{{.ID}}?article={{.Comment.Article}}&pos={{.Number}}&replies=yes&comment={{.Comment.Replyto}}" style="text-decoration: none;" class="mdl-color-text--grey-500"><small>赞({{.Comment.Like}})</small></a>
+                            {{end}}
+                            <small class="mdl-color-text--grey-500">&nbsp&nbsp|&nbsp&nbsp</small>
+                            <a href="javascript:void(0)" style="text-decoration: none;" onclick="document.getElementById('reply{{.ID}}').style.display='block'"><small class="mdl-color-text--grey-500">回复</small></a>
+                            <small class="mdl-color-text--grey-500">&nbsp&nbsp|&nbsp&nbsp</small>
+                            <a href="/replies/{{.ID}}" style="text-decoration: none;"><small class="mdl-color-text--grey-500">所有回复({{.ReplyNum}})</small></a>
+                            
+                        </span>
+
+                        <div style="display: none;" id="reply{{.ID}}">
+                            <form action="/createcomment?article={{.Comment.Article}}&replyto={{.ID}}&replies=yes&comment={{.Comment.Replyto}}" method="post">
+                                <div class="mdl-textfield mdl-js-textfield" style="width: 95%; margin-left: 2%;">
+                                <textarea rows=1 class="mdl-textfield__input" type="text" id="comment" name="content"></textarea>
+                                <label for="comment" class="mdl-textfield__label">回复 {{.Editor.Name}}: </label>
+                                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--grey-600 mdl-button--icon" style="right: 2%;">
+                                    <i class="material-icons" role="presentation">send</i>
+                                </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <hr>
+                    </div>
+                {{end}}
+                </div>
+
+            </div>
+
+{{template "footer"}}
+{{end}}

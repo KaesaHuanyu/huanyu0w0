@@ -20,6 +20,11 @@ func (h *Handler) SignupGet(c echo.Context) (err error) {
 }
 
 func (h *Handler) Signup(c echo.Context) (err error) {
+	//清除cookies
+	for _, cookie := range c.Cookies() {
+		cookie.MaxAge = -1
+		c.SetCookie(cookie)
+	}
 	//Bind
 	u := &model.User{
 		ID:     bson.NewObjectId(),
@@ -77,6 +82,11 @@ func (h *Handler) Signin(c echo.Context) (err error) {
 }
 
 func (h *Handler) Login(c echo.Context) (err error) {
+	//清除cookie
+	for _, cookie := range c.Cookies() {
+		cookie.MaxAge = -1
+		c.SetCookie(cookie)
+	}
 	//Bind
 	u := new(model.User)
 	if err = c.Bind(u); err != nil {

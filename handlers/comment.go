@@ -76,6 +76,12 @@ func (h *Handler) CreateComment(c echo.Context) (err error) {
 		return err
 	}
 
+	if replies := c.QueryParam("replies"); replies == "yes" {
+		if comment := c.QueryParam("comment"); comment != "" {
+			return c.Redirect(http.StatusFound, "/replies/" + comment)
+		}
+	}
+
 	return c.Redirect(http.StatusFound, "/article/" + comment.Article)
 }
 
@@ -128,6 +134,12 @@ func (h *Handler) CommentLike(c echo.Context) (err error) {
 		}
 	}
 
+	if replies := c.QueryParam("replies"); replies == "yes" {
+		if comment := c.QueryParam("comment"); comment != "" {
+			return c.Redirect(http.StatusFound, "/replies/" + comment + "#" + pos)
+		}
+	}
+
 	return c.Redirect(http.StatusFound, "/article/" + article + "#" + pos)
 }
 
@@ -141,6 +153,7 @@ func (h *Handler) Replies(c echo.Context) (err error) {
 		IsFollow bool
 		IsEditor bool
 	}{
+		DisplayComment: &model.DisplayComment{},
 		Replies: []*model.DisplayComment{},
 	}
 	if err = data.Cookie.ReadCookie(c); err == nil {
@@ -150,6 +163,7 @@ func (h *Handler) Replies(c echo.Context) (err error) {
 	id := c.Param("id")
 	db := h.DB.Clone()
 	defer db.Close()
+
 	data.DisplayComment.Comment = &model.Comment{}
 	if err = db.DB(MONGO_DB).C(COMMENT).
 	FindId(bson.ObjectIdHex(id)).
@@ -160,6 +174,10 @@ func (h *Handler) Replies(c echo.Context) (err error) {
 			return err
 		}
 	}
+
+	data.DisplayComment.ID = data.DisplayComment.Comment.ID.Hex()
+	data.DisplayComment.ShowTime = data.DisplayComment.Comment.GetShowTime()
+	data.DisplayComment.ReplyNum = len(data.DisplayComment.Comment.Replies)
 
 	data.DisplayComment.Editor = &model.User{}
 	if err = db.DB(MONGO_DB).C(USER).
@@ -178,13 +196,13 @@ func (h *Handler) Replies(c echo.Context) (err error) {
 		if err := db.DB(MONGO_DB).C(COMMENT).
 			FindId(bson.ObjectIdHex(data.DisplayComment.Comment.Replyto)).
 			One(master); err != nil {
-			log.Println("<(￣︶￣)↗[GO!]", i, " Replyto:", err)
+			log.Println("<(￣︶￣)↗[GO!]", " Replyto:", err)
 		}
 		data.DisplayComment.Replyto = &model.User{}
 		if err := db.DB(MONGO_DB).C(USER).
 			FindId(bson.ObjectIdHex(master.Editor)).
 			One(data.DisplayComment.Replyto); err != nil {
-			log.Println("<(￣︶￣)↗[GO!]", i, " Replyto:", err)
+			log.Println("<(￣︶￣)↗[GO!]", " Replyto:", err)
 		}
 	}
 
