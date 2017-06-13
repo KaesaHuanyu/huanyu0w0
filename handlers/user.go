@@ -29,7 +29,7 @@ func (h *Handler) Signup(c echo.Context) (err error) {
 	u := &model.User{
 		ID:     bson.NewObjectId(),
 		Time:   time.Now(),
-		Avatar: "http://images.huanyu0w0.cn/icon.jpg",
+		Avatar: "http://images.huanyu0w0.cn/avatar/squirrelAvatar.jpg",
 	}
 
 	if err = c.Bind(u); err != nil {
@@ -212,5 +212,5 @@ func (h *Handler) UserDetail(c echo.Context) (err error) {
 		}
 	}
 	data.User.Password = ""
-	return c.JSON(http.StatusOK, data.User)
+	return c.Render(http.StatusOK, "user", data)
 }

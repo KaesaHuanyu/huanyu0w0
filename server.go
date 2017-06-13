@@ -1,4 +1,4 @@
-//docker run --name huayu0w0-mongo -d --restart always -v ~/mongo:/data/db mongo
+//docker run --name huayu0w0-mongo -d --restart always -m 512m --oom-kill-disable -v ~/mongo:/data/db mongo
 //docker run -d --name huanyu0w0-server-test --restart always --link huanyu0w0-mongo-test:mongo -p 80:1323 daocloud.io/kaesa/huanyu0w0-server-test
 package main
 
@@ -53,6 +53,13 @@ func main() {
 		log.Fatal(err)
 	}
 
+	if err = db.Copy().DB(handlers.MONGO_DB).C(handlers.USER).EnsureIndex(mgo.Index{
+		Key:    []string{"name"},
+		Unique: true,
+	}); err != nil {
+		log.Fatal(err)
+	}
+
 	if err = db.Copy().DB(handlers.MONGO_DB).C(handlers.ARTICLE).EnsureIndex(mgo.Index{
 		Key:    []string{"topic"},
 		Unique: true,
@@ -81,10 +88,11 @@ func main() {
 	e.GET("/follow/:id", h.Follow)
 	e.POST("/posts", h.CreatePost)
 	e.GET("/feed", h.FetchPost)
+	e.POST("/upload", h.UpdateAvatar)
 	e.GET("/curriculumVitae", h.CurriculumVitae)
 	//图片之类的静态文件路由
 	e.Static("/static", "static")
-	e.File("/favicon.ico", "static/favicon/松鼠.svg")
+	e.File("/favicon.ico", "static/favicon/icon.svg")
 
 	//Run
 	e.Logger.Fatal(e.Start(":1323"))

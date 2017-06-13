@@ -13,7 +13,7 @@ import (
 
 func (h *Handler) Topic(c echo.Context) (err error) {
 	topic := c.Param("topic")
-	if topic != "anime" && topic != "movie" && topic != "tv" && topic != "music_note" &&
+	if topic != "toys" && topic != "movie" && topic != "tv" && topic != "music_note" &&
 		topic != "book" && topic != "others" && topic != "videogame_asset" {
 		return c.NoContent(http.StatusNotFound)
 	}
@@ -84,6 +84,7 @@ func (h *Handler) Topic(c echo.Context) (err error) {
 		go func(i int) {
 			defer wg.Done()
 			data.Displays[i].ShowTime = data.Displays[i].Article.GetShowTime()
+			data.Displays[i].ShowTopic = data.Displays[i].Article.GetShowTopic()
 			data.Displays[i].CommentsNum = len(data.Displays[i].Article.Comments)
 			//data.Displays[i].Editor不能为 nil
 			data.Displays[i].Editor = &model.User{}

@@ -19,23 +19,23 @@ type (
 		Url       string          `json:"url,omitempty" bson:"url,omitempty" form:"url"`
 		Comments  []string        `json:"comments" bson:"comments"`
 		Like      int             `json:"like" bson:"like"`
-		Click int `json:"click" bson:"click"`
+		Click     int             `json:"click" bson:"click"`
 		UserLiked map[string]bool `json:"user_liked" bson:"user_liked"`
 	}
 
 	Display struct {
 		Article     *Article
 		Editor      *User
-		Comments []*DisplayComment
-		MostLikes *DisplayComment
+		Comments    []*DisplayComment
+		MostLikes   *DisplayComment
 		IsMostLikes bool
 		ID          string
 		ShowTime    string
-		ShowTopic string
+		ShowTopic   string
 		CommentsNum int
-		Fans int
-		IsLike bool
-		IsFollow bool
+		Fans        int
+		IsLike      bool
+		IsFollow    bool
 	}
 )
 

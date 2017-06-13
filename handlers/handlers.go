@@ -11,7 +11,7 @@ type (
 )
 
 const (
-	MONGO_ADDRESS = "120.24.253.180:32784"
+	MONGO_ADDRESS = "120.24.253.180:32786"
 	MONGO_DB      = "huanyu0w0"
 	USER          = "users"
 	ARTICLE       = "articles"
