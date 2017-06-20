@@ -12,6 +12,7 @@ import (
 )
 
 func (h *Handler) CreateComment(c echo.Context) (err error) {
+	articleID := c.QueryParam("article")
 	//获得当前登录账户的ID
 	data := &struct {
 		model.Cookie
@@ -19,10 +20,9 @@ func (h *Handler) CreateComment(c echo.Context) (err error) {
 	if err = data.Cookie.ReadCookie(c); err == nil {
 		data.IsLogin = true
 	} else {
-		return c.Redirect(http.StatusFound, "/login")
+		return c.Redirect(http.StatusFound, "/login?path=article/" + articleID)
 	}
 
-	articleID := c.QueryParam("article")
 	comment := &model.Comment{
 		ID: bson.NewObjectId(),
 		Time: time.Now(),
@@ -86,16 +86,16 @@ func (h *Handler) CreateComment(c echo.Context) (err error) {
 }
 
 func (h *Handler) CommentLike(c echo.Context) (err error) {
+	article := c.QueryParam("article")
 	data := &struct {
 		model.Cookie
 	}{}
 	if err = data.Cookie.ReadCookie(c); err == nil {
 		data.IsLogin = true
 	} else {
-		return c.Redirect(http.StatusFound, "/login")
+		return c.Redirect(http.StatusFound, "/login?path=article/" + article)
 	}
 	id := c.Param("id")
-	article := c.QueryParam("article")
 	pos := c.QueryParam("pos")
 	//Add a follower to user
 	db := h.DB.Clone()

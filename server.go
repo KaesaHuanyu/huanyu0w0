@@ -90,9 +90,9 @@ func main() {
 	e.GET("/feed", h.FetchPost)
 	e.POST("/upload", h.UpdateAvatar)
 	e.GET("/curriculumVitae", h.CurriculumVitae)
+	e.GET("/3Q~", h.ThankYou)
 	//图片之类的静态文件路由
 	e.Static("/static", "static")
-	e.File("/favicon.ico", "static/favicon/icon.svg")
 
 	//Run
 	e.Logger.Fatal(e.Start(":1323"))

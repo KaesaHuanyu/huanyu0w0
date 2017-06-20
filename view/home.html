@@ -48,7 +48,7 @@
 
   				</div>
 
-  				<div class="mdl-card__menu" id="{{.ID}}"><a href="/{{.Article.Topic}}"><i class="material-icons">f{{.Article.Topic}}</i></a></div>
+  				<div class="mdl-card__menu" id="{{.ID}}"><a href="topic/{{.Article.Topic}}"><i class="material-icons">{{.Article.Topic}}</i></a></div>
   				<div class="mdl-tooltip" data-mdl-for="{{.ID}}">前往"{{.ShowTopic}}"分区</div>
 
 			  </div>
@@ -63,18 +63,33 @@
             margin-bottom: 160px;
             z-index: 900;
           }
+          #bgm{
+            position: fixed;
+            display: block;
+            left: 0;
+            bottom: 0;
+            margin-left: 40px;
+            margin-bottom: 60px;
+            z-index: 900;
+          }
         </style>
         
         <div id="sort">
         {{if .ByLike}}
           <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--accent">按热度排序</a>
           <!-- <span class="mdl-color-text--accent">&nbsp|&nbsp</span> -->
-          <a href="/{{.Ad}}?sort=time" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--primary">按时间排序</a>
+          <a href="/{{.Ad}}?sort=time" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--primary mdl-color-text--grey-700">按时间排序</a>
         {{else}}
-          <a href="/{{.Ad}}?sort=like" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--primary">按热度排序</a>
+          <a href="/{{.Ad}}?sort=like" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--primary mdl-color-text--grey-700">按热度排序</a>
           <!-- <span class="mdl-color-text--accent">&nbsp|&nbsp</span> -->
           <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--accent">按时间排序</a>
         {{end}}
+        </div>
+
+
+
+        <div id="bgm">
+            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=30245064&auto=0&height=66" style="width: 240px;"></iframe>
         </div>
 
       </div>

@@ -1,18 +1,15 @@
 package main
 
 import (
+	"github.com/rainycape/memcache"
 	"fmt"
 )
 
-type Tree struct {
-	Salary int
-	LTree  *Tree
-	RTree  *Tree
-}
-
 func main() {
-	var a interface{}
-	a = 2
-	v, ok := a.(string)
-	fmt.Println(v, ok)
+	mc,_ := memcache.New("192.168.1.42:60050")
+
+	mc.Set(&memcache.Item{Key: "foo", Value: []byte("my value")})
+
+	it, _ := mc.Get("foo")
+	fmt.Printf("Get memcache %s successed", string(it.Value))
 }

@@ -7,12 +7,18 @@ import (
 	"huanyu0w0/model"
 	"net/http"
 	"time"
+	"sync"
+	"log"
+	"strings"
 )
 
 func (h *Handler) SignupGet(c echo.Context) (err error) {
 	data := &struct {
 		model.Cookie
-	}{}
+		Path string
+	}{
+		Path: c.QueryParam("path"),
+	}
 	if err = data.Cookie.ReadCookie(c); err == nil {
 		data.IsLogin = true
 	}
@@ -68,13 +74,17 @@ func (h *Handler) Signup(c echo.Context) (err error) {
 	cookie.WriteCookie(c)
 
 	//u.Password = ""
-	return c.Redirect(http.StatusFound, "/")
+	path := c.QueryParam("path")
+	return c.Redirect(http.StatusFound, "/" + path)
 }
 
 func (h *Handler) Signin(c echo.Context) (err error) {
 	data := &struct {
 		model.Cookie
-	}{}
+		Path string
+	}{
+		Path: c.QueryParam("path"),
+	}
 	if err = data.Cookie.ReadCookie(c); err == nil {
 		data.IsLogin = true
 	}
@@ -115,20 +125,21 @@ func (h *Handler) Login(c echo.Context) (err error) {
 	cookie.WriteCookie(c)
 
 	//u.Password = ""
-	return c.Redirect(http.StatusFound, "/")
+	path := c.QueryParam("path")
+	return c.Redirect(http.StatusFound, "/" + path)
 }
 
 func (h *Handler) Follow(c echo.Context) (err error) {
+	article := c.QueryParam("article")
 	data := &struct {
 		model.Cookie
 	}{}
 	if err = data.Cookie.ReadCookie(c); err == nil {
 		data.IsLogin = true
 	} else {
-		return c.Redirect(http.StatusFound, "/login")
+		return c.Redirect(http.StatusFound, "/login?path=" + article)
 	}
 	id := c.Param("id")
-	article := c.QueryParam("article")
 	pos := c.QueryParam("pos")
 	//Add a follower to user
 	db := h.DB.Clone()
@@ -190,9 +201,9 @@ func (h *Handler) Signout(c echo.Context) (err error) {
 func (h *Handler) UserDetail(c echo.Context) (err error) {
 	data := &struct {
 		model.Cookie
-		User *model.User
+		UserDisplay *model.UserDisplay
 	}{
-		User: &model.User{},
+		UserDisplay: &model.UserDisplay{},
 	}
 	if err = data.Cookie.ReadCookie(c); err == nil {
 		data.IsLogin = true
@@ -201,16 +212,78 @@ func (h *Handler) UserDetail(c echo.Context) (err error) {
 	id := c.Param("id")
 	db := h.DB.Clone()
 	defer db.Close()
-
+	data.UserDisplay.User = &model.User{}
 	if err = db.DB(MONGO_DB).C(USER).
 	FindId(bson.ObjectIdHex(id)).
-	One(data.User); err != nil {
+	One(data.UserDisplay.User); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
 			return err
 		}
 	}
-	data.User.Password = ""
+
+	data.UserDisplay.ID = id
+	data.UserDisplay.CreateTime = data.UserDisplay.User.GetCreateTime()
+	data.UserDisplay.User.BigAvatar = strings.TrimSuffix(data.UserDisplay.User.Avatar, "-avatarStyle")
+
+	//Articles
+	wg := &sync.WaitGroup{}
+	for i, v := range data.UserDisplay.User.Articles {
+		wg.Add(1)
+		data.UserDisplay.Articles = append(data.UserDisplay.Articles, &model.Article{})
+		go func(i int, v string) {
+			defer wg.Done()
+			db := h.DB.Clone()
+			defer db.Close()
+			if err = db.DB(MONGO_DB).C(ARTICLE).
+			FindId(bson.ObjectIdHex(v)).
+			One(data.UserDisplay.Articles[i]); err != nil {
+				log.Println("<(￣︶￣)↗[GO!]", i, ", GetArticle:", err)
+			}
+			data.UserDisplay.Articles[i].ShowID = data.UserDisplay.Articles[i].ID.Hex()
+		}(i, v)
+	}
+	wg.Wait()
+
+	//Comments
+	wg2 := &sync.WaitGroup{}
+	for i, v := range data.UserDisplay.User.Comments {
+		wg2.Add(1)
+		data.UserDisplay.Comments = append(data.UserDisplay.Comments, &model.Comment{})
+		go func(i int, v string) {
+			defer wg2.Done()
+			db := h.DB.Clone()
+			defer db.Close()
+			if err = db.DB(MONGO_DB).C(COMMENT).
+				FindId(bson.ObjectIdHex(v)).
+				One(data.UserDisplay.Comments[i]); err != nil {
+				log.Println("<(￣︶￣)↗[GO!]", i, ", GetComment:", err)
+			}
+			data.UserDisplay.Comments[i].ShowID = data.UserDisplay.Comments[i].ID.Hex()
+		}(i, v)
+	}
+	wg2.Wait()
+
+	//Follow
+	wg3 := &sync.WaitGroup{}
+	for i, v := range data.UserDisplay.User.Follows {
+		wg3.Add(1)
+		data.UserDisplay.Follow = append(data.UserDisplay.Follow, &model.User{})
+		go func(i int, v string) {
+			defer wg3.Done()
+			db := h.DB.Clone()
+			defer db.Close()
+			if err = db.DB(MONGO_DB).C(USER).
+				FindId(bson.ObjectIdHex(v)).
+				One(data.UserDisplay.Follow[i]); err != nil {
+				log.Println("<(￣︶￣)↗[GO!]", i, ", GetFollow:", err)
+			}
+			data.UserDisplay.Follow[i].ShowID = data.UserDisplay.Follow[i].ID.Hex()
+			data.UserDisplay.Follow[i].BigAvatar = strings.TrimSuffix(data.UserDisplay.Follow[i].Avatar, "-avatarStyle")
+		}(i, v)
+	}
+	wg3.Wait()
+
 	return c.Render(http.StatusOK, "user", data)
 }

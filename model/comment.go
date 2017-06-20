@@ -9,6 +9,7 @@ import (
 type (
 	Comment struct {
 		ID        bson.ObjectId   `json:"id" bson:"_id,omitempty"`
+		ShowID string `json:"show_id,omitempty" bson:"show_id,omitempty"`
 		Editor    string          `json:"editor" bson:"editor"`
 		Article   string          `json:"article" bson:"article"`
 		Replyto   string          `json:"replyto,omitempty" bson:"replyto,omitempty"`

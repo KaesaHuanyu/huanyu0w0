@@ -10,7 +10,11 @@
           <!-- <h2 class="mdl-card__title-text mdl-color-text--grey-600">注册</h2> -->
           <strong class="mdl-color-text--grey-600">DNA提取中...未检测到阁下...重新建立神经绑定...</strong>
         </div>
-        <form action="/signup" method="post">
+        {{if .Path}}
+        <form action="/signup?path={{.Path}}" method="POST">
+        {{else}}
+        <form action="/signup" method="POST">
+        {{end}}
           <div class="mdl-card__supporting-text">
               <div class="mdl-textfield mdl-js-textfield" style="margin-left: 3%; width: 80%;">
                   <input class="mdl-textfield__input" type="email" id="email" name="email" />

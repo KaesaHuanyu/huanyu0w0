@@ -7,10 +7,13 @@
     	<div class="mdl-card mdl-shadow--4dp" style="margin-left: 9%; width: 30%; min-width: 360px; margin-top: 2%;">
   			<div class="mdl-card__title mdl-card--border mdl-color--primary">
    				<!-- <h2 class="mdl-card__title-text mdl-color-text--grey-600">登录</h2> -->
-          <strong class="mdl-color-text--grey-600">DNA提取中...阁下编号S-B2333...神经末梢连接中...</strong>
+          <strong class="mdl-color-text--grey-600">DNA提取中...编号S-B2333...准备神经末梢连接...</strong>
   			</div>
-
-          	<form action="/login" method="POST">
+            {{if .Path}}
+          	<form action="/login?path={{.Path}}" method="POST">
+            {{else}}
+            <form action="/login" method="POST">
+            {{end}}
   			<div class="mdl-card__supporting-text">
             	<div class="mdl-textfield mdl-js-textfield" style="margin-left: 3%; width: 80%;">
             		<!-- <span class="mdl-button--icon"><i class="material-icons">account_box</i></span> -->
@@ -33,7 +36,7 @@
 
   				<div class="mdl-card__actions">
    					<input type="submit" value="登录" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--primary"  style="margin-left: 3%;">
-   					<a href="/signup" class="mdl-button mdl-color-text--accent mdl-js-button mdl-js-ripple-effect" style="margin-left: 3%">还没有账号？注册</a>
+   					<a href="/signup?path={{.Path}}" class="mdl-button mdl-color-text--accent mdl-js-button mdl-js-ripple-effect" style="margin-left: 3%">还没有账号？注册</a>
   				</div>
           	</form>
 		</div>

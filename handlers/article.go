@@ -18,7 +18,7 @@ func (h *Handler) CreateArticleGet(c echo.Context) (err error) {
 	if err = data.Cookie.ReadCookie(c); err == nil {
 		data.IsLogin = true
 	} else {
-		return c.Redirect(http.StatusFound, "/login")
+		return c.Redirect(http.StatusFound, "/login?path=article/create")
 	}
 	return c.Render(http.StatusOK, "createarticle", data)
 }
@@ -206,15 +206,15 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 }
 
 func (h *Handler) ArticleLike(c echo.Context) (err error) {
+	id := c.Param("id")
 	data := &struct {
 		model.Cookie
 	}{}
 	if err = data.Cookie.ReadCookie(c); err == nil {
 		data.IsLogin = true
 	} else {
-		return c.Redirect(http.StatusFound, "/login")
+		return c.Redirect(http.StatusFound, "/login?path=article/" + id)
 	}
-	id := c.Param("id")
 	pos := c.QueryParam("pos")
 	//Add a follower to user
 	db := h.DB.Clone()
