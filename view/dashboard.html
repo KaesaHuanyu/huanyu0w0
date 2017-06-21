@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","http://widget.daovoice.io/widget/01fe692c.js","daovoice");</script>
+    <meta charset="UTF-8">
+    <link rel="icon" href="../static/favicon/squirrel.png">
+    <!-- <link rel="stylesheet" href="../static/mdl/mdl/material.min.css"> -->
+    <link rel="stylesheet" type="text/css" href="http://images.huanyu0w0.cn/material.min.css">
+    <!-- <script src="../static/mdl/mdl/material.min.js"></script> -->
+    <script type="text/javascript" src="http://images.huanyu0w0.cn/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+    #create-article {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 80px;
+      margin-bottom: 80px;
+      z-index: 900;
+    }
+
+    #donate {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 160px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+    </style>
+</head>
+<body>
+<div style="bottom: 120px;">
+    <script>
+        daovoice('init', {
+          app_id: "01fe692c",
+        });
+        daovoice('update');
+    </script>
+</div>
+
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+		<header class="mdl-layout__header">
+			<div class="mdl-layout__header-row">
+				<a href="/" class="mdl-layout-title mdl-color-text--grey-600" style="text-decoration: none;">huanyu0w0</a>
+				<div class="mdl-layout-spacer"></div>
+			</div>
+		</header>
+
+		<div class="mdl-layout__drawer">
+	    	<span class="mdl-layout-title">Title</span>
+	    	<nav class="mdl-navigation">
+	      		<a class="mdl-navigation__link" href="">Link</a>
+	      		<a class="mdl-navigation__link" href="">Link</a>
+	      		<a class="mdl-navigation__link" href="">Link</a>
+	      		<a class="mdl-navigation__link" href="">Link</a>
+	    	</nav>
+	  	</div>
+
+	  	<main class="mdl-layout__content">
+	    	<div class="page-content"><!-- Your content goes here --></div>
+	  	</main>
+
+	  	<!-- footer -->
+        <!-- <footer class="mdl-mini-footer" style="background: url('');">
+            <div class="mdl-mini-footer__left-section">
+                <div class="mdl-logo mdl-color-text--grey-700">huanyu0w0</div>
+                <ul class="mdl-mini-footer__link-list">
+                    <li><a href="https://github.com/KaesaHuanyu/huanyu0w0" target="_blank">GitHub</a></li>
+                    <li><a href="">意见 & 建议</a></li>
+                    <li><a href="/curriculumVitae">简历</a></li>
+                    <li>&nbsp&nbsp&nbsp&nbspBETA v1.0.1</li>
+                </ul>
+            </div>
+        </footer> -->
+	</div>
+
+	<div  id="create-article"><a href="/article/create" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-button--fab mdl-shadow--2dp mdl-color-text--white"><i class="material-icons">add</i></a></div>
+    <div class="mdl-tooltip" data-mdl-for="create-article">发布安利文...</div>
+
+    <div  id="donate"><a href="/3Q~" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--primary mdl-button--fab mdl-shadow--2dp mdl-color-text--grey-700"><i class="material-icons">wifi</i></a></div>
+    <div class="mdl-tooltip" data-mdl-for="donate">支持一下吧~ (๑•̀ㅂ•́)و✧</div>
+</body>
+</html>

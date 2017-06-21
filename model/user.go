@@ -20,7 +20,6 @@ type (
 		Follows   []string      `json:"follow" bson:"follow"`
 		Comments  []string      `json:"comments" bson:"comments"`
 		Articles  []string      `json:"articles" bson:"articles"`
-		History []string `json:"history" bson:"history"`
 		Collection []string `json:"collection" bson:"collection"`
 		Follower int      `json:"follower" bson:"follower"`
 		IsFollower map[string]bool `json:"is_follower" bson:"is_follower"`
