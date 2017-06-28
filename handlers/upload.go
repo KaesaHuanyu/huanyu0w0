@@ -1,17 +1,17 @@
 package handlers
 
 import (
-	"github.com/labstack/echo"
-	"os"
-	"io"
 	"fmt"
+	"github.com/labstack/echo"
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
+	"huanyu0w0/model"
+	"io"
 	"net/http"
+	"os"
 	"qiniupkg.com/api.v7/conf"
 	"qiniupkg.com/api.v7/kodo"
 	"qiniupkg.com/api.v7/kodocli"
-	"huanyu0w0/model"
-	"gopkg.in/mgo.v2/bson"
-	"gopkg.in/mgo.v2"
 )
 
 func (h *Handler) UpdateAvatar(c echo.Context) (err error) {
@@ -28,12 +28,12 @@ func (h *Handler) UpdateAvatar(c echo.Context) (err error) {
 	file, err := c.FormFile("file")
 	if err != nil {
 		fmt.Println("FormFile:")
-		return
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "请先选择图片"}
 	}
 	src, err := file.Open()
 	if err != nil {
 		fmt.Println()
-		return
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
 	}
 	defer src.Close()
 	//Destination
@@ -41,7 +41,7 @@ func (h *Handler) UpdateAvatar(c echo.Context) (err error) {
 	dst, err := os.Create(filePath)
 	if err != nil {
 		fmt.Println("os.Create:")
-		return
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
 	}
 
 	defer dst.Close()
@@ -49,41 +49,38 @@ func (h *Handler) UpdateAvatar(c echo.Context) (err error) {
 	//Copy
 	if _, err = io.Copy(dst, src); err != nil {
 		fmt.Println("io.Copy")
-		return
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
 	}
 
 	avatar, err := toQiniu(data.ID, file.Filename, filePath)
 	if err != nil {
-		fmt.Println()
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
 	}
 
 	err = os.Remove(filePath)
 	if err != nil {
 		fmt.Println("os.Remove:")
-		return
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
 	}
 
 	db := h.DB.Clone()
 	defer db.Close()
 	if err = db.DB(MONGO_DB).C(USER).
-	UpdateId(bson.ObjectIdHex(data.ID), bson.M{"$set": bson.M{"avatar": avatar}}); err != nil{
+		UpdateId(bson.ObjectIdHex(data.ID), bson.M{"$set": bson.M{"avatar": avatar}}); err != nil {
 		if err == mgo.ErrNotFound {
 			fmt.Println("UpdateId:")
 			return echo.ErrNotFound
 		} else {
 			fmt.Println("UpdateId:")
-			return err
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
 		}
 	}
 
-	ck, err := c.Cookie("avatar")
-	if err != nil {
-		return
-	}
+	ck, _ := c.Cookie("avatar")
 	ck.Value = avatar
 	c.SetCookie(ck)
 
-	return c.Redirect(http.StatusFound, "/")
+	return c.Redirect(http.StatusFound, "/user/dashboard")
 }
 
 func toQiniu(id, fileName, filePath string) (url string, err error) {
@@ -95,7 +92,7 @@ func toQiniu(id, fileName, filePath string) (url string, err error) {
 	c := kodo.New(0, nil)
 	// 设置上传的策略
 	policy := &kodo.PutPolicy{
-		Scope:   model.BUCKET+ ":" + key,
+		Scope: model.BUCKET + ":" + key,
 		//设置Token过期时间
 		Expires: 3600,
 	}

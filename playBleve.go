@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/blevesearch/bleve"
 	"fmt"
+	"github.com/blevesearch/bleve"
 )
 
 func main() {

@@ -5,10 +5,10 @@ import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"huanyu0w0/model"
-	"net/http"
-	"time"
-	"sync"
 	"log"
+	"net/http"
+	"sync"
+	"time"
 )
 
 func (h *Handler) CreateArticleGet(c echo.Context) (err error) {
@@ -41,7 +41,7 @@ func (h *Handler) CreateArticle(c echo.Context) (err error) {
 	}
 
 	if err = c.Bind(a); err != nil {
-		return
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
 	}
 
 	if a.Reason == "" || a.Title == "" || a.Name == "" {
@@ -50,21 +50,22 @@ func (h *Handler) CreateArticle(c echo.Context) (err error) {
 
 	db := h.DB.Clone()
 	defer db.Close()
+
+	if err = db.DB(MONGO_DB).C(ARTICLE).Insert(a); err != nil {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
+	}
+
 	//更新user的articles
 	if err = db.DB(MONGO_DB).C(USER).
 		UpdateId(bson.ObjectIdHex(data.ID), bson.M{"$addToSet": bson.M{"articles": a.ID.Hex()}}); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
-			return
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
 		}
 	}
 
-	if err = db.DB(MONGO_DB).C(ARTICLE).Insert(a); err != nil {
-		return
-	}
-
-	return c.Redirect(http.StatusFound, "/article/" + a.ID.Hex())
+	return c.Redirect(http.StatusFound, "/article/"+a.ID.Hex())
 }
 
 func (h *Handler) ArticleDetail(c echo.Context) (err error) {
@@ -84,8 +85,8 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 	defer db.Close()
 
 	if err = db.DB(MONGO_DB).C(ARTICLE).
-	FindId(bson.ObjectIdHex(id)).
-	One(data.Display.Article); err != nil {
+		FindId(bson.ObjectIdHex(id)).
+		One(data.Display.Article); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		}
@@ -100,7 +101,7 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 	//增加点击量
 	data.Display.Article.Click++
 	if err = db.DB(MONGO_DB).C(ARTICLE).
-	UpdateId(bson.ObjectIdHex(id), bson.M{"$set": bson.M{"click": data.Display.Article.Click}}); err != nil {
+		UpdateId(bson.ObjectIdHex(id), bson.M{"$set": bson.M{"click": data.Display.Article.Click}}); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		}
@@ -110,10 +111,10 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 	data.Display.ID = data.Display.Article.ID.Hex()
 	data.Display.ShowTime = data.Display.Article.GetShowTime()
 	data.Display.ShowTopic = data.Display.Article.GetShowTopic()
-	data.Display.Article.Click = data.Display.Article.Click/2
+	data.Display.Article.Click = data.Display.Article.Click / 2
 	if err = db.DB(MONGO_DB).C(USER).
-	FindId(bson.ObjectIdHex(data.Display.Article.Editor)).
-	One(data.Display.Editor); err != nil {
+		FindId(bson.ObjectIdHex(data.Display.Article.Editor)).
+		One(data.Display.Editor); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		}
@@ -128,7 +129,7 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 
 	data.Display.MostLikes = &model.DisplayComment{
 		Comment: &model.Comment{},
-		Editor: &model.User{},
+		Editor:  &model.User{},
 		Replyto: &model.User{},
 	}
 	wg := sync.WaitGroup{}
@@ -142,8 +143,8 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 			data.Display.Comments[i].Number = i + 1
 			data.Display.Comments[i].Comment = &model.Comment{}
 			if err := db.DB(MONGO_DB).C(COMMENT).
-			FindId(bson.ObjectIdHex(v)).
-			One(data.Display.Comments[i].Comment); err != nil {
+				FindId(bson.ObjectIdHex(v)).
+				One(data.Display.Comments[i].Comment); err != nil {
 				log.Println("<(￣︶￣)↗[GO!]", i, ":", err)
 			}
 			data.Display.Comments[i].ID = data.Display.Comments[i].Comment.ID.Hex()
@@ -202,6 +203,7 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 		data.Display.IsMostLikes = true
 	}
 
+	data.Display.Editor.Password = ""
 	return c.Render(http.StatusOK, "article", data)
 }
 
@@ -213,7 +215,7 @@ func (h *Handler) ArticleLike(c echo.Context) (err error) {
 	if err = data.Cookie.ReadCookie(c); err == nil {
 		data.IsLogin = true
 	} else {
-		return c.Redirect(http.StatusFound, "/login?path=article/" + id)
+		return c.Redirect(http.StatusFound, "/login?path=article/"+id)
 	}
 	pos := c.QueryParam("pos")
 	//Add a follower to user
@@ -245,7 +247,7 @@ func (h *Handler) ArticleLike(c echo.Context) (err error) {
 	}
 
 	if err = db.DB(MONGO_DB).C(ARTICLE).
-		UpdateId(a.ID, a); err != nil{
+		UpdateId(a.ID, a); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
@@ -253,5 +255,18 @@ func (h *Handler) ArticleLike(c echo.Context) (err error) {
 		}
 	}
 
-	return c.Redirect(http.StatusFound, "/article/" + id + "#" + pos)
+	return c.Redirect(http.StatusFound, "/article/"+id+"#"+pos)
+}
+
+func (h *Handler) RemoveArticle(c echo.Context) (err error) {
+	data := &struct {
+		model.Cookie
+	}{}
+	if err = data.Cookie.ReadCookie(c); err == nil {
+		data.IsLogin = true
+	} else {
+		log.Println("Not Login")
+		return c.NoContent(http.StatusNotFound)
+	}
+	return c.Redirect(http.StatusFound, "/user/dashboard")
 }

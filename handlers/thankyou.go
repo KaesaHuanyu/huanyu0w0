@@ -2,8 +2,8 @@ package handlers
 
 import (
 	"github.com/labstack/echo"
-	"net/http"
 	"huanyu0w0/model"
+	"net/http"
 )
 
 func (h *Handler) ThankYou(c echo.Context) (err error) {
@@ -12,8 +12,6 @@ func (h *Handler) ThankYou(c echo.Context) (err error) {
 	}{}
 	if err = data.Cookie.ReadCookie(c); err == nil {
 		data.IsLogin = true
-	} else {
-		return c.Redirect(http.StatusFound, "/login?path=3Q~")
 	}
 	return c.Render(http.StatusOK, "thankyou", data)
 }

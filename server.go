@@ -30,7 +30,6 @@ func main() {
 	//CORS中间件
 	e.Use(middleware.CORS())
 
-
 	//声明模版集
 	t := &Template{
 		templates: template.Must(template.ParseGlob("view/*.html")),
@@ -60,13 +59,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if err = db.Copy().DB(handlers.MONGO_DB).C(handlers.ARTICLE).EnsureIndex(mgo.Index{
-		Key:    []string{"topic"},
-		Unique: true,
-	}); err != nil {
-		log.Fatal(err)
-	}
-
 	//Initialize
 	h := &handlers.Handler{db}
 	//Routes
@@ -81,16 +73,22 @@ func main() {
 	e.GET("/article/:id", h.ArticleDetail)
 	e.GET("/articlelike/:id", h.ArticleLike)
 	e.GET("/commentlike/:id", h.CommentLike)
-	e.POST("/createcomment", h.CreateComment)
+	e.POST("/comment/create", h.CreateComment)
 	e.GET("/replies/:id", h.Replies)
 	e.GET("/user/:id", h.UserDetail)
+	e.GET("/user/dashboard", h.Dashboard)
+	e.GET("/admin/dashboard", h.Admin)
 	e.GET("/topic/:topic", h.Topic)
 	e.GET("/follow/:id", h.Follow)
 	e.POST("/posts", h.CreatePost)
 	e.GET("/feed", h.FetchPost)
-	e.POST("/upload", h.UpdateAvatar)
-	e.GET("/curriculumVitae", h.CurriculumVitae)
-	e.GET("/3Q~", h.ThankYou)
+	e.POST("/updateAvatar", h.UpdateAvatar)
+	e.GET("/resume", h.CurriculumVitae)
+	e.GET("/thankYouForYourGenerosity", h.ThankYou)
+	//e.GET("/user/remove/:id", h.RemoveUser)
+	e.GET("/article/remove/:id", h.RemoveArticle)
+	e.GET("/comment/remove/:id", h.RemoveComment)
+	e.POST("/user/update", h.UpdateUser)
 	//图片之类的静态文件路由
 	e.Static("/static", "static")
 

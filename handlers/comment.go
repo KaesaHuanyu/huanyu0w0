@@ -2,13 +2,13 @@ package handlers
 
 import (
 	"github.com/labstack/echo"
-	"net/http"
-	"huanyu0w0/model"
-	"gopkg.in/mgo.v2/bson"
-	"time"
 	"gopkg.in/mgo.v2"
-	"sync"
+	"gopkg.in/mgo.v2/bson"
+	"huanyu0w0/model"
 	"log"
+	"net/http"
+	"sync"
+	"time"
 )
 
 func (h *Handler) CreateComment(c echo.Context) (err error) {
@@ -20,14 +20,14 @@ func (h *Handler) CreateComment(c echo.Context) (err error) {
 	if err = data.Cookie.ReadCookie(c); err == nil {
 		data.IsLogin = true
 	} else {
-		return c.Redirect(http.StatusFound, "/login?path=article/" + articleID)
+		return c.Redirect(http.StatusFound, "/login?path=article/"+articleID)
 	}
 
 	comment := &model.Comment{
-		ID: bson.NewObjectId(),
-		Time: time.Now(),
+		ID:      bson.NewObjectId(),
+		Time:    time.Now(),
 		Article: articleID,
-		Editor: data.ID,
+		Editor:  data.ID,
 	}
 
 	if err = c.Bind(comment); err != nil {
@@ -39,9 +39,13 @@ func (h *Handler) CreateComment(c echo.Context) (err error) {
 
 	db := h.DB.Clone()
 	defer db.Close()
+
+	if err = db.DB(MONGO_DB).C(COMMENT).Insert(comment); err != nil {
+		return err
+	}
 	//更新user
 	if err = db.DB(MONGO_DB).C(USER).
-	UpdateId(bson.ObjectIdHex(comment.Editor), bson.M{"$addToSet": bson.M{"comments": comment.ID.Hex()}}); err != nil{
+		UpdateId(bson.ObjectIdHex(comment.Editor), bson.M{"$addToSet": bson.M{"comments": comment.ID.Hex()}}); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
@@ -50,7 +54,7 @@ func (h *Handler) CreateComment(c echo.Context) (err error) {
 	}
 	//更新article
 	if err = db.DB(MONGO_DB).C(ARTICLE).
-		UpdateId(bson.ObjectIdHex(comment.Article), bson.M{"$addToSet": bson.M{"comments": comment.ID.Hex()}}); err != nil{
+		UpdateId(bson.ObjectIdHex(comment.Article), bson.M{"$addToSet": bson.M{"comments": comment.ID.Hex()}}); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
@@ -72,17 +76,13 @@ func (h *Handler) CreateComment(c echo.Context) (err error) {
 		}
 	}
 
-	if err = db.DB(MONGO_DB).C(COMMENT).Insert(comment); err != nil {
-		return err
-	}
-
 	if replies := c.QueryParam("replies"); replies == "yes" {
 		if comment := c.QueryParam("comment"); comment != "" {
-			return c.Redirect(http.StatusFound, "/replies/" + comment)
+			return c.Redirect(http.StatusFound, "/replies/"+comment)
 		}
 	}
 
-	return c.Redirect(http.StatusFound, "/article/" + comment.Article)
+	return c.Redirect(http.StatusFound, "/article/"+comment.Article)
 }
 
 func (h *Handler) CommentLike(c echo.Context) (err error) {
@@ -93,7 +93,7 @@ func (h *Handler) CommentLike(c echo.Context) (err error) {
 	if err = data.Cookie.ReadCookie(c); err == nil {
 		data.IsLogin = true
 	} else {
-		return c.Redirect(http.StatusFound, "/login?path=article/" + article)
+		return c.Redirect(http.StatusFound, "/login?path=article/"+article)
 	}
 	id := c.Param("id")
 	pos := c.QueryParam("pos")
@@ -126,7 +126,7 @@ func (h *Handler) CommentLike(c echo.Context) (err error) {
 	}
 
 	if err = db.DB(MONGO_DB).C(COMMENT).
-		UpdateId(comment.ID, comment); err != nil{
+		UpdateId(comment.ID, comment); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
@@ -136,11 +136,11 @@ func (h *Handler) CommentLike(c echo.Context) (err error) {
 
 	if replies := c.QueryParam("replies"); replies == "yes" {
 		if comment := c.QueryParam("comment"); comment != "" {
-			return c.Redirect(http.StatusFound, "/replies/" + comment + "#" + pos)
+			return c.Redirect(http.StatusFound, "/replies/"+comment+"#"+pos)
 		}
 	}
 
-	return c.Redirect(http.StatusFound, "/article/" + article + "#" + pos)
+	return c.Redirect(http.StatusFound, "/article/"+article+"#"+pos)
 }
 
 func (h *Handler) Replies(c echo.Context) (err error) {
@@ -148,13 +148,13 @@ func (h *Handler) Replies(c echo.Context) (err error) {
 	data := &struct {
 		model.Cookie
 		DisplayComment *model.DisplayComment
-		Replies []*model.DisplayComment
-		IsLike bool
-		IsFollow bool
-		IsEditor bool
+		Replies        []*model.DisplayComment
+		IsLike         bool
+		IsFollow       bool
+		IsEditor       bool
 	}{
 		DisplayComment: &model.DisplayComment{},
-		Replies: []*model.DisplayComment{},
+		Replies:        []*model.DisplayComment{},
 	}
 	if err = data.Cookie.ReadCookie(c); err == nil {
 		data.IsLogin = true
@@ -166,8 +166,8 @@ func (h *Handler) Replies(c echo.Context) (err error) {
 
 	data.DisplayComment.Comment = &model.Comment{}
 	if err = db.DB(MONGO_DB).C(COMMENT).
-	FindId(bson.ObjectIdHex(id)).
-	One(data.DisplayComment.Comment); err != nil{
+		FindId(bson.ObjectIdHex(id)).
+		One(data.DisplayComment.Comment); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
@@ -181,8 +181,8 @@ func (h *Handler) Replies(c echo.Context) (err error) {
 
 	data.DisplayComment.Editor = &model.User{}
 	if err = db.DB(MONGO_DB).C(USER).
-	FindId(bson.ObjectIdHex(data.DisplayComment.Comment.Editor)).
-	One(data.DisplayComment.Editor); err != nil {
+		FindId(bson.ObjectIdHex(data.DisplayComment.Comment.Editor)).
+		One(data.DisplayComment.Editor); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
@@ -232,8 +232,8 @@ func (h *Handler) Replies(c echo.Context) (err error) {
 			data.Replies[i].Number = i + 1
 			data.Replies[i].Comment = &model.Comment{}
 			if err = db.DB(MONGO_DB).C(COMMENT).
-			FindId(bson.ObjectIdHex(v)).
-			One(data.Replies[i].Comment); err != nil {
+				FindId(bson.ObjectIdHex(v)).
+				One(data.Replies[i].Comment); err != nil {
 				log.Println("<(￣︶￣)↗[GO!]", i, " Find comment:", err)
 			}
 			data.Replies[i].ID = data.Replies[i].Comment.ID.Hex()
@@ -242,8 +242,8 @@ func (h *Handler) Replies(c echo.Context) (err error) {
 
 			data.Replies[i].Editor = &model.User{}
 			if err = db.DB(MONGO_DB).C(USER).
-			FindId(bson.ObjectIdHex(data.Replies[i].Comment.Editor)).
-			One(data.Replies[i].Editor); err != nil{
+				FindId(bson.ObjectIdHex(data.Replies[i].Comment.Editor)).
+				One(data.Replies[i].Editor); err != nil {
 				log.Println("<(￣︶￣)↗[GO!]", i, " Find editor:", err)
 			}
 
@@ -265,9 +265,27 @@ func (h *Handler) Replies(c echo.Context) (err error) {
 					data.Replies[i].IsFollow = true
 				}
 			}
+
+			data.Replies[i].Replyto.Password = ""
+			data.Replies[i].Editor.Password = ""
 		}(i, v)
 	}
 	wg.Wait()
 
+	data.DisplayComment.Editor.Password = ""
+	data.DisplayComment.Replyto.Password = ""
 	return c.Render(http.StatusOK, "replies", data)
+}
+
+func (h *Handler) RemoveComment(c echo.Context) (err error) {
+	data := &struct {
+		model.Cookie
+	}{}
+	if err = data.Cookie.ReadCookie(c); err == nil {
+		data.IsLogin = true
+	} else {
+		log.Println("Not Login")
+		return c.NoContent(http.StatusNotFound)
+	}
+	return c.Redirect(http.StatusFound, "/user/dashboard")
 }

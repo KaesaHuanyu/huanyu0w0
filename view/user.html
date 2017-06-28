@@ -5,18 +5,23 @@
     <title>{{.UserDisplay.User.Name}} - 个人主页 - huanyu0w0 - 松鼠党de奇妙聚集地 Σ( ° △ °|||)</title>
 {{template "header" .}}
 
-	<div class="mdl-grid" style="width: 55%; min-width: 800px; margin-left: 5%;">
+<div class="mdl-grid" style="width: 55%; min-width: 800px; margin-left: 5%;">
 	
 	<div class="mdl-card mdl-cell mdl-shadow--4dp" style="background: url('{{.UserDisplay.User.BigAvatar}}') center / cover;">
 		
 	</div>
 
-	<div class="mdl-cell mdl-card mdl-shadow--4dp" style="background-color: #f8bbd0;">
-		<div class="mdl-card__title mdl-card--expand">
+	<div class="mdl-cell mdl-card mdl-shadow--4dp" style="background-color: #F9FBE7;">
+		<div class="mdl-card__title">
 	        <h2 class="mdl-card__title-text mdl-color-text--accent">{{.UserDisplay.User.Name}}</h2>
 	    </div>
-	    <div class="mdl-card__supporting-text">
-	    	
+	    <div class="mdl-card__supporting-text mdl-card--expand mdl-color-text--grey-600">
+        <p>{{.UserDisplay.User.Email}}</p>
+        {{if .UserDisplay.User.Info}}
+            <p>{{.UserDisplay.User.Info}}</p>
+        {{else}}
+	    	<p>咸鱼没有简介_(:з」∠)_</p>
+        {{end}}
 	    </div>
 	    <div class="mdl-card__actions">
 	    	<a href="" class="mdl-button mdl-color-text--accent mdl-js-button mdl-js-ripple-effect">+关注</a>
@@ -27,34 +32,34 @@
 	    </div>
 	</div>
 
-	<div class="mdl-cell">
+	<!-- <div class="mdl-cell">
 		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" src="//music.163.com/outchain/player?type=2&id=32196517&auto=0&height=66" style="margin-top: 5%;"></iframe>
-	</div>
+	</div> -->
 
-	<div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col" style="background-color: #81d4fa;">
+	<div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col" style="background-color: #F9FBE7;">
 		<div class="mdl-card__title mdl-card--border">
             <h2 class="mdl-card__title-text mdl-color-text--grey-600">TA的稿件</h2>
         </div>
 
         <div class="mdl-card__supporting-text">
-        	<div class="mdl-grid">
-
-        		{{range $index, $_ := .UserDisplay.Articles}}
-        		<div class="mdl-cell mdl-cell--10-col">
-        			<h2 class="mdl-card__title-text mdl-color-text--grey-700">#{{$index}}&nbsp&nbsp{{.Title}}</h2>
-        		</div>
-        		<div class="mdl-cell mdl-cell--2-col">
-        			<a href="/article/{{.ShowID}}" target="_blank" class="mdl-button mdl-color-text--grey-700 mdl-button--raised mdl-js-button mdl-js-ripple-effect mdl-color--primary">READ</a>
-        		</div>
-        		{{else}}
-        		<h2 class="mdl-card__title-text mdl-color-text--grey-500">暂无稿件...</h2>
-        		{{end}}
-
-        	</div>
+            <ul class="mdl-list">
+              {{range $index, $_ := .UserDisplay.Articles}}
+                  <li class="mdl-list__item mdl-color-text--grey-600">
+                    <span class="mdl-list__item-primary-content">#{{$index}}&nbsp&nbsp{{.Title}}</span>
+                    <a target="_blank" href="/article/{{.ShowID}}" id="read{{.ShowID}}" class="mdl-list__item-secondary-action mdl-button mdl-js-button mdl-button--icon mdl-color-text--accent">
+                      <i class="material-icons">play_arrow</i>
+                    </a>
+                    <div class="mdl-tooltip" data-mdl-for="read{{.ShowID}}">阅读...</div>
+                  </li>
+                  <hr>
+              {{else}}
+              <h2 class="mdl-card__title-text mdl-color-text--grey-500">暂无稿件...</h2>
+              {{end}}
+              </ul>
         </div>
 	</div>
 
-	<div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col" style="background-color: #fff59d;">
+	<div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col" style="background-color: #F9FBE7;">
 		<div class="mdl-card__title mdl-card--border">
             <h2 class="mdl-card__title-text mdl-color-text--grey-600">TA的关注</h2>
         </div>
@@ -69,51 +74,7 @@
         	</div>
         </div>
 	</div>
-
-	<div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col" style="background-color: #f8bbd0;">
-		<div class="mdl-card__title mdl-card--border">
-            <h2 class="mdl-card__title-text mdl-color-text--grey-600">TA的浏览记录</h2>
-        </div>
-
-        <div class="mdl-card__supporting-text">
-        	<div class="mdl-grid">
-        		{{range $index, $_ := .UserDisplay.Comments}}
-        		<div class="mdl-cell mdl-cell--10-col">
-        			<h2 class="mdl-card__title-text mdl-color-text--grey-700">#{{$index}}&nbsp&nbsp{{.Content}}</h2>
-        		</div>
-        		<div class="mdl-cell mdl-cell--2-col">
-        			<a href="/article/{{.Article}}" target="_blank" class="mdl-button mdl-color-text--grey-700 mdl-button--raised mdl-js-button mdl-js-ripple-effect mdl-color--primary">READ</a>
-        		</div>
-        		{{else}}
-        		<h2 class="mdl-card__title-text mdl-color-text--grey-500">暂无浏览记录...</h2>
-        		{{end}}
-        	</div>
-        </div>
-	</div>
-
-    <table class="mdl-data-table mdl-js-data-table mdl-cell mdl-cell--12-col mdl-shadow--4dp">
-        <thead>
-            <th class="mdl-data-table__cell--non-numeric">标题</th>
-            <th class="mdl-data-table__cell--non-numeric">创建时间</th>
-            <th class="mdl-data-table__cell--non-numeric">ID</th>
-        </thead>
-        
-        <tbody>
-        {{range .UserDisplay.Articles}}
-            <tr>
-                <td class="mdl-data-table__cell--non-numeric">{{.Title}}</td>
-                <td class="mdl-data-table__cell--non-numeric">{{.Time}}</td>
-                <td class="mdl-data-table__cell--non-numeric">{{.ShowID}}</td>
-            </tr>
-        {{end}}
-        </tbody>
-    </table>
-
-	<form action="/upload" method="post" enctype="multipart/form-data">
-    	上传头像(图片名请勿含有中文): <input type="file" name="file" accept="image/*"><br><br>
-    <input type="submit" value="Submit">
-	</form>
 	
-	</div>
+</div>
 {{template "footer"}}
 {{end}}

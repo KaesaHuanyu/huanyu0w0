@@ -22,9 +22,9 @@ func (h *Handler) Home(c echo.Context) (err error) {
 		PreviousPage int
 		Head         bool
 		Tail         bool
-		ByLike bool
-		ByTime bool
-		Ad string
+		ByLike       bool
+		ByTime       bool
+		Ad           string
 	}{
 		Displays: []*model.Display{},
 	}
@@ -93,6 +93,7 @@ func (h *Handler) Home(c echo.Context) (err error) {
 			if err != nil {
 				fmt.Println("<(￣︶￣)↗[GO!]", i, ":", err)
 			}
+			data.Displays[i].Editor.Password = ""
 		}(i)
 	}
 	wg.Wait()

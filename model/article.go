@@ -9,7 +9,7 @@ import (
 type (
 	Article struct {
 		ID        bson.ObjectId   `json:"id" bson:"_id,omitempty"`
-		ShowID string `json:"show_id,omitempty" bson:"show_id,omitempty"`
+		ShowID    string          `json:"show_id,omitempty" bson:"show_id,omitempty"`
 		Time      time.Time       `json:"time" bson:"time"`
 		Change    time.Time       `json:"change,omitempty" bson:"change,omitempty"`
 		Editor    string          `json:"editor" bson:"editor"`

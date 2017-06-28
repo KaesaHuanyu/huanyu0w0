@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 {{define "article"}}
+<!DOCTYPE html>
 <html>
 <head>
 <title>{{.Display.Article.Title}} - {{.Display.ShowTopic}} - huanyu0w0 - 松鼠党de奇妙聚集地 Σ( ° △ °|||)</title>
@@ -39,7 +39,7 @@
                     <span class="mdl-color-text--grey-500">
                         <a href="/user/{{.Display.Article.Editor}}" target="_blank" style="text-decoration: none;"><big>{{.Display.Editor.Name}}</big></a>&nbsp
                         {{if .Display.IsFollow}}
-                        <a href="/follow/{{.Display.Article.Editor}}?article={{.Display.ID}}&pos=0" id="0" style="text-decoration: none;"><small class="mdl-color-text--accent">已关注</small></a>
+                        <a href="/follow/{{.Display.Article.Editor}}?article={{.Display.ID}}&pos=0" id="0" style="text-decoration: none;"><small class="mdl-color-text--grey-500">已关注</small></a>
                         {{else}}
                         <a href="/follow/{{.Display.Article.Editor}}?article={{.Display.ID}}&pos=0" id="0" style="text-decoration: none;"><small>+关注</small></a>
                         {{end}}
@@ -49,12 +49,12 @@
                 </div>
 
                 <div class="mdl-card__supporting-text mdl-color-text--grey-600" style="min-height: 320px; margin: 2%; margin-top: 1%; margin-left: 3%;">
-                    {{.Display.Article.Reason}}
+                    <p>{{.Display.Article.Reason}}</p>
                 </div>
 
                 <div class="mdl-card__actions mdl-card--border mdl-color--grey-50 mdl-shadow--2dp">
 
-                    <form action="/createcomment?article={{.Display.ID}}" method="post">
+                    <form action="/comment/create?article={{.Display.ID}}" method="post">
 
                         <div class="mdl-textfield mdl-js-textfield" style="width: 95%; margin-left: 2%;">
                             <textarea rows=1 class="mdl-textfield__input" type="text" id="comment" name="content"></textarea>
@@ -111,7 +111,7 @@
                     </div>
 
                     <div style="display: none;" id="reply{{.Display.MostLikes.ID}}">
-                        <form action="/createcomment?article={{.Display.MostLikes.Comment.Article}}&replyto={{.Display.MostLikes.ID}}" method="post">
+                        <form action="/comment/create?article={{.Display.MostLikes.Comment.Article}}&replyto={{.Display.MostLikes.ID}}" method="post">
                             <div class="mdl-textfield mdl-js-textfield" style="width: 95%; margin-left: 2%;">
                             <textarea rows=1 class="mdl-textfield__input" type="text" id="comment" name="content"></textarea>
                             <label for="comment" class="mdl-textfield__label">回复 {{.Display.MostLikes.Editor.Name}}: </label>
@@ -172,7 +172,7 @@
                         </span>
 
                         <div style="display: none;" id="reply{{.ID}}">
-                            <form action="/createcomment?article={{.Comment.Article}}&replyto={{.ID}}" method="post">
+                            <form action="/comment/create?article={{.Comment.Article}}&replyto={{.ID}}" method="post">
                                 <div class="mdl-textfield mdl-js-textfield" style="width: 95%; margin-left: 2%;">
                                 <textarea rows=1 class="mdl-textfield__input" type="text" id="comment" name="content"></textarea>
                                 <label for="comment" class="mdl-textfield__label">回复 {{.Editor.Name}}: </label>

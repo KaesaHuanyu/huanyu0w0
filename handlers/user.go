@@ -5,11 +5,12 @@ import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"huanyu0w0/model"
-	"net/http"
-	"time"
-	"sync"
 	"log"
+	"net/http"
 	"strings"
+	"sync"
+	"time"
+	"strconv"
 )
 
 func (h *Handler) SignupGet(c echo.Context) (err error) {
@@ -75,7 +76,7 @@ func (h *Handler) Signup(c echo.Context) (err error) {
 
 	//u.Password = ""
 	path := c.QueryParam("path")
-	return c.Redirect(http.StatusFound, "/" + path)
+	return c.Redirect(http.StatusFound, "/"+path)
 }
 
 func (h *Handler) Signin(c echo.Context) (err error) {
@@ -117,6 +118,9 @@ func (h *Handler) Login(c echo.Context) (err error) {
 	cookie := &model.Cookie{
 		ID:     u.ID.Hex(),
 		Avatar: u.Avatar,
+		Email:	u.Email,
+		UnixTime: strconv.Itoa(int(u.Time.Unix())),
+		Name: u.Name,
 	}
 	remember := c.FormValue("remember")
 	if remember == "on" {
@@ -126,7 +130,7 @@ func (h *Handler) Login(c echo.Context) (err error) {
 
 	//u.Password = ""
 	path := c.QueryParam("path")
-	return c.Redirect(http.StatusFound, "/" + path)
+	return c.Redirect(http.StatusFound, "/"+path)
 }
 
 func (h *Handler) Follow(c echo.Context) (err error) {
@@ -137,7 +141,7 @@ func (h *Handler) Follow(c echo.Context) (err error) {
 	if err = data.Cookie.ReadCookie(c); err == nil {
 		data.IsLogin = true
 	} else {
-		return c.Redirect(http.StatusFound, "/login?path=" + article)
+		return c.Redirect(http.StatusFound, "/login?path="+article)
 	}
 	id := c.Param("id")
 	pos := c.QueryParam("pos")
@@ -170,7 +174,7 @@ func (h *Handler) Follow(c echo.Context) (err error) {
 	}
 
 	if err = db.DB(MONGO_DB).C(USER).
-	UpdateId(u.ID, u); err != nil{
+		UpdateId(u.ID, u); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
@@ -179,7 +183,7 @@ func (h *Handler) Follow(c echo.Context) (err error) {
 	}
 
 	if err = db.DB(MONGO_DB).C(USER).
-	UpdateId(bson.ObjectIdHex(data.ID), bson.M{"$addToSet": bson.M{"follow": u.ID.Hex()}}); err != nil{
+		UpdateId(bson.ObjectIdHex(data.ID), bson.M{"$addToSet": bson.M{"follow": u.ID.Hex()}}); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
@@ -187,7 +191,7 @@ func (h *Handler) Follow(c echo.Context) (err error) {
 		}
 	}
 
-	return c.Redirect(http.StatusFound, "/article/" + article + "#" + pos)
+	return c.Redirect(http.StatusFound, "/article/"+article+"#"+pos)
 }
 
 func (h *Handler) Signout(c echo.Context) (err error) {
@@ -214,8 +218,8 @@ func (h *Handler) UserDetail(c echo.Context) (err error) {
 	defer db.Close()
 	data.UserDisplay.User = &model.User{}
 	if err = db.DB(MONGO_DB).C(USER).
-	FindId(bson.ObjectIdHex(id)).
-	One(data.UserDisplay.User); err != nil {
+		FindId(bson.ObjectIdHex(id)).
+		One(data.UserDisplay.User); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
@@ -226,6 +230,7 @@ func (h *Handler) UserDetail(c echo.Context) (err error) {
 	data.UserDisplay.ID = id
 	data.UserDisplay.CreateTime = data.UserDisplay.User.GetCreateTime()
 	data.UserDisplay.User.BigAvatar = strings.TrimSuffix(data.UserDisplay.User.Avatar, "-avatarStyle")
+	data.UserDisplay.User.Password = ""
 
 	//Articles
 	wg := &sync.WaitGroup{}
@@ -237,8 +242,8 @@ func (h *Handler) UserDetail(c echo.Context) (err error) {
 			db := h.DB.Clone()
 			defer db.Close()
 			if err = db.DB(MONGO_DB).C(ARTICLE).
-			FindId(bson.ObjectIdHex(v)).
-			One(data.UserDisplay.Articles[i]); err != nil {
+				FindId(bson.ObjectIdHex(v)).
+				One(data.UserDisplay.Articles[i]); err != nil {
 				log.Println("<(￣︶￣)↗[GO!]", i, ", GetArticle:", err)
 			}
 			data.UserDisplay.Articles[i].ShowID = data.UserDisplay.Articles[i].ID.Hex()
@@ -246,7 +251,82 @@ func (h *Handler) UserDetail(c echo.Context) (err error) {
 	}
 	wg.Wait()
 
-	//Comments
+	//Follow
+	wg2 := &sync.WaitGroup{}
+	for i, v := range data.UserDisplay.User.Follows {
+		wg2.Add(1)
+		data.UserDisplay.Follow = append(data.UserDisplay.Follow, &model.User{})
+		go func(i int, v string) {
+			defer wg2.Done()
+			db := h.DB.Clone()
+			defer db.Close()
+			if err = db.DB(MONGO_DB).C(USER).
+				FindId(bson.ObjectIdHex(v)).
+				One(data.UserDisplay.Follow[i]); err != nil {
+				log.Println("<(￣︶￣)↗[GO!]", i, ", GetFollow:", err)
+			}
+			data.UserDisplay.Follow[i].ShowID = data.UserDisplay.Follow[i].ID.Hex()
+			data.UserDisplay.Follow[i].BigAvatar = strings.TrimSuffix(data.UserDisplay.Follow[i].Avatar, "-avatarStyle")
+			data.UserDisplay.Follow[i].Password = ""
+		}(i, v)
+	}
+	wg2.Wait()
+
+	return c.Render(http.StatusOK, "user", data)
+}
+
+func (h *Handler) Dashboard(c echo.Context) (err error) {
+	data := &struct {
+		model.Cookie
+		UserDisplay *model.UserDisplay
+	}{
+		UserDisplay: &model.UserDisplay{},
+	}
+	if err = data.Cookie.ReadCookie(c); err == nil {
+		data.IsLogin = true
+	} else {
+		return c.Redirect(http.StatusFound, "/login?path=user/dashboard")
+	}
+
+	//取得mongo连接
+	db := h.DB.Clone()
+	defer db.Close()
+
+	//得到User
+	data.UserDisplay.User = &model.User{}
+	if err = db.DB(MONGO_DB).C(USER).
+	FindId(bson.ObjectIdHex(data.ID)).
+	One(data.UserDisplay.User); err != nil{
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		} else {
+			return
+		}
+	}
+
+	data.UserDisplay.User.BigAvatar = strings.TrimSuffix(data.UserDisplay.User.Avatar, "-avatarStyle")
+	data.UserDisplay.User.Password = ""
+
+	//得到Articles
+	wg := &sync.WaitGroup{}
+	for i, v := range data.UserDisplay.User.Articles {
+		wg.Add(1)
+		data.UserDisplay.Articles = append(data.UserDisplay.Articles, &model.Article{})
+		go func(i int, v string) {
+			defer wg.Done()
+			db := h.DB.Clone()
+			defer db.Close()
+			if err = db.DB(MONGO_DB).C(ARTICLE).
+				FindId(bson.ObjectIdHex(v)).
+				One(data.UserDisplay.Articles[i]); err != nil {
+				log.Println("<(￣︶￣)↗[GO!]", i, ", GetArticle:", err)
+			}
+			data.UserDisplay.Articles[i].ShowID = data.UserDisplay.Articles[i].ID.Hex()
+		}(i, v)
+	}
+	wg.Wait()
+
+	//得到Comments
 	wg2 := &sync.WaitGroup{}
 	for i, v := range data.UserDisplay.User.Comments {
 		wg2.Add(1)
@@ -265,25 +345,78 @@ func (h *Handler) UserDetail(c echo.Context) (err error) {
 	}
 	wg2.Wait()
 
-	//Follow
-	wg3 := &sync.WaitGroup{}
-	for i, v := range data.UserDisplay.User.Follows {
-		wg3.Add(1)
-		data.UserDisplay.Follow = append(data.UserDisplay.Follow, &model.User{})
-		go func(i int, v string) {
-			defer wg3.Done()
-			db := h.DB.Clone()
-			defer db.Close()
-			if err = db.DB(MONGO_DB).C(USER).
-				FindId(bson.ObjectIdHex(v)).
-				One(data.UserDisplay.Follow[i]); err != nil {
-				log.Println("<(￣︶￣)↗[GO!]", i, ", GetFollow:", err)
-			}
-			data.UserDisplay.Follow[i].ShowID = data.UserDisplay.Follow[i].ID.Hex()
-			data.UserDisplay.Follow[i].BigAvatar = strings.TrimSuffix(data.UserDisplay.Follow[i].Avatar, "-avatarStyle")
-		}(i, v)
-	}
-	wg3.Wait()
+	return c.Render(http.StatusOK, "dashboard", data)
+}
 
-	return c.Render(http.StatusOK, "user", data)
+func (h *Handler) RemoveUser(c echo.Context) (err error) {
+	data := &struct {
+		model.Cookie
+	}{}
+	if err = data.Cookie.ReadCookie(c); err == nil {
+		data.IsLogin = true
+	} else {
+		log.Println("Not Login")
+		return c.NoContent(http.StatusNotFound)
+	}
+	return c.Redirect(http.StatusFound, "/user/dashboard")
+}
+
+func (h *Handler) UpdateUser(c echo.Context) (err error) {
+	data := &struct {
+		model.Cookie
+	}{}
+	if err = data.Cookie.ReadCookie(c); err == nil {
+		data.IsLogin = true
+	} else {
+		log.Println("Not Login")
+		return c.NoContent(http.StatusNotFound)
+	}
+
+	u := new(model.User)
+	if err = c.Bind(u); err != nil {
+		return
+	}
+	u.Change = time.Now()
+
+	db := h.DB.Clone()
+	defer db.Close()
+
+	if u.Name != "" {
+		if err = db.DB(MONGO_DB).C(USER).
+			Find(bson.M{"name": u.Name}).One(&model.User{}); err == nil {
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: "用户名已存在"}
+		}
+		if err = db.DB(MONGO_DB).C(USER).
+			UpdateId(bson.ObjectIdHex(data.ID), bson.M{"$set": bson.M{"name": u.Name}}); err != nil {
+			if err == mgo.ErrNotFound {
+				return echo.ErrNotFound
+			} else {
+				return &echo.HTTPError{Code: http.StatusBadRequest, Message: "更新信息失败"}
+			}
+		}
+	}
+
+	if u.Password != "" {
+		if err = db.DB(MONGO_DB).C(USER).
+			UpdateId(bson.ObjectIdHex(data.ID), bson.M{"$set": bson.M{"password": u.Password}}); err != nil {
+			if err == mgo.ErrNotFound {
+				return echo.ErrNotFound
+			} else {
+				return &echo.HTTPError{Code: http.StatusBadRequest, Message: "更新信息失败"}
+			}
+		}
+	}
+
+	if u.Info != "" {
+		if err = db.DB(MONGO_DB).C(USER).
+			UpdateId(bson.ObjectIdHex(data.ID), bson.M{"$set": bson.M{"info": u.Info}}); err != nil {
+			if err == mgo.ErrNotFound {
+				return echo.ErrNotFound
+			} else {
+				return &echo.HTTPError{Code: http.StatusBadRequest, Message: "更新信息失败"}
+			}
+		}
+	}
+
+	return c.Redirect(http.StatusFound, "/user/dashboard")
 }

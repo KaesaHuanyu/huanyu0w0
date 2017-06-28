@@ -23,7 +23,5 @@ var (
 	BGM = []string{
 		"30245064",
 	}
-	WallPaper = []string{
-
-	}
+	WallPaper = []string{}
 )

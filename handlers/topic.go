@@ -25,12 +25,12 @@ func (h *Handler) Topic(c echo.Context) (err error) {
 		PreviousPage int
 		Head         bool
 		Tail         bool
-		Ad string
-		ByTime bool
-		ByLike bool
+		Ad           string
+		ByTime       bool
+		ByLike       bool
 	}{
 		Displays: []*model.Display{},
-		Ad: "topic/" + topic,
+		Ad:       "topic/" + topic,
 	}
 	if err = data.ReadCookie(c); err == nil {
 		data.IsLogin = true
@@ -96,6 +96,7 @@ func (h *Handler) Topic(c echo.Context) (err error) {
 			if err != nil {
 				fmt.Println("<(￣︶￣)↗[GO!]", i, ":", err)
 			}
+			data.Displays[i].Editor.Password = ""
 		}(i)
 	}
 	wg.Wait()
