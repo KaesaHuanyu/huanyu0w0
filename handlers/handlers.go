@@ -11,17 +11,11 @@ type (
 )
 
 const (
-	MONGO_ADDRESS = "120.24.253.180:32786"
+	MONGO_ADDRESS = "huanyu0w0-mongo:27017"
 	MONGO_DB      = "huanyu0w0"
 	USER          = "users"
 	ARTICLE       = "articles"
 	COMMENT       = "comments"
-	POST          = "posts"
+	LOG          = "logs"
 )
 
-var (
-	BGM = []string{
-		"30245064",
-	}
-	WallPaper = []string{}
-)

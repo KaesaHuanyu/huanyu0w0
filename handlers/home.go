@@ -9,8 +9,8 @@ import (
 	"html/template"
 	"huanyu0w0/model"
 	"net/http"
-	"strconv"
 	"sync"
+	"strconv"
 )
 
 func (h *Handler) Home(c echo.Context) (err error) {
@@ -43,7 +43,7 @@ func (h *Handler) Home(c echo.Context) (err error) {
 	}
 	page, _ := strconv.Atoi(c.QueryParam("page"))
 	articles := []*model.Article{}
-	//Default
+	////Default
 	if page == 0 {
 		page = 1
 	}
@@ -60,15 +60,15 @@ func (h *Handler) Home(c echo.Context) (err error) {
 	if err = db.DB(MONGO_DB).C(ARTICLE).
 		Find(nil).
 		Sort(sort).
-		Skip((page - 1) * 20).
-		Limit(20).
+		Skip((page - 1) * 12).
+		Limit(12).
 		All(&articles); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		}
 	}
 
-	if len(articles) < 20 {
+	if len(articles) < 12 {
 		data.Tail = true
 	}
 

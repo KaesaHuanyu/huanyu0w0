@@ -11,6 +11,7 @@ import (
 	"sync"
 	"time"
 	"strconv"
+	"fmt"
 )
 
 func (h *Handler) SignupGet(c echo.Context) (err error) {
@@ -40,7 +41,7 @@ func (h *Handler) Signup(c echo.Context) (err error) {
 	}
 
 	if err = c.Bind(u); err != nil {
-		return
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 	}
 	//Validate
 	if u.Email == "" || u.Password == "" || u.Name == "" {
@@ -65,7 +66,7 @@ func (h *Handler) Signup(c echo.Context) (err error) {
 
 	//Save user
 	if err = db.DB(MONGO_DB).C(USER).Insert(u); err != nil {
-		return
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 	}
 
 	cookie := &model.Cookie{
@@ -73,6 +74,20 @@ func (h *Handler) Signup(c echo.Context) (err error) {
 		Avatar: u.Avatar,
 	}
 	cookie.WriteCookie(c)
+
+	//记录日志
+	log := &model.Log{
+		ID: bson.NewObjectId(),
+		Time: time.Now(),
+		User: u.ID.Hex(),
+		Operation: "注册",
+		Signup: true,
+	}
+
+	if err = db.DB(MONGO_DB).C(LOG).
+	Insert(log); err != nil {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
+	}
 
 	//u.Password = ""
 	path := c.QueryParam("path")
@@ -101,7 +116,7 @@ func (h *Handler) Login(c echo.Context) (err error) {
 	//Bind
 	u := new(model.User)
 	if err = c.Bind(u); err != nil {
-		return
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 	}
 
 	//Find user
@@ -112,7 +127,7 @@ func (h *Handler) Login(c echo.Context) (err error) {
 		if err == mgo.ErrNotFound {
 			return &echo.HTTPError{Code: http.StatusUnauthorized, Message: "用户名或密码错误"}
 		}
-		return
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 	}
 
 	cookie := &model.Cookie{
@@ -154,7 +169,7 @@ func (h *Handler) Follow(c echo.Context) (err error) {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
-			return err
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 		}
 	}
 	if u.IsFollower == nil {
@@ -178,7 +193,7 @@ func (h *Handler) Follow(c echo.Context) (err error) {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
-			return err
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 		}
 	}
 
@@ -187,7 +202,7 @@ func (h *Handler) Follow(c echo.Context) (err error) {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
-			return err
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 		}
 	}
 
@@ -223,7 +238,7 @@ func (h *Handler) UserDetail(c echo.Context) (err error) {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
-			return err
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 		}
 	}
 
@@ -300,7 +315,7 @@ func (h *Handler) Dashboard(c echo.Context) (err error) {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
-			return
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 		}
 	}
 
@@ -374,7 +389,7 @@ func (h *Handler) UpdateUser(c echo.Context) (err error) {
 
 	u := new(model.User)
 	if err = c.Bind(u); err != nil {
-		return
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 	}
 	u.Change = time.Now()
 

@@ -1,5 +1,5 @@
-//docker run --name huayu0w0-mongo -d --restart always -m 512m --oom-kill-disable -v ~/mongo:/data/db mongo
-//docker run -d --name huanyu0w0-server-test --restart always --link huanyu0w0-mongo-test:mongo -p 80:1323 daocloud.io/kaesa/huanyu0w0-server-test
+//docker run --name huayu0w0-mongo -d --restart always -m 1024m --oom-kill-disable -v ~/mongo:/data/db mongo
+//docker run -d --name huanyu0w0-server --restart always --link huanyu0w0-mongo:mongo -p 80:1323 daocloud.io/kaesa/huanyu0w0-server:v1.0.1
 package main
 
 import (
@@ -85,10 +85,13 @@ func main() {
 	e.POST("/updateAvatar", h.UpdateAvatar)
 	e.GET("/resume", h.CurriculumVitae)
 	e.GET("/thankYouForYourGenerosity", h.ThankYou)
-	//e.GET("/user/remove/:id", h.RemoveUser)
 	e.GET("/article/remove/:id", h.RemoveArticle)
 	e.GET("/comment/remove/:id", h.RemoveComment)
+	//e.GET("/user/remove/:id", h.RemoveUser)
+	e.POST("/article/remove", h.RemoveArticle)
+	e.POST("/comment/remove", h.RemoveComment)
 	e.POST("/user/update", h.UpdateUser)
+	e.GET("/logs", h.AdminLogs)
 	//图片之类的静态文件路由
 	e.Static("/static", "static")
 

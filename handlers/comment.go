@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"sync"
 	"time"
+	"fmt"
 )
 
 func (h *Handler) CreateComment(c echo.Context) (err error) {
@@ -31,7 +32,7 @@ func (h *Handler) CreateComment(c echo.Context) (err error) {
 	}
 
 	if err = c.Bind(comment); err != nil {
-		return
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 	}
 	if comment.Content == "" {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid content field"}
@@ -40,40 +41,59 @@ func (h *Handler) CreateComment(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	if err = db.DB(MONGO_DB).C(COMMENT).Insert(comment); err != nil {
-		return err
-	}
-	//更新user
-	if err = db.DB(MONGO_DB).C(USER).
-		UpdateId(bson.ObjectIdHex(comment.Editor), bson.M{"$addToSet": bson.M{"comments": comment.ID.Hex()}}); err != nil {
-		if err == mgo.ErrNotFound {
-			return echo.ErrNotFound
-		} else {
-			return err
-		}
-	}
-	//更新article
-	if err = db.DB(MONGO_DB).C(ARTICLE).
-		UpdateId(bson.ObjectIdHex(comment.Article), bson.M{"$addToSet": bson.M{"comments": comment.ID.Hex()}}); err != nil {
-		if err == mgo.ErrNotFound {
-			return echo.ErrNotFound
-		} else {
-			return err
-		}
-	}
-
 	replyto := c.QueryParam("replyto")
 	if replyto != "" {
 		comment.Replyto = replyto
 		//更新comment
 		if err = db.DB(MONGO_DB).C(COMMENT).
-			UpdateId(bson.ObjectIdHex(replyto), bson.M{"$addToSet": bson.M{"replies": comment.ID.Hex()}}); err != nil {
+			UpdateId(bson.ObjectIdHex(replyto), bson.M{"$addToSet": bson.M{"replies": comment.ID.Hex()}});
+			err != nil {
 			if err == mgo.ErrNotFound {
 				return echo.ErrNotFound
 			} else {
-				return err
+				return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 			}
 		}
+	}
+
+	if err = db.DB(MONGO_DB).C(COMMENT).Insert(comment); err != nil {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
+	}
+
+	//更新user
+	if err = db.DB(MONGO_DB).C(USER).
+		UpdateId(bson.ObjectIdHex(comment.Editor), bson.M{"$addToSet": bson.M{"comments": comment.ID.Hex()}});
+		err != nil {
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		} else {
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
+		}
+	}
+	//更新article
+	if err = db.DB(MONGO_DB).C(ARTICLE).
+		UpdateId(bson.ObjectIdHex(comment.Article), bson.M{"$addToSet": bson.M{"comments": comment.ID.Hex()}});
+		err != nil {
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		} else {
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
+		}
+	}
+
+	//记录日志
+	log := &model.Log{
+		ID: bson.NewObjectId(),
+		Time: time.Now(),
+		Object: comment.ID.Hex(),
+		Type: "评论",
+		User: data.ID,
+		Operation: "创建",
+	}
+
+	if err = db.DB(MONGO_DB).C(LOG).
+		Insert(log); err != nil {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 	}
 
 	if replies := c.QueryParam("replies"); replies == "yes" {
@@ -106,7 +126,7 @@ func (h *Handler) CommentLike(c echo.Context) (err error) {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
-			return err
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 		}
 	}
 	if comment.UserLiked == nil {
@@ -130,7 +150,7 @@ func (h *Handler) CommentLike(c echo.Context) (err error) {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
-			return err
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 		}
 	}
 
@@ -171,7 +191,7 @@ func (h *Handler) Replies(c echo.Context) (err error) {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
-			return err
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 		}
 	}
 
@@ -186,9 +206,10 @@ func (h *Handler) Replies(c echo.Context) (err error) {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
-			return err
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 		}
 	}
+	data.DisplayComment.Editor.Password = ""
 
 	//是否为回复
 	if data.DisplayComment.Comment.Replyto != "" {
@@ -204,6 +225,7 @@ func (h *Handler) Replies(c echo.Context) (err error) {
 			One(data.DisplayComment.Replyto); err != nil {
 			log.Println("<(￣︶￣)↗[GO!]", " Replyto:", err)
 		}
+		data.DisplayComment.Replyto.Password = ""
 	}
 
 	//当前用户是否关注
@@ -266,14 +288,11 @@ func (h *Handler) Replies(c echo.Context) (err error) {
 				}
 			}
 
-			data.Replies[i].Replyto.Password = ""
 			data.Replies[i].Editor.Password = ""
 		}(i, v)
 	}
 	wg.Wait()
 
-	data.DisplayComment.Editor.Password = ""
-	data.DisplayComment.Replyto.Password = ""
 	return c.Render(http.StatusOK, "replies", data)
 }
 
@@ -287,5 +306,161 @@ func (h *Handler) RemoveComment(c echo.Context) (err error) {
 		log.Println("Not Login")
 		return c.NoContent(http.StatusNotFound)
 	}
+
+	id := c.FormValue("commentid")
+	if id == "" {
+		id = c.Param("id")
+	}
+
+	db := h.DB.Clone()
+	defer db.Close()
+
+	//获取comment
+	comment := &model.Comment{}
+	if err = db.DB(MONGO_DB).C(COMMENT).
+		FindId(bson.ObjectIdHex(id)).
+		One(comment); err != nil {
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		} else {
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
+		}
+	}
+
+	if comment.Editor != data.ID {
+		admin := &model.User{}
+		if err = db.DB(MONGO_DB).C(USER).
+			FindId(bson.ObjectIdHex(data.ID)).
+			One(admin); err != nil {
+			if err == mgo.ErrNotFound {
+				return echo.ErrNotFound
+			} else {
+				return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
+			}
+		}
+		if !admin.Admin {
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: "您没有删除该评论的权限"}
+		}
+	}
+
+	if err = h.removeComment(id, false); err != nil {
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		} else {
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
+		}
+	}
+
+	//记录日志
+	log := &model.Log{
+		ID: bson.NewObjectId(),
+		Time: time.Now(),
+		Object: comment.ID.Hex(),
+		Type: "评论",
+		User: data.ID,
+		Operation: "删除",
+	}
+
+	if err = db.DB(MONGO_DB).C(LOG).
+		Insert(log); err != nil {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
+	}
+
 	return c.Redirect(http.StatusFound, "/user/dashboard")
+}
+
+//删除评论
+func (h *Handler) removeComment(id string, article bool) (err error) {
+	db := h.DB.Clone()
+	defer db.Close()
+
+	//获取comment
+	c := &model.Comment{}
+	if err = db.DB(MONGO_DB).C(COMMENT).
+	FindId(bson.ObjectIdHex(id)).
+	One(c); err != nil {
+		return
+	}
+
+	if c.Replyto != "" {
+		r := &model.Comment{}
+		if err = db.DB(MONGO_DB).C(COMMENT).
+			FindId(bson.ObjectIdHex(c.Replyto)).
+			One(r); err != nil {
+			return
+		}
+
+		for i, v := range r.Replies {
+			if v == id {
+				r.Replies = append(r.Replies[:i], r.Replies[i+1:]...)
+				break
+			}
+		}
+
+		//更新user
+		if err = db.DB(MONGO_DB).C(COMMENT).
+			UpdateId(bson.ObjectIdHex(c.Replyto), r); err != nil {
+			return
+		}
+	}
+
+	for _, v := range c.Replies {
+		if err = db.DB(MONGO_DB).C(COMMENT).
+		UpdateId(bson.ObjectIdHex(v), bson.M{"$set": bson.M{"replyto": ""}});
+			err != nil {
+			return
+		}
+	}
+
+	//获取user
+	u := &model.User{}
+	if err = db.DB(MONGO_DB).C(USER).
+		FindId(bson.ObjectIdHex(c.Editor)).
+		One(u); err != nil {
+		return
+	}
+
+	for i, v := range u.Comments {
+		if v == id {
+			u.Comments = append(u.Comments[:i], u.Comments[i+1:]...)
+			break
+		}
+	}
+
+	//更新user
+	if err = db.DB(MONGO_DB).C(USER).
+		UpdateId(bson.ObjectIdHex(c.Editor), u); err != nil {
+		return
+	}
+
+	if !article {
+		//获取article
+		a := &model.Article{}
+		if err = db.DB(MONGO_DB).C(ARTICLE).
+			FindId(bson.ObjectIdHex(c.Article)).
+			One(a); err != nil {
+			return
+		}
+
+		for i, v := range a.Comments {
+			if v == id {
+				a.Comments = append(a.Comments[:i], a.Comments[i+1:]...)
+				break
+			}
+		}
+
+		//更新article
+		if err = db.DB(MONGO_DB).C(ARTICLE).
+			UpdateId(bson.ObjectIdHex(c.Article), a); err != nil {
+			return
+		}
+	}
+
+	//删除comment
+	if err = db.DB(MONGO_DB).C(COMMENT).
+		RemoveId(bson.ObjectIdHex(id)); err != nil {
+		return
+	}
+
+	return
 }

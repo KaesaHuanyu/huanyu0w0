@@ -2,7 +2,7 @@
 {{define "replies"}}
 <html>
 <head>
-<title>{{.DisplayComment.Editor.Name}} - huanyu0w0 - 松鼠党de奇妙聚集地 Σ( ° △ °|||)</title>
+<title>{{.DisplayComment.Editor.Name}} - huanyu0w0 - 安利党de命中注定 Σ( ° △ °|||)</title>
 {{template "header" .}}
 
             <div class="mdl-card mdl-shadow--4dp" style="margin-left: 8%; margin-top: 1%; min-width: 640px; width: 40%;">
@@ -49,7 +49,7 @@
                         </span>
 
                         <div style="display: none;" id="replymain">
-                            <form action="/createcomment?article={{.DisplayComment.Comment.Article}}&replyto={{.DisplayComment.ID}}&replies=yes&comment={{.DisplayComment.ID}}" method="post">
+                            <form action="/comment/create?article={{.DisplayComment.Comment.Article}}&replyto={{.DisplayComment.ID}}&replies=yes&comment={{.DisplayComment.ID}}" method="post">
                                 <div class="mdl-textfield mdl-js-textfield" style="width: 95%; margin-left: 2%;">
                                 <textarea rows=1 class="mdl-textfield__input" type="text" id="comment" name="content"></textarea>
                                 <label for="comment" class="mdl-textfield__label">回复 {{.DisplayComment.Editor.Name}}: </label>
@@ -107,7 +107,7 @@
                         </span>
 
                         <div style="display: none;" id="reply{{.ID}}">
-                            <form action="/createcomment?article={{.Comment.Article}}&replyto={{.ID}}&replies=yes&comment={{.Comment.Replyto}}" method="post">
+                            <form action="/comment/create?article={{.Comment.Article}}&replyto={{.ID}}&replies=yes&comment={{.Comment.Replyto}}" method="post">
                                 <div class="mdl-textfield mdl-js-textfield" style="width: 95%; margin-left: 2%;">
                                 <textarea rows=1 class="mdl-textfield__input" type="text" id="comment" name="content"></textarea>
                                 <label for="comment" class="mdl-textfield__label">回复 {{.Editor.Name}}: </label>

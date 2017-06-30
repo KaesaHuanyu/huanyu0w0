@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"sync"
 	"time"
+	"fmt"
 )
 
 func (h *Handler) CreateArticleGet(c echo.Context) (err error) {
@@ -41,18 +42,18 @@ func (h *Handler) CreateArticle(c echo.Context) (err error) {
 	}
 
 	if err = c.Bind(a); err != nil {
-		return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 	}
 
 	if a.Reason == "" || a.Title == "" || a.Name == "" {
-		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid title, name or reason field"}
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "标题、作品名或理由为空"}
 	}
 
 	db := h.DB.Clone()
 	defer db.Close()
 
 	if err = db.DB(MONGO_DB).C(ARTICLE).Insert(a); err != nil {
-		return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 	}
 
 	//更新user的articles
@@ -61,8 +62,23 @@ func (h *Handler) CreateArticle(c echo.Context) (err error) {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
-			return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 		}
+	}
+
+	//记录日志
+	log := &model.Log{
+		ID: bson.NewObjectId(),
+		Time: time.Now(),
+		Object: a.ID.Hex(),
+		Type: "文稿",
+		User: data.ID,
+		Operation: "创建",
+	}
+
+	if err = db.DB(MONGO_DB).C(LOG).
+		Insert(log); err != nil {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 	}
 
 	return c.Redirect(http.StatusFound, "/article/"+a.ID.Hex())
@@ -119,6 +135,7 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 			return echo.ErrNotFound
 		}
 	}
+	data.Display.Editor.Password = ""
 
 	//当前用户是否关注
 	if v, ok := data.Display.Editor.IsFollower[data.ID]; ok {
@@ -171,6 +188,7 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 					One(data.Display.Comments[i].Replyto); err != nil {
 					log.Println("<(￣︶￣)↗[GO!]", i, " Replyto:", err)
 				}
+				data.Display.Comments[i].Replyto.Password = ""
 			}
 			//是否是楼主
 			if data.Display.Comments[i].Comment.Editor == data.Display.Article.Editor {
@@ -203,7 +221,6 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 		data.Display.IsMostLikes = true
 	}
 
-	data.Display.Editor.Password = ""
 	return c.Render(http.StatusOK, "article", data)
 }
 
@@ -227,7 +244,7 @@ func (h *Handler) ArticleLike(c echo.Context) (err error) {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
-			return err
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 		}
 	}
 	if a.UserLiked == nil {
@@ -251,7 +268,7 @@ func (h *Handler) ArticleLike(c echo.Context) (err error) {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
-			return err
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 		}
 	}
 
@@ -268,5 +285,105 @@ func (h *Handler) RemoveArticle(c echo.Context) (err error) {
 		log.Println("Not Login")
 		return c.NoContent(http.StatusNotFound)
 	}
+
+	id := c.FormValue("articleid")
+	if id == "" {
+		id = c.Param("id")
+	}
+
+	db := h.DB.Clone()
+	defer db.Close()
+	//获取article
+	a := &model.Article{}
+	if err = db.DB(MONGO_DB).C(ARTICLE).
+		FindId(bson.ObjectIdHex(id)).
+		One(a); err != nil {
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		} else {
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
+		}
+	}
+
+	//权限检测
+	if a.Editor != data.ID {
+		admin := &model.User{}
+		if err = db.DB(MONGO_DB).C(USER).
+		FindId(bson.ObjectIdHex(data.ID)).
+		One(admin); err != nil {
+			if err == mgo.ErrNotFound {
+				return echo.ErrNotFound
+			} else {
+				return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
+			}
+		}
+		if !admin.Admin {
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: "您没有删除该文章的权限"}
+		}
+	}
+
+	//删除
+	if err = db.DB(MONGO_DB).C(ARTICLE).
+		RemoveId(bson.ObjectIdHex(id)); err != nil {
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		} else {
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
+		}
+	}
+
+	//获取user
+	u := &model.User{}
+	if err = db.DB(MONGO_DB).C(USER).
+		FindId(bson.ObjectIdHex(a.Editor)).
+		One(u); err != nil {
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		} else {
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
+		}
+	}
+
+	for i, v := range u.Articles {
+		if v == id {
+			u.Articles = append(u.Articles[:i], u.Articles[i+1:]...)
+			break
+		}
+	}
+
+	//更新user
+	if err = db.DB(MONGO_DB).C(USER).
+		UpdateId(bson.ObjectIdHex(a.Editor), u); err != nil {
+		log.Printf("RemoveComment.Uodate User ERROR: %s", err)
+	}
+
+	//删除comments
+	wg := sync.WaitGroup{}
+	for i, v := range a.Comments {
+		wg.Add(1)
+		go func(i int, v string) {
+			defer wg.Done()
+			if err := h.removeComment(v, true); err != nil {
+				log.Printf("RemoveComment.WaitGroupGoroutine[%d] ERROR: %s", i, v)
+			}
+		}(i, v)
+	}
+	wg.Wait()
+
+	//记录日志
+	log := &model.Log{
+		ID: bson.NewObjectId(),
+		Time: time.Now(),
+		Object: a.ID.Hex(),
+		Type: "文稿",
+		User: data.ID,
+		Operation: "删除",
+	}
+
+	if err = db.DB(MONGO_DB).C(LOG).
+		Insert(log); err != nil {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
+	}
+
 	return c.Redirect(http.StatusFound, "/user/dashboard")
 }

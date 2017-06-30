@@ -33,7 +33,7 @@ func (h *Handler) UpdateAvatar(c echo.Context) (err error) {
 	src, err := file.Open()
 	if err != nil {
 		fmt.Println()
-		return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 	}
 	defer src.Close()
 	//Destination
@@ -41,7 +41,7 @@ func (h *Handler) UpdateAvatar(c echo.Context) (err error) {
 	dst, err := os.Create(filePath)
 	if err != nil {
 		fmt.Println("os.Create:")
-		return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 	}
 
 	defer dst.Close()
@@ -49,18 +49,18 @@ func (h *Handler) UpdateAvatar(c echo.Context) (err error) {
 	//Copy
 	if _, err = io.Copy(dst, src); err != nil {
 		fmt.Println("io.Copy")
-		return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 	}
 
 	avatar, err := toQiniu(data.ID, file.Filename, filePath)
 	if err != nil {
-		return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 	}
 
 	err = os.Remove(filePath)
 	if err != nil {
 		fmt.Println("os.Remove:")
-		return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 	}
 
 	db := h.DB.Clone()
@@ -72,7 +72,7 @@ func (h *Handler) UpdateAvatar(c echo.Context) (err error) {
 			return echo.ErrNotFound
 		} else {
 			fmt.Println("UpdateId:")
-			return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 		}
 	}
 

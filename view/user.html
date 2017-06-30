@@ -2,7 +2,7 @@
 {{define "user"}}
 <html>
 <head>
-    <title>{{.UserDisplay.User.Name}} - 个人主页 - huanyu0w0 - 松鼠党de奇妙聚集地 Σ( ° △ °|||)</title>
+    <title>{{.UserDisplay.User.Name}} - 个人主页 - huanyu0w0 - 安利党de命中注定 Σ( ° △ °|||)</title>
 {{template "header" .}}
 
 <div class="mdl-grid" style="width: 55%; min-width: 800px; margin-left: 5%;">
@@ -16,7 +16,7 @@
 	        <h2 class="mdl-card__title-text mdl-color-text--accent">{{.UserDisplay.User.Name}}</h2>
 	    </div>
 	    <div class="mdl-card__supporting-text mdl-card--expand mdl-color-text--grey-600">
-        <p>{{.UserDisplay.User.Email}}</p>
+        <a href="mailto:{{.UserDisplay.User.Email}}" style="text-decoration: none;">{{.UserDisplay.User.Email}}</a><br>
         {{if .UserDisplay.User.Info}}
             <p>{{.UserDisplay.User.Info}}</p>
         {{else}}
@@ -24,7 +24,7 @@
         {{end}}
 	    </div>
 	    <div class="mdl-card__actions">
-	    	<a href="" class="mdl-button mdl-color-text--accent mdl-js-button mdl-js-ripple-effect">+关注</a>
+	    	<!-- <a href="" class="mdl-button mdl-color-text--accent mdl-js-button mdl-js-ripple-effect">+关注</a> -->
 	    	<div style="float: right; margin-right: 3%;">
             	<i class="material-icons mdl-color-text--accent">favorite</i>
             	<small class="mdl-color-text--accent">{{.UserDisplay.User.Follower}} 位粉丝</small>

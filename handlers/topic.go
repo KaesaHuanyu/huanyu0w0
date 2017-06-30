@@ -63,15 +63,15 @@ func (h *Handler) Topic(c echo.Context) (err error) {
 	if err = db.DB(MONGO_DB).C(ARTICLE).
 		Find(bson.M{"topic": topic}).
 		Sort(sort).
-		Skip((page - 1) * 20).
-		Limit(20).
+		Skip((page - 1) * 12).
+		Limit(12).
 		All(&articles); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		}
 	}
 
-	if len(articles) < 20 {
+	if len(articles) < 12 {
 		data.Tail = true
 	}
 
