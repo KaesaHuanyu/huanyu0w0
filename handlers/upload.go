@@ -37,7 +37,7 @@ func (h *Handler) UpdateAvatar(c echo.Context) (err error) {
 	}
 	defer src.Close()
 	//Destination
-	filePath := "static/tmp/" + file.Filename
+	filePath := "static/" + file.Filename
 	dst, err := os.Create(filePath)
 	if err != nil {
 		fmt.Println("os.Create:")
