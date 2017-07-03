@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9e749d95-0938-46ae-bc2b-95b662fbc046" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/handlers/article.go" afterPath="$PROJECT_DIR$/handlers/article.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.go" afterPath="$PROJECT_DIR$/server.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/view/createarticle.html" afterPath="$PROJECT_DIR$/view/createarticle.html" />
@@ -32,8 +31,8 @@
       <file leaf-file-name="server.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="526">
-              <caret line="93" column="31" lean-forward="true" selection-start-line="93" selection-start-column="31" selection-end-line="93" selection-end-column="31" />
+            <state relative-caret-position="544">
+              <caret line="94" column="45" lean-forward="false" selection-start-line="94" selection-start-column="45" selection-end-line="94" selection-end-column="45" />
               <folding>
                 <element signature="e#262#437#0" expanded="true" />
               </folding>
@@ -44,8 +43,8 @@
       <file leaf-file-name="article.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/handlers/article.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="634">
-              <caret line="466" column="1" lean-forward="true" selection-start-line="466" selection-start-column="1" selection-end-line="466" selection-end-column="1" />
+            <state relative-caret-position="616">
+              <caret line="476" column="55" lean-forward="false" selection-start-line="476" selection-start-column="55" selection-end-line="476" selection-end-column="55" />
               <folding>
                 <element signature="e#18#224#0" expanded="true" />
               </folding>
@@ -821,8 +820,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="526">
-          <caret line="93" column="31" lean-forward="true" selection-start-line="93" selection-start-column="31" selection-end-line="93" selection-end-column="31" />
+        <state relative-caret-position="544">
+          <caret line="94" column="45" lean-forward="false" selection-start-line="94" selection-start-column="45" selection-end-line="94" selection-end-column="45" />
           <folding>
             <element signature="e#262#437#0" expanded="true" />
           </folding>
@@ -831,8 +830,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/handlers/article.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="634">
-          <caret line="466" column="1" lean-forward="true" selection-start-line="466" selection-start-column="1" selection-end-line="466" selection-end-column="1" />
+        <state relative-caret-position="616">
+          <caret line="476" column="55" lean-forward="false" selection-start-line="476" selection-start-column="55" selection-end-line="476" selection-end-column="55" />
           <folding>
             <element signature="e#18#224#0" expanded="true" />
           </folding>

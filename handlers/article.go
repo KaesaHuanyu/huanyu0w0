@@ -26,12 +26,6 @@ func (h *Handler) CreateArticleGet(c echo.Context) (err error) {
 	} else {
 		return c.Redirect(http.StatusFound, "/login?path=article/create")
 	}
-
-	url := c.QueryParam("url")
-	if url != "" {
-		data.Url = url
-	}
-
 	return c.Render(http.StatusOK, "createarticle", data)
 }
 
@@ -463,5 +457,22 @@ func (h *Handler) ArticleImage(c echo.Context) (err error) {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 	}
 
-	return c.Redirect(http.StatusFound, "/article/create?url="+url)
+	return c.Redirect(http.StatusFound, "/article/image?url="+url)
+}
+
+func (h *Handler) ArticleImageGet(c echo.Context) (err error) {
+	data := &struct {
+		model.Cookie
+		Url string
+	}{}
+	if err = data.Cookie.ReadCookie(c); err == nil {
+		data.IsLogin = true
+	} else {
+		return c.Redirect(http.StatusFound, "/login")
+	}
+	url := c.QueryParam("url")
+	if url != "" {
+		data.Url = url
+	}
+	return c.Render(http.StatusOK, "articlephoto", data)
 }

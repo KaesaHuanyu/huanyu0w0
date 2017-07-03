@@ -1,0 +1,33 @@
+{{define "articlephoto"}}
+<!DOCTYPE html>
+<html>
+<head>
+<title>WRITRING... - huanyu0w0 - 安利党de命中注定 Σ( ° △ °|||)</title>
+{{template "header" .}}
+
+<div class="mdl-grid">
+<div class="mdl-cell mdl-cell--3-col"></div>
+<div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--6-col">
+	<div class="mdl-card__supporting-text">
+	<form action="/article/image/{{.ID}}" method="post" enctype="multipart/form-data">
+                  <br>
+                  <div style="margin-left: 3%; display: block;">
+                    <small class="mdl-color-text--grey-500">请选择图片(请勿包含中文)</small>
+                    <br>
+                    <input type="file" name="file" accept="image/*" style="margin-bottom: 2%;">
+                  </div>
+
+                  <a href="javascript:void(0);" type="submit" style="margin-left: 3%; margin-bottom: 2%; text-decoration: none;">添加图片</a>
+                </form>
+                <div style="margin-left: 3%;">
+                  <li class="mdl-list__item mdl-color-text--grey-600">
+                    <span class="mdl-list__item-primary-content">url: {{.Url}}</span>
+                  </li>
+                </div>
+    </div>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col"></div>
+    </div>
+</div>
+{{template "footer"}}
+{{end}}
