@@ -92,7 +92,7 @@ func main() {
 	e.POST("/comment/remove", h.RemoveComment)
 	e.POST("/user/update", h.UpdateUser)
 	e.GET("/logs", h.AdminLogs)
-	e.GET("/article/image/:id", h.ArticleImage)
+	e.POST("/article/image/:id", h.ArticleImage)
 	//图片之类的静态文件路由
 	e.Static("/static", "static")
 

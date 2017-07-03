@@ -463,5 +463,5 @@ func (h *Handler) ArticleImage(c echo.Context) (err error) {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 	}
 
-	return c.Redirect(http.StatusFound, "/article/create&url="+url)
+	return c.Redirect(http.StatusFound, "/article/create?url="+url)
 }
