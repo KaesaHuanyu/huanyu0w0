@@ -10,9 +10,9 @@ type (
 	Cookie struct {
 		ID       string
 		Avatar   string
-		Email	string
+		Email    string
 		UnixTime string
-		Name	string
+		Name     string
 		Remember bool
 		IsLogin  bool
 	}

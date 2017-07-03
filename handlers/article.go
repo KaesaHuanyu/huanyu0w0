@@ -1,28 +1,37 @@
 package handlers
 
 import (
+	"fmt"
 	"github.com/labstack/echo"
+	"github.com/russross/blackfriday"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+	"html/template"
 	"huanyu0w0/model"
+	"io"
 	"log"
 	"net/http"
+	"os"
 	"sync"
 	"time"
-	"fmt"
-	"html/template"
-	"github.com/russross/blackfriday"
 )
 
 func (h *Handler) CreateArticleGet(c echo.Context) (err error) {
 	data := &struct {
 		model.Cookie
+		Url string
 	}{}
 	if err = data.Cookie.ReadCookie(c); err == nil {
 		data.IsLogin = true
 	} else {
 		return c.Redirect(http.StatusFound, "/login?path=article/create")
 	}
+
+	url := c.QueryParam("url")
+	if url != "" {
+		data.Url = url
+	}
+
 	return c.Render(http.StatusOK, "createarticle", data)
 }
 
@@ -51,6 +60,10 @@ func (h *Handler) CreateArticle(c echo.Context) (err error) {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "标题、作品名或安利理由为空"}
 	}
 
+	if len(a.Title) > 60 {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "标题名不能超过20个字"}
+	}
+
 	db := h.DB.Clone()
 	defer db.Close()
 
@@ -75,11 +88,11 @@ func (h *Handler) CreateArticle(c echo.Context) (err error) {
 
 	//记录日志
 	log := &model.Log{
-		ID: bson.NewObjectId(),
-		Time: time.Now(),
-		Object: a.ID.Hex(),
-		Type: "文稿",
-		User: data.ID,
+		ID:        bson.NewObjectId(),
+		Time:      time.Now(),
+		Object:    a.ID.Hex(),
+		Type:      "文稿",
+		User:      data.ID,
 		Operation: "创建",
 	}
 
@@ -320,8 +333,8 @@ func (h *Handler) RemoveArticle(c echo.Context) (err error) {
 	if a.Editor != data.ID {
 		admin := &model.User{}
 		if err = db.DB(MONGO_DB).C(USER).
-		FindId(bson.ObjectIdHex(data.ID)).
-		One(admin); err != nil {
+			FindId(bson.ObjectIdHex(data.ID)).
+			One(admin); err != nil {
 			if err == mgo.ErrNotFound {
 				return echo.ErrNotFound
 			} else {
@@ -383,11 +396,11 @@ func (h *Handler) RemoveArticle(c echo.Context) (err error) {
 
 	//记录日志
 	log := &model.Log{
-		ID: bson.NewObjectId(),
-		Time: time.Now(),
-		Object: a.ID.Hex(),
-		Type: "文稿",
-		User: data.ID,
+		ID:        bson.NewObjectId(),
+		Time:      time.Now(),
+		Object:    a.ID.Hex(),
+		Type:      "文稿",
+		User:      data.ID,
 		Operation: "删除",
 	}
 
@@ -397,4 +410,58 @@ func (h *Handler) RemoveArticle(c echo.Context) (err error) {
 	}
 
 	return c.Redirect(http.StatusFound, "/user/dashboard")
+}
+
+func (h *Handler) ArticleImage(c echo.Context) (err error) {
+	data := &struct {
+		model.Cookie
+	}{}
+	if err = data.Cookie.ReadCookie(c); err == nil {
+		data.IsLogin = true
+	} else {
+		return c.Redirect(http.StatusFound, "/login")
+	}
+
+	//Read file
+	//Source
+	file, err := c.FormFile("file")
+	if err != nil {
+		fmt.Println("FormFile:")
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "请先选择图片"}
+	}
+	src, err := file.Open()
+	if err != nil {
+		fmt.Println()
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
+	}
+	defer src.Close()
+	//Destination
+	filePath := "static/" + file.Filename
+	dst, err := os.Create(filePath)
+	if err != nil {
+		fmt.Println("os.Create:")
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
+	}
+
+	defer dst.Close()
+
+	//Copy
+	if _, err = io.Copy(dst, src); err != nil {
+		fmt.Println("io.Copy")
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
+	}
+
+	id := c.Param("id")
+	url, err := toQiniu(id, file.Filename, filePath, "", "-imageStyle")
+	if err != nil {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
+	}
+
+	err = os.Remove(filePath)
+	if err != nil {
+		fmt.Println("os.Remove:")
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
+	}
+
+	return c.Redirect(http.StatusFound, "/article/create&url="+url)
 }

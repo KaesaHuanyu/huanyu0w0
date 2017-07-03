@@ -1,20 +1,20 @@
 package handlers
 
 import (
+	"fmt"
 	"github.com/labstack/echo"
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 	"huanyu0w0/model"
 	"log"
 	"net/http"
-	"gopkg.in/mgo.v2/bson"
-	"gopkg.in/mgo.v2"
-	"fmt"
 )
 
 func (h *Handler) Admin(c echo.Context) (err error) {
 	data := &struct {
 		model.Cookie
-		Admin *model.User
-		User int
+		Admin   *model.User
+		User    int
 		Article int
 		Comment int
 	}{
@@ -35,7 +35,7 @@ func (h *Handler) Admin(c echo.Context) (err error) {
 	data.Admin = &model.User{}
 	if err = db.DB(MONGO_DB).C(USER).
 		FindId(bson.ObjectIdHex(data.ID)).
-		One(data.Admin); err != nil{
+		One(data.Admin); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
@@ -60,26 +60,26 @@ func (h *Handler) Admin(c echo.Context) (err error) {
 func (h *Handler) AdminLogs(c echo.Context) (err error) {
 	data := &struct {
 		model.Cookie
-		Admin *model.User
-		Events []*struct{
-			Time string
-			User string
-			Admin bool
+		Admin  *model.User
+		Events []*struct {
+			Time      string
+			User      string
+			Admin     bool
 			Operation string
-			Type string
-			Object string
-			Signup bool
+			Type      string
+			Object    string
+			Signup    bool
 		}
 	}{
 		Admin: &model.User{},
-		Events: []*struct{
-			Time string
-			User string
-			Admin bool
+		Events: []*struct {
+			Time      string
+			User      string
+			Admin     bool
 			Operation string
-			Type string
-			Object string
-			Signup bool
+			Type      string
+			Object    string
+			Signup    bool
 		}{},
 	}
 	if err = data.Cookie.ReadCookie(c); err == nil {
@@ -97,7 +97,7 @@ func (h *Handler) AdminLogs(c echo.Context) (err error) {
 	data.Admin = &model.User{}
 	if err = db.DB(MONGO_DB).C(USER).
 		FindId(bson.ObjectIdHex(data.ID)).
-		One(data.Admin); err != nil{
+		One(data.Admin); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
@@ -115,8 +115,8 @@ func (h *Handler) AdminLogs(c echo.Context) (err error) {
 	//读取日志
 	logs := []*model.Log{}
 	if err = db.DB(MONGO_DB).C(LOG).
-	Find(nil).Sort("-time").
-	All(&logs); err != nil {
+		Find(nil).Sort("-time").
+		All(&logs); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		}
@@ -125,26 +125,26 @@ func (h *Handler) AdminLogs(c echo.Context) (err error) {
 	for _, v := range logs {
 		u := &model.User{}
 		if err := db.DB(MONGO_DB).C(USER).
-		FindId(bson.ObjectIdHex(v.User)).
-		One(u); err != nil {
+			FindId(bson.ObjectIdHex(v.User)).
+			One(u); err != nil {
 			return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 		}
-		event := &struct{
-			Time string
-			User string
-			Admin bool
+		event := &struct {
+			Time      string
+			User      string
+			Admin     bool
 			Operation string
-			Type string
-			Object string
-			Signup bool
+			Type      string
+			Object    string
+			Signup    bool
 		}{
-			Time: v.Time.Format("2006年 01月02日 15:04:05"),
-			User: u.Name,
-			Admin: u.Admin,
+			Time:      v.Time.Format("2006年 01月02日 15:04:05"),
+			User:      u.Name,
+			Admin:     u.Admin,
 			Operation: v.Operation,
-			Type: v.Type,
-			Object: v.Object,
-			Signup: v.Signup,
+			Type:      v.Type,
+			Object:    v.Object,
+			Signup:    v.Signup,
 		}
 		data.Events = append(data.Events, event)
 	}

@@ -16,6 +16,5 @@ const (
 	USER          = "users"
 	ARTICLE       = "articles"
 	COMMENT       = "comments"
-	LOG          = "logs"
+	LOG           = "logs"
 )
-

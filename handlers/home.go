@@ -9,8 +9,8 @@ import (
 	"html/template"
 	"huanyu0w0/model"
 	"net/http"
-	"sync"
 	"strconv"
+	"sync"
 )
 
 func (h *Handler) Home(c echo.Context) (err error) {

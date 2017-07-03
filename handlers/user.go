@@ -1,17 +1,17 @@
 package handlers
 
 import (
+	"fmt"
 	"github.com/labstack/echo"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"huanyu0w0/model"
 	"log"
 	"net/http"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
-	"strconv"
-	"fmt"
 )
 
 func (h *Handler) SignupGet(c echo.Context) (err error) {
@@ -77,15 +77,15 @@ func (h *Handler) Signup(c echo.Context) (err error) {
 
 	//记录日志
 	log := &model.Log{
-		ID: bson.NewObjectId(),
-		Time: time.Now(),
-		User: u.ID.Hex(),
+		ID:        bson.NewObjectId(),
+		Time:      time.Now(),
+		User:      u.ID.Hex(),
 		Operation: "注册",
-		Signup: true,
+		Signup:    true,
 	}
 
 	if err = db.DB(MONGO_DB).C(LOG).
-	Insert(log); err != nil {
+		Insert(log); err != nil {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 	}
 
@@ -131,11 +131,11 @@ func (h *Handler) Login(c echo.Context) (err error) {
 	}
 
 	cookie := &model.Cookie{
-		ID:     u.ID.Hex(),
-		Avatar: u.Avatar,
-		Email:	u.Email,
+		ID:       u.ID.Hex(),
+		Avatar:   u.Avatar,
+		Email:    u.Email,
 		UnixTime: strconv.Itoa(int(u.Time.Unix())),
-		Name: u.Name,
+		Name:     u.Name,
 	}
 	remember := c.FormValue("remember")
 	if remember == "on" {
@@ -281,7 +281,8 @@ func (h *Handler) UserDetail(c echo.Context) (err error) {
 				log.Println("<(￣︶￣)↗[GO!]", i, ", GetFollow:", err)
 			}
 			data.UserDisplay.Follow[i].ShowID = data.UserDisplay.Follow[i].ID.Hex()
-			data.UserDisplay.Follow[i].BigAvatar = strings.TrimSuffix(data.UserDisplay.Follow[i].Avatar, "-avatarStyle")
+			data.UserDisplay.Follow[i].BigAvatar = strings.TrimSuffix(data.UserDisplay.Follow[i].Avatar,
+				"-avatarStyle")
 			data.UserDisplay.Follow[i].Password = ""
 		}(i, v)
 	}
@@ -310,8 +311,8 @@ func (h *Handler) Dashboard(c echo.Context) (err error) {
 	//得到User
 	data.UserDisplay.User = &model.User{}
 	if err = db.DB(MONGO_DB).C(USER).
-	FindId(bson.ObjectIdHex(data.ID)).
-	One(data.UserDisplay.User); err != nil{
+		FindId(bson.ObjectIdHex(data.ID)).
+		One(data.UserDisplay.User); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {

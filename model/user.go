@@ -23,7 +23,7 @@ type (
 		Articles   []string        `json:"articles" bson:"articles"`
 		Follower   int             `json:"follower" bson:"follower"`
 		IsFollower map[string]bool `json:"is_follower" bson:"is_follower"`
-		Admin	bool	`json:"admin,omitempty" bson:"admin"`
+		Admin      bool            `json:"admin,omitempty" bson:"admin"`
 	}
 
 	UserDisplay struct {

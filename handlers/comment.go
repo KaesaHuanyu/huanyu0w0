@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"github.com/labstack/echo"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -9,7 +10,6 @@ import (
 	"net/http"
 	"sync"
 	"time"
-	"fmt"
 )
 
 func (h *Handler) CreateComment(c echo.Context) (err error) {
@@ -46,8 +46,7 @@ func (h *Handler) CreateComment(c echo.Context) (err error) {
 		comment.Replyto = replyto
 		//更新comment
 		if err = db.DB(MONGO_DB).C(COMMENT).
-			UpdateId(bson.ObjectIdHex(replyto), bson.M{"$addToSet": bson.M{"replies": comment.ID.Hex()}});
-			err != nil {
+			UpdateId(bson.ObjectIdHex(replyto), bson.M{"$addToSet": bson.M{"replies": comment.ID.Hex()}}); err != nil {
 			if err == mgo.ErrNotFound {
 				return echo.ErrNotFound
 			} else {
@@ -62,8 +61,7 @@ func (h *Handler) CreateComment(c echo.Context) (err error) {
 
 	//更新user
 	if err = db.DB(MONGO_DB).C(USER).
-		UpdateId(bson.ObjectIdHex(comment.Editor), bson.M{"$addToSet": bson.M{"comments": comment.ID.Hex()}});
-		err != nil {
+		UpdateId(bson.ObjectIdHex(comment.Editor), bson.M{"$addToSet": bson.M{"comments": comment.ID.Hex()}}); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
@@ -72,8 +70,7 @@ func (h *Handler) CreateComment(c echo.Context) (err error) {
 	}
 	//更新article
 	if err = db.DB(MONGO_DB).C(ARTICLE).
-		UpdateId(bson.ObjectIdHex(comment.Article), bson.M{"$addToSet": bson.M{"comments": comment.ID.Hex()}});
-		err != nil {
+		UpdateId(bson.ObjectIdHex(comment.Article), bson.M{"$addToSet": bson.M{"comments": comment.ID.Hex()}}); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		} else {
@@ -83,11 +80,11 @@ func (h *Handler) CreateComment(c echo.Context) (err error) {
 
 	//记录日志
 	log := &model.Log{
-		ID: bson.NewObjectId(),
-		Time: time.Now(),
-		Object: comment.ID.Hex(),
-		Type: "评论",
-		User: data.ID,
+		ID:        bson.NewObjectId(),
+		Time:      time.Now(),
+		Object:    comment.ID.Hex(),
+		Type:      "评论",
+		User:      data.ID,
 		Operation: "创建",
 	}
 
@@ -353,11 +350,11 @@ func (h *Handler) RemoveComment(c echo.Context) (err error) {
 
 	//记录日志
 	log := &model.Log{
-		ID: bson.NewObjectId(),
-		Time: time.Now(),
-		Object: comment.ID.Hex(),
-		Type: "评论",
-		User: data.ID,
+		ID:        bson.NewObjectId(),
+		Time:      time.Now(),
+		Object:    comment.ID.Hex(),
+		Type:      "评论",
+		User:      data.ID,
 		Operation: "删除",
 	}
 
@@ -377,8 +374,8 @@ func (h *Handler) removeComment(id string, article bool) (err error) {
 	//获取comment
 	c := &model.Comment{}
 	if err = db.DB(MONGO_DB).C(COMMENT).
-	FindId(bson.ObjectIdHex(id)).
-	One(c); err != nil {
+		FindId(bson.ObjectIdHex(id)).
+		One(c); err != nil {
 		return
 	}
 
@@ -406,8 +403,7 @@ func (h *Handler) removeComment(id string, article bool) (err error) {
 
 	for _, v := range c.Replies {
 		if err = db.DB(MONGO_DB).C(COMMENT).
-		UpdateId(bson.ObjectIdHex(v), bson.M{"$set": bson.M{"replyto": ""}});
-			err != nil {
+			UpdateId(bson.ObjectIdHex(v), bson.M{"$set": bson.M{"replyto": ""}}); err != nil {
 			return
 		}
 	}

@@ -14,7 +14,7 @@
   			<div class="mdl-card__supporting-text">
             	<div class="mdl-textfield mdl-js-textfield" style="margin-left: 3%; width: 90%;">
               		<input class="mdl-textfield__input" type="text" id="title" name="title" />
-              		<label class="mdl-textfield__label" for="title">醒目の标题...</label>
+              		<label class="mdl-textfield__label" for="title">醒目の标题...(20个字以内)</label>
             	</div>
 
               <div class="mdl-textfield mdl-js-textfield" style="margin-left: 3%; width: 90%;">
@@ -35,10 +35,26 @@
               <hr>
 
             	<div class="mdl-textfield mdl-js-textfield" style="margin-left: 3%; width: 90%">
-              		<textarea class="mdl-textfield__input" type="text" id="reason" name="reason" rows="9" style="width: 100%;"></textarea>
+              		<textarea class="mdl-textfield__input" type="text" id="reason" name="reason" rows="12" style="width: 100%;"></textarea>
               		<label class="mdl-textfield__label" for="reason">安利理由...(支持markdown哟ヾ(=･ω･=)o)</label>
             	</div>
 
+              <form action="/article/image/{{.ID}}" method="post" enctype="multipart/form-data" style="margin-left: 3%; width: 90%">
+                  <br>
+                  <div style="display: block;">
+                    <small class="mdl-color-text--grey-500">请选择图片(请勿包含中文)</small>
+                    <br>
+                    <input type="file" name="file" accept="image/*" style="margin-bottom: 2%;">
+                  </div>
+                  <input type="submit" value="添加图片" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--accent">
+                </form>
+                <br>
+                <div class="" style="margin-left: 3%; width: 90%">
+                  <li class="mdl-list__item mdl-color-text--grey-600">
+                    <span class="mdl-list__item-primary-content">url: <a href="{{.Url}}">{{.Url}}</a></span>
+                  </li>
+                </div>
+                <br>
             	<div style="margin-left: 3%;" class="mdl-color-text--accent"><label class="mdl-radio mdl-js-radio">
             		<input type="radio" class="mdl-radio__button" name="topic" value="toys" checked />
             		<span class="mdl-radio__label">番剧</span>

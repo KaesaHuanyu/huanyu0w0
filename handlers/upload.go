@@ -12,6 +12,7 @@ import (
 	"qiniupkg.com/api.v7/conf"
 	"qiniupkg.com/api.v7/kodo"
 	"qiniupkg.com/api.v7/kodocli"
+	"strings"
 )
 
 func (h *Handler) UpdateAvatar(c echo.Context) (err error) {
@@ -23,6 +24,7 @@ func (h *Handler) UpdateAvatar(c echo.Context) (err error) {
 	} else {
 		return c.Redirect(http.StatusFound, "/login")
 	}
+
 	//Read file
 	//Source
 	file, err := c.FormFile("file")
@@ -52,7 +54,9 @@ func (h *Handler) UpdateAvatar(c echo.Context) (err error) {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 	}
 
-	avatar, err := toQiniu(data.ID, file.Filename, filePath)
+	originAvatar := strings.TrimPrefix(strings.TrimSuffix(data.Avatar, "-avatarStyle"),
+		"http://images.huanyu0w0.cn/")
+	avatar, err := toQiniu(data.ID, file.Filename, filePath, originAvatar, "-avatarStyle")
 	if err != nil {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
 	}
@@ -83,13 +87,23 @@ func (h *Handler) UpdateAvatar(c echo.Context) (err error) {
 	return c.Redirect(http.StatusFound, "/user/dashboard")
 }
 
-func toQiniu(id, fileName, filePath string) (url string, err error) {
+func toQiniu(id, fileName, filePath, originAvatar, style string) (url string, err error) {
 	conf.ACCESS_KEY = model.ACCESS_KEY
 	conf.SECRET_KEY = model.SECRET_KEY
 	key := "avatar/" + id + "/" + fileName
 
 	// 创建一个Client
 	c := kodo.New(0, nil)
+	//删除原文件
+	p := c.Bucket(model.BUCKET)
+	// 调用Delete方法删除文件
+	err = p.Delete(nil, originAvatar)
+	// 打印返回值以及出错信息
+	if err == nil {
+		fmt.Println("Delete success")
+	} else {
+		fmt.Println(err)
+	}
 	// 设置上传的策略
 	policy := &kodo.PutPolicy{
 		Scope: model.BUCKET + ":" + key,
@@ -111,6 +125,6 @@ func toQiniu(id, fileName, filePath string) (url string, err error) {
 		fmt.Println("uploader.PutFile:")
 		return
 	}
-	url = "http://images.huanyu0w0.cn/" + key + "-avatarStyle"
+	url = "http://images.huanyu0w0.cn/" + key + style
 	return
 }
