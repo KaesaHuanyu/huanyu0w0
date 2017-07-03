@@ -10,6 +10,8 @@ import (
 	"sync"
 	"time"
 	"fmt"
+	"html/template"
+	"github.com/russross/blackfriday"
 )
 
 func (h *Handler) CreateArticleGet(c echo.Context) (err error) {
@@ -46,11 +48,16 @@ func (h *Handler) CreateArticle(c echo.Context) (err error) {
 	}
 
 	if a.Reason == "" || a.Title == "" || a.Name == "" {
-		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "标题、作品名或理由为空"}
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "标题、作品名或安利理由为空"}
 	}
 
 	db := h.DB.Clone()
 	defer db.Close()
+
+	if err = db.DB(MONGO_DB).C(ARTICLE).
+		Find(bson.M{"title": a.Title}).One(&model.Article{}); err == nil {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "该标题已存在"}
+	}
 
 	if err = db.DB(MONGO_DB).C(ARTICLE).Insert(a); err != nil {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: fmt.Sprintf("%s", err)}
@@ -88,6 +95,7 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 	data := &struct {
 		model.Cookie
 		Display *model.Display
+		Content template.HTML
 	}{
 		Display: &model.Display{},
 	}
@@ -107,6 +115,9 @@ func (h *Handler) ArticleDetail(c echo.Context) (err error) {
 			return echo.ErrNotFound
 		}
 	}
+	data.Content = template.HTML(blackfriday.MarkdownCommon([]byte(data.Display.Article.Reason)))
+	data.Display.Article.Reason = ""
+
 	//当前用户是否点赞
 	if v, ok := data.Display.Article.UserLiked[data.ID]; ok {
 		if v {
