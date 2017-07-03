@@ -11,15 +11,26 @@
     </div>
 	<div class="mdl-card__supporting-text mdl-card--expand">
 	<form action="/article/image/{{.ID}}" method="post" enctype="multipart/form-data">
-                  <div style="margin-left: 3%; display: block;">
-                    <small class="mdl-color-text--grey-500">请选择图片(请勿包含中文)</small>
-                    <br>
-                    <input type="file" name="file" accept="image/*" style="margin-bottom: 2%;">
-                  </div>
-                  <li class="mdl-list__item mdl-color-text--grey-600">
-                    <h2 class="mdl-card__title-text">Url.</h2><br>
-                    <span class="mdl-list__item-primary-content">{{.Url}}</span>
-                  </li>
+                  
+                  <ul class="mdl-list" style="margin-left: 3%">
+                    <li class="mdl-list__item">
+                      <small class="mdl-color-text--grey-500">请选择图片(请勿包含中文)</small>
+                    </li>
+                    <li class="mdl-list">
+                      <input type="file" name="file" accept="image/*" style="margin-bottom: 2%;">
+                    </li>
+                    <li class="mdl-list__item mdl-color-text--grey-600">
+                      <span class="mdl-list__item-primary-content">Url.</span>
+                    </li>
+                    <li class="mdl-list__item mdl-color-text--grey-600">
+                      {{if .Url}}
+                      <span class="mdl-list__item-primary-content">{{.Url}}</span>
+                      {{else}}
+                      <span class="mdl-list__item-primary-content">等待上传...</span>
+                      {{end}}
+                    </li>
+                  </ul>
+                  
                   <div class="mdl-card__actions">
                     <input type="submit" value="上传图片" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white">
                   </div>
