@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9e749d95-0938-46ae-bc2b-95b662fbc046" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dockerfile" afterPath="$PROJECT_DIR$/Dockerfile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/handlers/admin.go" afterPath="$PROJECT_DIR$/handlers/admin.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/handlers/article.go" afterPath="$PROJECT_DIR$/handlers/article.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/handlers/comment.go" afterPath="$PROJECT_DIR$/handlers/comment.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/handlers/handlers.go" afterPath="$PROJECT_DIR$/handlers/handlers.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/handlers/home.go" afterPath="$PROJECT_DIR$/handlers/home.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/handlers/upload.go" afterPath="$PROJECT_DIR$/handlers/upload.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/handlers/user.go" afterPath="$PROJECT_DIR$/handlers/user.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/cookie.go" afterPath="$PROJECT_DIR$/model/cookie.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/log.go" afterPath="$PROJECT_DIR$/model/log.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/user.go" afterPath="$PROJECT_DIR$/model/user.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.go" afterPath="$PROJECT_DIR$/server.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/view/createarticle.html" afterPath="$PROJECT_DIR$/view/createarticle.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -101,8 +88,8 @@
       <file leaf-file-name="Dockerfile" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Dockerfile">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="4" column="20" lean-forward="false" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+            <state relative-caret-position="108">
+              <caret line="6" column="4" lean-forward="false" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -843,8 +830,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Dockerfile">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="20" lean-forward="false" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+        <state relative-caret-position="108">
+          <caret line="6" column="4" lean-forward="false" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
           <folding />
         </state>
       </provider>

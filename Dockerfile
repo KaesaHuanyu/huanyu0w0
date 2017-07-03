@@ -4,8 +4,7 @@ WORKDIR /gogogo/src/huanyu0w0
 ENV GOPATH /gogogo
 ENV TZ Asia/Shanghai
 COPY . /gogogo/src/huanyu0w0
-RUN apt update
-    go get -u github.com/labstack/echo && \
+RUN go get -u github.com/labstack/echo && \
     go get -u github.com/dgrijalva/jwt-go && \
     go get -u github.com/russross/blackfriday && \
     go get -u qiniupkg.com/api.v7 && \
