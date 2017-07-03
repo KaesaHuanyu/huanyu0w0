@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9e749d95-0938-46ae-bc2b-95b662fbc046" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/view/articlePhoto.html" afterPath="$PROJECT_DIR$/view/articlePhoto.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/view/createarticle.html" afterPath="$PROJECT_DIR$/view/createarticle.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
