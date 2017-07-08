@@ -14,6 +14,7 @@ import (
 	"os"
 	"sync"
 	"time"
+	"github.com/labstack/echo-contrib/session"
 )
 
 func (h *Handler) CreateArticleGet(c echo.Context) (err error) {
@@ -38,6 +39,15 @@ func (h *Handler) CreateArticle(c echo.Context) (err error) {
 		data.IsLogin = true
 	} else {
 		return c.Redirect(http.StatusFound, "/login")
+	}
+
+	verifyUser := c.FormValue("verify")
+	if verifyUser == "" {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "请输入验证码"}
+	}
+	sess, _ := session.Get("session", c)
+	if verifyUser != sess.Values["verify"] {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "验证码错误"}
 	}
 
 	a := &model.Article{

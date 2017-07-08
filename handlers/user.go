@@ -12,6 +12,7 @@ import (
 	"strings"
 	"sync"
 	"time"
+	"github.com/labstack/echo-contrib/session"
 )
 
 func (h *Handler) SignupGet(c echo.Context) (err error) {
@@ -33,6 +34,16 @@ func (h *Handler) Signup(c echo.Context) (err error) {
 		cookie.MaxAge = -1
 		c.SetCookie(cookie)
 	}
+
+	verifyUser := c.FormValue("verify")
+	if verifyUser == "" {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "请输入验证码"}
+	}
+	sess, _ := session.Get("session", c)
+	if verifyUser != sess.Values["verify"] {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "验证码错误"}
+	}
+
 	//Bind
 	u := &model.User{
 		ID:     bson.NewObjectId(),
@@ -46,6 +57,14 @@ func (h *Handler) Signup(c echo.Context) (err error) {
 	//Validate
 	if u.Email == "" || u.Password == "" || u.Name == "" {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "不能为空"}
+	}
+
+	if len(u.Name) > 24 {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "用户名不能超过24个字节"}
+	}
+
+	if len(u.Name) > 30 {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "邮箱有这么长吗..."}
 	}
 
 	//Check email
@@ -409,6 +428,9 @@ func (h *Handler) UpdateUser(c echo.Context) (err error) {
 			} else {
 				return &echo.HTTPError{Code: http.StatusBadRequest, Message: "更新信息失败"}
 			}
+		}
+		if len(u.Name) > 24 {
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: "用户名不能超过24个字节"}
 		}
 	}
 

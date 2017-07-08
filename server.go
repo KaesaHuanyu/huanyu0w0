@@ -10,6 +10,11 @@ import (
 	"html/template"
 	"huanyu0w0/handlers"
 	"io"
+	"github.com/afocus/captcha"
+	"image/png"
+	"github.com/labstack/echo-contrib/session"
+	"github.com/gorilla/sessions"
+	"net/http"
 )
 
 //实现echo.Renderer接口
@@ -21,6 +26,8 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 	return t.templates.ExecuteTemplate(w, name, data)
 }
 
+var cap *captcha.Captcha
+
 func main() {
 	//Echo instance
 	e := echo.New()
@@ -29,6 +36,9 @@ func main() {
 	e.Use(middleware.Recover())
 	//CORS中间件
 	e.Use(middleware.CORS())
+	//session中间件
+	e.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
+
 
 	//声明模版集
 	t := &Template{
@@ -96,6 +106,25 @@ func main() {
 	e.POST("/article/image/:id", h.ArticleImage)
 	//图片之类的静态文件路由
 	e.Static("/static", "static")
+	//验证码
+	cap = captcha.New()
+	if err := cap.SetFont("comic.ttf"); err != nil {
+		panic(err)
+	}
+	cap.SetSize(160, 80)
+	e.GET("/verify", func(c echo.Context) (err error) {
+		img, str := cap.Create(4, captcha.NUM)
+		sess, _ := session.Get("session", c)
+		sess.Options = &sessions.Options{
+			Path:     "/",
+			MaxAge:   120,
+			HttpOnly: true,
+		}
+		sess.Values["verify"] = str
+		sess.Save(c.Request(), c.Response())
+		defer png.Encode(c.Response().Writer, img)
+		return c.NoContent(http.StatusOK)
+	})
 
 	//Run
 	e.Logger.Fatal(e.Start(":1323"))

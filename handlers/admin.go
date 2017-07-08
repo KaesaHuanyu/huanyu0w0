@@ -8,6 +8,7 @@ import (
 	"huanyu0w0/model"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 func (h *Handler) Admin(c echo.Context) (err error) {
@@ -112,10 +113,16 @@ func (h *Handler) AdminLogs(c echo.Context) (err error) {
 		return c.NoContent(http.StatusNotFound)
 	}
 
+	page, _ := strconv.Atoi(c.QueryParam("page"))
+	////Default
+	if page == 0 {
+		page = 1
+	}
+
 	//读取日志
 	logs := []*model.Log{}
 	if err = db.DB(MONGO_DB).C(LOG).
-		Find(nil).Sort("-time").
+		Find(nil).Sort("-time").Skip((page-1)*30).Limit(30).
 		All(&logs); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
