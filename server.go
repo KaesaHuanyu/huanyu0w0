@@ -117,7 +117,7 @@ func main() {
 		sess, _ := session.Get("session", c)
 		sess.Options = &sessions.Options{
 			Path:     "/",
-			MaxAge:   120,
+			MaxAge:   60 * 60 * 2,
 			HttpOnly: true,
 		}
 		sess.Values["verify"] = str
