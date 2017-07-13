@@ -1,4 +1,4 @@
-FROM golang:1.8.3-alpine3.6
+FROM golang
 MAINTAINER kaesalai@gmail.com
 WORKDIR /gogogo/src/huanyu0w0
 ENV GOPATH /gogogo
