@@ -1,4 +1,4 @@
-FROM hub.c.163.com/library/golang:latest
+FROM golang:1.8.3-alpine3.6
 MAINTAINER kaesalai@gmail.com
 WORKDIR /gogogo/src/huanyu0w0
 ENV GOPATH /gogogo
